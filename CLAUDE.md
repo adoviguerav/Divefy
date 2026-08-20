@@ -1,18 +1,52 @@
-# [PROJECT NAME]
+# Divefy
 
-[Brief 1-2 sentence project description]
+Copiloto conversacional de seguridad en buceo: un chat (CLI) que responde en ES/EN apoyándose solo en un corpus verificado (US Navy Diving Manual Rev 7 + apuntes PADI propios), construido sobre un banco de experimentos que mide cada pieza del RAG y cada modelo contra un examen propio.
 
-> This file is empty. Run `/define_project` to generate it via guided Q&A.
-> If you have a starter template available in `.claude/templates/`, the command will offer it as base.
+## Función core
 
-## Code Rules
+Chat RAG con grounding estricto + banco de experimentos que compara técnicas × modelos × corpus para encontrar la config de máxima calidad (y ver si un modelo local pequeño alcanza a los de API).
 
-Project-specific rules loaded via @imports as you add them under `.claude/rules/`:
+## Stack
 
-# @.claude/rules/your-rule.md
+- Python ≥3.12 con **uv** (`uv sync`, `uv run pytest`).
+- LangChain como librería (sin LangGraph). Chroma como vectorstore (embebido, colección por config).
+- Modelos locales vía **mlx-lm** (Mac Apple Silicon); API vía SDK. Modelos del grid: Sonnet 5, Haiku 4.5, Qwen 3.5 9B/4B.
+- Embeddings: BGE-M3 (base) vs Qwen3-Embedding-0.6B (medido). Reranker: bge-reranker-v2-m3.
+- Enriquecedor de índice: Gemini Flash. Juez de evals: un GPT. Ambos fuera de la ablación.
+- Observabilidad: LangSmith. Chat: Textual.
 
-Universal rules (testing, security, coding-style, git-workflow, performance, hooks, agents) live in `~/.claude/rules/` and load automatically via global CLAUDE.md.
+## Estructura
 
-## Personal Notes (optional)
+```
+src/divefy/          # un módulo por fase del pipeline (ingest → chunking → enrich →
+                     # indexing → retrieve → rerank → generate/guardrail → chat) + corrector + config
+data/raw/            # fuentes: navy-diving-manual-rev7.pdf + PADI_course/ (apuntes, NO regenerables)
+data/processed/      # salida de ingesta (regenerable)
+data/eval/           # etiquetas y cachés del eval
+results/             # una fila de métricas por config, nunca se sobreescriben
+docs/                # golden dataset, idea original, limitaciones hardware
+.claude/plans/       # PRD.md y EXPERIMENTOS.md (locales, gitignored)
+```
 
-If you want WIP notes/paths/personal shortcuts that should NOT be committed, copy `CLAUDE.local.md.example` to `CLAUDE.local.md`. It's gitignored — Claude loads it at session start but it never reaches the repo.
+## Reglas inmutables
+
+1. **El golden dataset NUNCA se indexa** (`docs/Buceo - Golden dataset.jsonl`): es el examen. El corrector usa solo `uso=eval` (84 preguntas).
+2. **PADI manda** en conflictos doctrinales con el manual Navy; se citan ambos cuando difieren.
+3. **Números de seguridad textuales del corpus, jamás traducidos ni parafraseados**; todo número emitido pasa el guardarraíl determinista o se convierte en abstención.
+4. **Sin soporte en el corpus → abstención plantilla**, nunca generación sin grounding.
+5. Las decisiones de diseño pasan por Adolfo antes de escribirse; el PRD refleja lo decidido, no propuestas.
+6. Los brazos del grid ya están cerrados en `.claude/plans/EXPERIMENTOS.md` — no añadir técnicas nuevas sin dato que lo justifique (los descartes tienen motivo escrito).
+
+## Glosario
+
+- **Golden**: las 186 Q-A del curso PADI (84 eval / 102 repaso). Examen, no corpus.
+- **El corrector**: script de evals; una config → una fila de métricas versionada.
+- **Receta**: combinación corpus + tope + extras + embedding + búsqueda (+rerank). La colección Chroma lleva su nombre canónico `corpus-tope-extras-embedding`.
+- **Fija-y-barre**: barrer una dimensión cada vez desde la receta base; nunca el cruce completo.
+- **section_id**: identificador estable de sección (`9-3.2`, `fichero#sección`) — las etiquetas del eval y el recall@k dependen de él.
+
+## Referencias
+
+- `.claude/plans/PRD.md` — el plan completo, §7 con las 9 fases cerradas (orden de decisión = orden de implementación).
+- `.claude/plans/EXPERIMENTOS.md` — cuaderno de laboratorio: base, variantes, resultados, descartes con motivo.
+- Reglas universales (testing, security, git…) en `~/.claude/rules/`, cargadas por el CLAUDE.md global.
