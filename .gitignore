@@ -190,3 +190,6 @@ Organización carpetas proyecto.md
 
 # Divefy: artefactos regenerables de la ingesta (data/raw/ es la fuente)
 data/processed/
+
+# Fixtures de test: se regeneran con `uv run pytest tests/ -m slow`
+tests/fixtures/

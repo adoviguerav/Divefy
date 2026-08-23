@@ -1,102 +1,333 @@
 {
   "2": {
-    "chars_prosa": 64249,
-    "chars_tablas": 9725,
-    "chars_descartados": 1424,
-    "chars_entrada": 75398,
-    "secciones_detectadas": 74,
-    "secciones_emitidas": 74,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 77048
+    "paginas": [
+      121,
+      158
+    ],
+    "segundos": 19.1,
+    "secciones": 54,
+    "punteros_tabla": 15,
+    "tablas_que_dice_el_manual": 19,
+    "TABLAS_PERDIDAS": [
+      "2-14",
+      "2-17",
+      "2-8",
+      "2-9"
+    ],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.904
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "158": {
+          "parse_score": 1.0,
+          "layout_score": 0.742
+        },
+        "143": {
+          "parse_score": 1.0,
+          "layout_score": 0.808
+        },
+        "147": {
+          "parse_score": 1.0,
+          "layout_score": 0.818
+        }
+      }
+    }
   },
   "3": {
-    "chars_prosa": 159608,
-    "chars_tablas": 1307,
-    "chars_descartados": 3158,
-    "chars_entrada": 164073,
-    "secciones_detectadas": 140,
-    "secciones_emitidas": 140,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 163162
+    "paginas": [
+      159,
+      222
+    ],
+    "segundos": 8.2,
+    "secciones": 63,
+    "punteros_tabla": 2,
+    "tablas_que_dice_el_manual": 2,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.928
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "222": {
+          "parse_score": 1.0,
+          "layout_score": 0.63
+        },
+        "215": {
+          "parse_score": 1.0,
+          "layout_score": 0.873
+        },
+        "177": {
+          "parse_score": 1.0,
+          "layout_score": 0.881
+        }
+      }
+    }
   },
   "4": {
-    "chars_prosa": 36301,
-    "chars_tablas": 4261,
-    "chars_descartados": 644,
-    "chars_entrada": 41206,
-    "secciones_detectadas": 44,
-    "secciones_emitidas": 44,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 40256
+    "paginas": [
+      223,
+      240
+    ],
+    "segundos": 3.6,
+    "secciones": 22,
+    "punteros_tabla": 4,
+    "tablas_que_dice_el_manual": 4,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.905
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "240": {
+          "parse_score": 1.0,
+          "layout_score": 0.64
+        },
+        "228": {
+          "parse_score": 1.0,
+          "layout_score": 0.84
+        },
+        "229": {
+          "parse_score": 1.0,
+          "layout_score": 0.865
+        }
+      }
+    }
   },
   "6": {
-    "chars_prosa": 61733,
-    "chars_tablas": 1424,
-    "chars_descartados": 5606,
-    "chars_entrada": 68763,
-    "secciones_detectadas": 51,
-    "secciones_emitidas": 51,
-    "descartes_altos": true,
-    "chars_entrada_pdfplumber": 68815
+    "paginas": [
+      305,
+      338
+    ],
+    "segundos": 6.0,
+    "secciones": 18,
+    "punteros_tabla": 2,
+    "tablas_que_dice_el_manual": 2,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.906
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "338": {
+          "parse_score": 1.0,
+          "layout_score": 0.652
+        },
+        "334": {
+          "parse_score": 1.0,
+          "layout_score": 0.815
+        },
+        "324": {
+          "parse_score": 1.0,
+          "layout_score": 0.824
+        }
+      }
+    }
   },
   "7": {
-    "chars_prosa": 101064,
-    "chars_tablas": 313,
-    "chars_descartados": 6169,
-    "chars_entrada": 107546,
-    "secciones_detectadas": 109,
-    "secciones_emitidas": 109,
-    "descartes_altos": true,
-    "chars_entrada_pdfplumber": 109767
+    "paginas": [
+      339,
+      390
+    ],
+    "segundos": 7.2,
+    "secciones": 45,
+    "punteros_tabla": 1,
+    "tablas_que_dice_el_manual": 1,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.917
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "379": {
+          "parse_score": 1.0,
+          "layout_score": 0.831
+        },
+        "342": {
+          "parse_score": 1.0,
+          "layout_score": 0.835
+        },
+        "371": {
+          "parse_score": 1.0,
+          "layout_score": 0.839
+        }
+      }
+    }
   },
   "9": {
-    "chars_prosa": 114791,
-    "chars_tablas": 39895,
-    "chars_descartados": 16776,
-    "chars_entrada": 171462,
-    "secciones_detectadas": 88,
-    "secciones_emitidas": 88,
-    "descartes_altos": true,
-    "chars_entrada_pdfplumber": 180620
+    "paginas": [
+      431,
+      516
+    ],
+    "segundos": 137.3,
+    "secciones": 73,
+    "punteros_tabla": 8,
+    "tablas_que_dice_el_manual": 9,
+    "TABLAS_PERDIDAS": [
+      "9-8"
+    ],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.907
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "516": {
+          "parse_score": 1.0,
+          "layout_score": 0.722
+        },
+        "514": {
+          "parse_score": 1.0,
+          "layout_score": 0.762
+        },
+        "515": {
+          "parse_score": 1.0,
+          "layout_score": 0.776
+        }
+      }
+    }
   },
   "10": {
-    "chars_prosa": 20717,
-    "chars_tablas": 1641,
-    "chars_descartados": 773,
-    "chars_entrada": 23131,
-    "secciones_detectadas": 25,
-    "secciones_emitidas": 25,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 23474
+    "paginas": [
+      517,
+      530
+    ],
+    "segundos": 4.4,
+    "secciones": 22,
+    "punteros_tabla": 2,
+    "tablas_que_dice_el_manual": 2,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.9
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "530": {
+          "parse_score": 1.0,
+          "layout_score": 0.56
+        },
+        "520": {
+          "parse_score": 1.0,
+          "layout_score": 0.809
+        },
+        "518": {
+          "parse_score": 1.0,
+          "layout_score": 0.906
+        }
+      }
+    }
   },
   "11": {
-    "chars_prosa": 33968,
-    "chars_tablas": 0,
-    "chars_descartados": 754,
-    "chars_entrada": 34722,
-    "secciones_detectadas": 44,
-    "secciones_emitidas": 44,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 34225
+    "paginas": [
+      531,
+      546
+    ],
+    "segundos": 2.0,
+    "secciones": 34,
+    "punteros_tabla": 0,
+    "tablas_que_dice_el_manual": 0,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.93
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "535": {
+          "parse_score": 1.0,
+          "layout_score": 0.898
+        },
+        "539": {
+          "parse_score": 1.0,
+          "layout_score": 0.902
+        },
+        "540": {
+          "parse_score": 1.0,
+          "layout_score": 0.912
+        }
+      }
+    }
   },
   "14": {
-    "chars_prosa": 14967,
-    "chars_tablas": 0,
-    "chars_descartados": 510,
-    "chars_entrada": 15477,
-    "secciones_detectadas": 15,
-    "secciones_emitidas": 15,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 15838
+    "paginas": [
+      697,
+      708
+    ],
+    "segundos": 1.7,
+    "secciones": 12,
+    "punteros_tabla": 0,
+    "tablas_que_dice_el_manual": 0,
+    "TABLAS_PERDIDAS": [],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.879
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "706": {
+          "parse_score": 1.0,
+          "layout_score": 0.645
+        },
+        "708": {
+          "parse_score": 1.0,
+          "layout_score": 0.792
+        },
+        "707": {
+          "parse_score": 1.0,
+          "layout_score": 0.833
+        }
+      }
+    }
   },
   "17": {
-    "chars_prosa": 102235,
-    "chars_tablas": 3980,
-    "chars_descartados": 3660,
-    "chars_entrada": 109875,
-    "secciones_detectadas": 127,
-    "secciones_emitidas": 127,
-    "descartes_altos": false,
-    "chars_entrada_pdfplumber": 125650
+    "paginas": [
+      851,
+      902
+    ],
+    "segundos": 6.8,
+    "secciones": 68,
+    "punteros_tabla": 6,
+    "tablas_que_dice_el_manual": 9,
+    "TABLAS_PERDIDAS": [
+      "17-2",
+      "17-8",
+      "17-9"
+    ],
+    "confianza": {
+      "capitulo": {
+        "parse_score": 1.0,
+        "layout_score": 0.915
+      },
+      "nota": "QualityGrade.EXCELLENT",
+      "PAGINAS_A_REVISAR": {
+        "888": {
+          "parse_score": 1.0,
+          "layout_score": 0.788
+        },
+        "897": {
+          "parse_score": 1.0,
+          "layout_score": 0.84
+        },
+        "851": {
+          "parse_score": 1.0,
+          "layout_score": 0.846
+        }
+      }
+    }
   }
 }
