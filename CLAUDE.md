@@ -18,8 +18,16 @@ Chat RAG con grounding estricto + banco de experimentos que compara técnicas ×
 ## Estructura
 
 ```
-src/divefy/          # un módulo por fase del pipeline (ingest → chunking → enrich →
-                     # indexing → retrieve → rerank → generate/guardrail → chat) + corrector + config
+src/divefy/
+  config.py          # config de experimento, global
+  chat.py            # Fase 8 — entrypoint CLI (Textual)
+  pipeline/          # un módulo por fase, prefijo pN_ para que el orden se vea en `ls`:
+                     # p1_ingest → p2_chunking → p3_enrich → p4_indexing/p4_vectorstore →
+                     # p5_retrieve → p6_rerank → p7_generate/p7_guardrail
+  evals/             # corrector.py — banco de experimentos (config -> fila de métricas)
+  llm/               # Fase 7 — proveedores API + modelos locales (mlx-lm) tras una
+                     # interfaz única que p7_generate.py llama sin saber cuál es cuál;
+                     # vacío hasta tener el segundo backend real
 data/raw/            # fuentes: navy-diving-manual-rev7.pdf + PADI_course/ (apuntes, NO regenerables)
 data/processed/      # salida de ingesta (regenerable)
 data/eval/           # etiquetas y cachés del eval
