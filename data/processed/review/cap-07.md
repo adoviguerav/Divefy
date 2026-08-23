@@ -79,8 +79,13 @@ Dive supervisors shall consider employing an independent back-up air source for 
 The minimum number of qualified divers required on station is provided in Figure 7-3.
 The minimum SCUBA dive team includes the Diving Supervisor, divers, and standby diver. Additional members support in roles such as tender, boat crew, special systems, and equipment operators as required by the nature of the operation. Personnel levels may need to be increased as necessary to meet the operational situation.
 WARNING These are the minimum personnel levels allowed. The Dive Supervisor shall conduct effective mission analysis, mission planning, and ORM to ensure personnel levels are adequate for safe diving.
+WARNING These are the minimum personnel levels allowed. The Dive Supervisor shall conduct effective mission analysis, mission planning, and ORM to ensure personnel levels are adequate for safe diving.
+WARNING These are the minimum personnel levels allowed. The Dive Supervisor shall conduct effective mission analysis, mission planning, and ORM to ensure personnel levels are adequate for safe diving. NOTES: NOTES: NOTES:
 Figure 7-3. Minimum Manning Levels for SCUBA Diving.
-7-2.2.1 SCUBA Diving Supervisor. Dive Supervisors are selected based on leadership, maturity, supervisory ability, and technical expertise and may be any formally trained U.S. military diver, PQS qualified, and designated in writing by the Commanding Officer.
+
+## SCUBA Diving Supervisor
+
+Dive Supervisors are selected based on leadership, maturity, supervisory ability, and technical expertise and may be any formally trained U.S. military diver, PQS qualified, and designated in writing by the Commanding Officer.
 The Diving Supervisor is in charge of the diving operation regardless of rank. The Dive Supervisor shall execute dives in a safe and effective manner and discontinue diving operations in the event of unsafe diving conditions. The Dive Supervisor is responsible for knowing and complying with rules, limits, procedures, and for understanding the extent of their authority as delegated by the Commanding Officer. The Dive Supervisor shall be included in operational planning and shall conduct and document an adequate ORM assessment for each diving day. Diving operations shall not be conducted without the presence of the Diving Supervisor.
 
 ## SCUBA Diver
@@ -182,12 +187,21 @@ The Navy PMS system and the manufacturer's service manual provides guidance for 
 ## Full Face Mask
 
 An ANU approved full face mask may be used with an approved single-hose first-stage regulator with an octopus, to the maximum approved depth of the regulator, as indicated in the NAVSEA/00C ANU list ( Figure 7-5 ).
-7-3.1.1.5 Mouthpiece. The size and design of SCUBA mouthpieces differ between manufacturers, but each mouthpiece provides relatively watertight passageways for delivering breathing air into the diver's mouth. The mouthpiece should fit comfortably with slight pressure from the lips.
-7-3.1.1.6 Octopus. An octopus is an additional single hose second stage regulator connected to the diver's first stage regulator and may be used in case the diver's primary second stage regulator fails or for buddy breathing. Hose length
+
+## Mouthpiece
+
+The size and design of SCUBA mouthpieces differ between manufacturers, but each mouthpiece provides relatively watertight passageways for delivering breathing air into the diver's mouth. The mouthpiece should fit comfortably with slight pressure from the lips.
+
+## Octopus
+
+An octopus is an additional single hose second stage regulator connected to the diver's first stage regulator and may be used in case the diver's primary second stage regulator fails or for buddy breathing. Hose length
 Figure 7-5. MK 20 FFM SCUBA.
 and designation markings are at the discretion of the diving unit. An octopus is mandatory for standby diver. Use of an octopus is the preferred method to accomplish buddy breathing (see paragraph 7-9.1).
 The octopus shall be secured on or near the diver's chest to provide easy access in an emergency and to allow the diver to immediately observe if the octopus free flows during the dive. During predive inspection, the diver shall breathe the octopus to ensure it is working properly.
-7-3.1.1.7 Submersible Cylinder Pressure Gauge. The SCUBA regulator assembly shall be equipped with a submersible pressure gauge to indicate pressure content of the cylinder.
+
+## Submersible Cylinder Pressure Gauge
+
+The SCUBA regulator assembly shall be equipped with a submersible pressure gauge to indicate pressure content of the cylinder.
 The submersible cylinder pressure gauge provides the diver with a continuous read-out of the air remaining in the cylinder(s). Various submersible pressure gauges suitable for Navy use are commercially available. Most are equipped with a 2 to 3 foot length of high-pressure rubber hose with standard fittings, and are secured directly into the first stage regulator. When turning on the cylinder, the diver should turn the face of the gauge towards the deck to prevent injury in the event of a blowout. The gauge and hose should be tucked under a shoulder strap or otherwise secured to avoid its entanglement with bottom debris or other equipment. Submersible pressure gauges must be calibrated in accordance with PMS.
 When diving without a reserve, the dive shall be terminated when the cylinder pressure reaches 500 psi for a single cylinder or 250 psi for twin manifold cylinders.
 
@@ -242,9 +256,9 @@ n Have sufficient volume to raise an unconscious diver safely from the maximum d
 n Be sturdy enough to resist normal wear and tear.
 Most life preservers employ carbon dioxide (CO 2 ) cartridges as the low pressure inflation device. The cartridges must be the proper size for the life preserver and must be weighed prior to use, in accordance with PMS.
 
-## Buoyancy Compensator (BC)
+## Buoyancy Compensator (BC). A buoyancy compensator may be used at the Diving Supervisor's discretion
 
-A buoyancy compensator may be used at the Diving Supervisor's discretion. The decision to use a life preserver or a BC balances diver safety in the event of an emergency with diver comfort while working in the water column. BCs will maintain a diver in a head up position on the surface but most are NOT designed to maintain the diver in a face up position without counter weights.
+The decision to use a life preserver or a BC balances diver safety in the event of an emergency with diver comfort while working in the water column. BCs will maintain a diver in a head up position on the surface but most are NOT designed to maintain the diver in a face up position without counter weights.
 A number of factors must be considered when selecting a BC: type of wet suit, diving depth, breathing equipment characteristics, nature of diving activity, accessory equipment, and weight belt.
 Buoyancy compensators shall:
 n Provide a minimum of 10 pounds of positive buoyancy at the maximum depth.
@@ -256,7 +270,9 @@ Training and practice under controlled conditions are required to master diving 
 Refer to the appropriate technical manual for complete operations and maintenance instructions for the equipment. A BC is not required when using a variable volume dry suit (VVDS).
 ANU listed life preservers and buoyancy compensators must be operated in the authorized configuration. Additionally, life preservers and buoyancy compensators may have specific depth limits that must be verified with the ANU.
 Prior to use of VVDS as a buoyancy compensator, divers must be thoroughly familiar with its use.
-7-3.5 Weight Belt.
+
+## Weight Belt.
+
 SCUBA is designed to have near neutral buoyancy. With full tanks, a unit tends to have negative buoyancy, becoming slightly positive as the air supply is consumed. Most
 Figure 7-7. Life Preserver.
 divers are positively buoyant, even more so when wearing a wet suit, and need to add extra weight to achieve a neutral or slightly negative status. This extra weight is furnished by a weighted belt worn outside of all other equipment, and strapped so that it can easily released in the event of an emergency.
@@ -300,7 +316,10 @@ A diver needs some form of protection from cold water to counter heat loss durin
 The wet suit is a form-fitting suit, usually made of closed-cell neoprene. Custom-fitted wet suits are recommended since they provide the greatest freedom of movement, and thermal protection.
 The suit traps a thin layer of water next to the diver's skin, where it is warmed by the diver's body. Wet suits are available in a variety of thicknesses and the thicker the suit the better the insulation (and the greater the buoyancy). A diver wearing a thicker wetsuit will fatigue more easily and use more air, which must be accounted for in dive planning. The buoyancy of a wetsuit must be countered by adding weight to the diver.
 Because wet suits are closed-cell construction they will compress in compliance with Boyle's law and lose buoyancy and the ability to thermally protect the diver. The deeper the dive, the greater the effect of Boyle's Law on the suit. As a diver ascends at the end of a dive, the wet suit buoyancy is restored and the diver may lose control of the ascent, particularly in the last 30fsw where the greatest change in pressure occurs. This effect is compounded if the diver has depleted most of the air in the tanks and is positively buoyant as a result.
-7-4.1.2 Variable Volume Dry Suits. The Variable Volume Dry Suit (VVDS) has proven to be effective in keeping divers warm in near-freezing water. It is typically constructed of 1/4-inch closed-cell neoprene with nylon backing on both sides. Boots are provided as an integral part of the suit, but the hood and three finger gloves are usually separate. The dry suit keeps the diver dry, but it is the thermal insulation worn under the suit that insulates the diver and provides warmth.
+
+## Variable Volume Dry Suits
+
+The Variable Volume Dry Suit (VVDS) has proven to be effective in keeping divers warm in near-freezing water. It is typically constructed of 1/4-inch closed-cell neoprene with nylon backing on both sides. Boots are provided as an integral part of the suit, but the hood and three finger gloves are usually separate. The dry suit keeps the diver dry, but it is the thermal insulation worn under the suit that insulates the diver and provides warmth.
 Inflation is controlled using inlet and outlet valves, which are fitted into the suit. Air is supplied from a pressure reducer on an auxiliary cylinder, from the emergency gas supply, or the SCUBA bottle. About 0.2 actual cubic foot of air is required for normal inflation. Because of this inflation, slightly more weight than would be used with a wet suit must be carried.
 Wet or dry suits can be worn with hoods, gloves, boots, or hard-soled shoes depending upon conditions. If the diver will be working under conditions where the suit may be easily torn or punctured, the diver should be provided with additional protection such as coveralls or heavy canvas chafing gear.
 Divers must train and be proficient with dry suit use before conducting operational dives. A thorough understanding of the unique buoyancy characteristics of the dry suit is critical to operating effectively. Inflation and dump valves must not be obstructed and the diver must know their location. The diver must understand that performing head down descents and operating in a horizontal and head down position will lead to air migrating to the feet and result in blow up.
@@ -456,8 +475,9 @@ In the absence of high-pressure air systems, large-volume air compressors can be
 If a suitable compressor is available, the basic charging procedure will be the same as that outlined for cascading except that the compressor will replace the bank of cylinders.
 Additional information on using air compressors is found in Chapter 4.
 
-## Safety Precautions for Charging and Handling Cylinders. The following safety rules apply to charging and handling SCUBA cylinders:
+## Safety Precautions for Charging and Handling Cylinders
 
+The following safety rules apply to charging and handling SCUBA cylinders:
 n Carry cylinders by holding the valve and body of the cylinder. Avoid carrying a cylinder by the backpack or harness straps as the quick-release buckle can be accidentally tripped or the straps may fail.
 n Do not attempt to fill any cylinder if the hydrostatic test date has expired or if the cylinder appears to be substandard. Dents, severe rusting, bent valves, frozen reserve mechanisms, or evidence of internal contamination (e.g., water scales or rust) are all signs of unsuitability. See CGA Pamphlet C-6, Standards for Visual Inspection of Compressed Gas Cylinders.
 n Always use gauges to measure cylinder pressure. Never point the dial of a gauge to which pressure is being applied toward the operators face.
@@ -473,7 +493,10 @@ n Cylinders should always be properly secured aboard ship or in a diving boat.
 ## PREDIVE PROCEDURES
 
 Predive procedures for SCUBA operations include equipment preparation, dive brief, donning gear, and a predive inspection before the divers enter the water. The SCUBA diving operations setup checklist (Figure 7-11 ), and Dive Supervisor's predive checklist (Figure 7-12) presented in this chapter are examples of U.S.Navy material and may be used as provided or modified locally to suit specific needs.
-7-6.1 Equipment Preparation. Prior to any dive, all divers must carefully inspect their own equipment for signs of deterioration, damage, or corrosion. The equipment must be tested for proper operation. Predive preparation procedures must be standardized, not altered for convenience, and must be the personal concern of each diver.
+
+## Equipment Preparation
+
+Prior to any dive, all divers must carefully inspect their own equipment for signs of deterioration, damage, or corrosion. The equipment must be tested for proper operation. Predive preparation procedures must be standardized, not altered for convenience, and must be the personal concern of each diver.
 
 ## Air Cylinders.
 
@@ -783,9 +806,15 @@ Some common methods of diver communications are: through-water communication sys
 Presently, several types of throughwater communication systems are available for SCUBA diving operations. Acoustic systems provide one-way, topside-to-diver communications. The multidirectional audio signal is emitted through the water by a submerged transducer. Divers can hear the audio signal without signal receiving equipment. Amplitude Modulated (AM) and Single Sideband (SSB) systems provide diver-to-diver, diver-to-topside, and topside-to-diver communications. Both the AM and SSB systems require transmitting and receiving equipment worn by the divers. AM systems provide a stronger signal and better intelligibility, but are restricted to line-of-sight use. SSB systems provide superior performance in and around obstacles. Through-water communication systems are listed on the ANU list.
 Figure 7-14. SCUBA Hand Signals (page 1 of 3).
 Figure 7-14. SCUBA Hand Signals (page 2 of 3).
-7-8.5.2 Hand and Line-Pull Signals. Navy divers use common hand signals to ensure universal understanding. Figure 7-14 presents the U.S. Navy approved hand signals. Under certain conditions, special signals applicable to a specific mission may be devised and approved by the Diving Supervisor. If visibility is poor, the dive partners may be forced to communicate with line-pull signals on a buddy line. Line-pull signals are discussed in Table 8-2. Hand signals and line-pull signals should be delivered in a forceful, exaggerated manner so that there is no ambiguity and no doubt that a signal is being given. If a signal is given, it shall be acknowledged immediately. Failure of a diver to respond to a signal is an emergency.
+
+## Hand and Line-Pull Signals
+
+Navy divers use common hand signals to ensure universal understanding. Figure 7-14 presents the U.S. Navy approved hand signals. Under certain conditions, special signals applicable to a specific mission may be devised and approved by the Diving Supervisor. If visibility is poor, the dive partners may be forced to communicate with line-pull signals on a buddy line. Line-pull signals are discussed in Table 8-2. Hand signals and line-pull signals should be delivered in a forceful, exaggerated manner so that there is no ambiguity and no doubt that a signal is being given. If a signal is given, it shall be acknowledged immediately. Failure of a diver to respond to a signal is an emergency.
 Figure 7-14. SCUBA Hand Signals (page 3 of 3).
-7-8.6 Working with Tools. The near-neutral buoyancy of a SCUBA diver poses certain problems when working with tools. A diver is at a disadvantage when applying leverage with tools. When applying force to a wrench, for example, the diver is pushed away and can apply very little torque. If both sides of the work are accessible, two wrenches (one on the nut and one on the bolt) should be used. By pulling on one wrench and pushing on the other, the counter-force permits most of the effort to be transmitted to the work. When using any tool that requires leverage or force (including pneumatic power tools), the diver should be braced with feet, a free hand, or a shoulder.
+
+## Working with Tools
+
+The near-neutral buoyancy of a SCUBA diver poses certain problems when working with tools. A diver is at a disadvantage when applying leverage with tools. When applying force to a wrench, for example, the diver is pushed away and can apply very little torque. If both sides of the work are accessible, two wrenches (one on the nut and one on the bolt) should be used. By pulling on one wrench and pushing on the other, the counter-force permits most of the effort to be transmitted to the work. When using any tool that requires leverage or force (including pneumatic power tools), the diver should be braced with feet, a free hand, or a shoulder.
 NOTE When using externally powered tools with SCUBA, the diver must have voice communications with the Diving Supervisor.
 Tools should be organized in advance. The diver should carry as few items as possible. If many tools are required, a canvas tool bag should be used to lower them to the diver as needed. Further guidelines for working underwater are provided in the U.S. Navy Underwater Ship Husbandry Manual (NAVSEA S0600- AAPRO-010). Authorized power tools are listed in the NAVSEA/00C ANU list.
 
@@ -930,7 +959,10 @@ Actuate the life preserver or inflate the B.C. to surface immediately. Do not di
 If the SCUBA has become entangled and must be abandoned, actuate the quickrelease buckles to ditch the apparatus. SCUBA ditch and don refresher should be included in work-up training dives under controlled conditions.
 During a free ascent or buddy breathing, the affected diver, or the diver without the mouthpiece must exhale continuously to prevent a POIS due
 to expanding air in the lungs.
-7-9.2 Ascent From Under a Vessel. When underwater ship husbandry tasks are required, surface-supplied lightweight equipment is preferred. SCUBA diving is permitted under floating hulls, however, a tending line to the SCUBA diver must be provided. Ships are often moored against closed-face piers or heavy camels and care must be exercised to ensure that the tending line permits a clear path for emergency surfacing of the diver.
+
+## Ascent From Under a Vessel
+
+When underwater ship husbandry tasks are required, surface-supplied lightweight equipment is preferred. SCUBA diving is permitted under floating hulls, however, a tending line to the SCUBA diver must be provided. Ships are often moored against closed-face piers or heavy camels and care must be exercised to ensure that the tending line permits a clear path for emergency surfacing of the diver.
 Due to the unique nature of EOD operations involving neutralization of live limpet mines, the use of tending lines is not practical or required. During limpet mine search training, the use of tending lines is required.
 SCUBA dive plans on deep-draft ships should restrict diving operations to one quadrant of the hull at a time. This theoretical quartering of the ship's hull will minimize potential diver disorientation caused by multiple keel crossings or fore and aft confusion.
 Predive briefs must include careful instruction on life preserver use when working under a hull to prevent panic blowup against the hull. Life preservers should not be fully inflated until after the diver passes the turn of the bilge.
@@ -942,7 +974,10 @@ The Diving Supervisor shall determine the required bottom time for each dive. Ba
 When the divers have completed the assigned task, or have reached the maximum allowable bottom time prescribed in the dive plan, they must ascend to the stage or the marked line and signal the surface to begin decompression. With the stage being handled from the surface, the divers will be taken through the appropriate stops while the timekeeper controls the progress. Before each move of the stage, the tender will signal the divers to prepare for the lift and the divers will signal back when prepared. When using a marked line, the tender will signal when each stop has been completed, at which point the divers will swim up, signaling their arrival at the next stop. Stop times will always be regulated by the Dive Supervisor.
 In determining the levels for the decompression stops, the sea state on the surface must be taken into consideration. If large swells are running, the stage or marker line will be constantly rising and falling with the movements of the surface-support craft. The depth of each decompression stop should be calculated so that the divers' chests will never be brought above the depths prescribed for the stops in the decompression tables.
 In the event of an accidental surfacing or an emergency, the Diving Supervisor will have to determine if decompression should be resumed in the water or if the services of a recompression chamber are required. The possibility of having to make such a choice should be anticipated during the planning stages of the operation.
-7-9.4 Surfacing and Leaving the Water. When approaching the surface, divers must not come up under the support craft or any other obstruction. They should listen for the sound of propellers and delay surfacing until satisfied that there is no obstruction. Once on the surface, the diver should scan immediately in all directions and check for hazards (e.g., approaching surface vessels) and for the location of the support craft and other divers. After the area is deemed clear of hazards, immediately inflate the life preserver or BC and signal the support craft with hand signals, whistle, or flare. Once in contact with the Diving Supervisor, divers report their maximum depth attained, bottom time, air remaining, and any problems encountered.
+
+## Surfacing and Leaving the Water
+
+When approaching the surface, divers must not come up under the support craft or any other obstruction. They should listen for the sound of propellers and delay surfacing until satisfied that there is no obstruction. Once on the surface, the diver should scan immediately in all directions and check for hazards (e.g., approaching surface vessels) and for the location of the support craft and other divers. After the area is deemed clear of hazards, immediately inflate the life preserver or BC and signal the support craft with hand signals, whistle, or flare. Once in contact with the Diving Supervisor, divers report their maximum depth attained, bottom time, air remaining, and any problems encountered.
 As the divers break the surface, the tender and other personnel in the support craft must keep them in sight constantly and be alert for any signs of trouble. While one diver is being taken aboard the support craft, attention must not be diverted from the remaining divers in the water.
 Usually, getting into the boat will be easier if the divers first remove the weight belts, then the SCUBA, and hand them to the tenders. If the boat has a ladder, swim fins should also be removed. Without a ladder, the swim fins will help to give the diver an extra push to get aboard. A small boat may be boarded over the side or over the stern depending on the type of craft and the surface conditions.
 
@@ -951,6 +986,6 @@ Usually, getting into the boat will be easier if the divers first remove the wei
 The Diving Supervisor should debrief each returning diver while the experience of the dive is still fresh. The Diving Supervisor should determine if the assigned tasks were completed, if any problems were encountered, if any changes to the overall dive plan are indicated and if the divers have any suggestions for the next team.
 The diver shall remain within under the direct observation of the Dive Supervisor, or a competent representative, for 10 minutes post dive and 30 minutes' travel time of the diving unit for at least 2 hours after surfacing. When satisfied with their physical condition, the divers' first responsibility after the dive is to check their equipment for damage and get it properly cleaned and stowed. Each diver is responsible for the immediate postdive maintenance and proper disposition of the equipment used during the dive. The Planned Maintenance System provides direction for postdive maintenance.
 
-## Table 7-1
+## Table 7-1. Sample SCUBA Cylinder Data.
 
-Table 7-1 (capítulo 7, páginas 350-355).
+Table 7-1. Sample SCUBA Cylinder Data. (capítulo 7, páginas 350-350).

@@ -39,7 +39,7 @@ def test_es_fila_distintiva_linea_vacia():
 
 
 def test_plegar_caption_pliega_continuacion():
-    assert plegar_caption("Table 9-9. Some caption text (Continued).") == "Table 9-9"
+    assert plegar_caption("Table 9-9. Some caption text (Continued).") == "Table 9-9. Some caption text"
 
 
 def test_plegar_caption_sin_continuacion():

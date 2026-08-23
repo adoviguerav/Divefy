@@ -35,13 +35,19 @@ Humans readily function within the narrow atmospheric envelope present at the ea
 Figure 2-1. Molecules. Two similar atoms combine to form an oxygen molecule while the atoms of two different elements, hydrogen and oxygen, combine to form a water molecule.
 Figure 2-2. The Three States of Matter.
 do not naturally combine with other substances. The presence of inert elements in breathing mixtures is important when calculating a diver's decompression obligations.
-2-3.4 The Three States of Matter. Matter can exist in one of three natural states: solid, liquid, or gas (Figure 2-2 ). A solid has a definite size and shape. A liquid has a definite volume, but takes the shape of the container. Gas has neither definite shape nor volume, but will expand to fill a container. Gases and liquids are collectively referred to as fluids.
+
+## The Three States of Matter
+
+Matter can exist in one of three natural states: solid, liquid, or gas (Figure 2-2 ). A solid has a definite size and shape. A liquid has a definite volume, but takes the shape of the container. Gas has neither definite shape nor volume, but will expand to fill a container. Gases and liquids are collectively referred to as fluids.
 The physical state of a substance depends primarily upon temperature and partially upon pressure. A solid is the coolest of the three states, with its molecules rigidly aligned in fixed patterns. The molecules move, but their motion is like a constant vibration. As heat is added the molecules increase their motion, slip apart from each other and move around; the solid becomes a liquid. A few of the mole cules will spontaneously leave the surface of the liquid and become a gas. When the substance reaches its boiling point, the molecules are moving very rapidly in all directions and the liquid is quickly transformed into a gas. Lowering the temperature reverses the sequence. As the gas molecules cool, their motion is reduced and the gas condenses into a liquid. As the temperature continues to fall, the liquid reaches the freezing point and transforms to a solid state.
 
 ## MEASUREMENT
 
 Physics relies heavily upon standards of comparison of one state of matter or energy to another. To apply the principles of physics, divers must be able to employ a variety of units of measurement.
-2-4.1 Measurement Systems. Two systems of measurement are widely used throughout the world. Although the English System is commonly used in the United States, the most common system of measurement in the world is the International System of Units. The Interna tional System of Units, or SI system, is a modernized metric system designated in 1960 by the General Conference on Weights and Measures. The SI system is decimal based with all its units related, so that it is not necessary to use calcula tions to change from one unit to another. The SI system changes one of its units of measurement to another by moving the decimal point, rather than by the lengthy calculations necessary in the English System. Because measurements are often reported in units of the English system, it is important to be able to convert them to SI units. Measurements can be converted from one system to another by using the conversion factors in Table 2-10 through 2-18 .
+
+## Measurement Systems
+
+Two systems of measurement are widely used throughout the world. Although the English System is commonly used in the United States, the most common system of measurement in the world is the International System of Units. The Interna tional System of Units, or SI system, is a modernized metric system designated in 1960 by the General Conference on Weights and Measures. The SI system is decimal based with all its units related, so that it is not necessary to use calcula tions to change from one unit to another. The SI system changes one of its units of measurement to another by moving the decimal point, rather than by the lengthy calculations necessary in the English System. Because measurements are often reported in units of the English system, it is important to be able to convert them to SI units. Measurements can be converted from one system to another by using the conversion factors in Table 2-10 through 2-18 .
 
 ## Temperature Measurements
 
@@ -245,7 +251,10 @@ A diver can vary his buoyancy in several ways. By adding weight to his gear, he 
 ## GASES IN DIVING
 
 Knowledge of the properties and behavior of gases, especially those used for breathing, is vitally important to divers.
-2-10.1 Atmospheric Air. The most common gas used in diving is atmospheric air, the composition of which is shown in Table 2-2. Any gases found in concentrations different than those in Table 2-2 or that are not listed in Table 2-2 are considered contaminants. Depending on weather and location, many industrial pollutants may be found in air. Carbon monoxide is the most commonly encountered and is often present around air compressor engine exhaust. Care must be taken to exclude the pollut ants from the diver's compressed air by appropriate filtering, inlet location, and compressor maintenance. Water vapor in varying quantities is present in compressed air and its concentration is important in certain instances.
+
+## Atmospheric Air
+
+The most common gas used in diving is atmospheric air, the composition of which is shown in Table 2-2. Any gases found in concentrations different than those in Table 2-2 or that are not listed in Table 2-2 are considered contaminants. Depending on weather and location, many industrial pollutants may be found in air. Carbon monoxide is the most commonly encountered and is often present around air compressor engine exhaust. Care must be taken to exclude the pollut ants from the diver's compressed air by appropriate filtering, inlet location, and compressor maintenance. Water vapor in varying quantities is present in compressed air and its concentration is important in certain instances.
 For most purposes and computations, diving air may be assumed to be composed of 79 percent nitrogen and 21 percent oxygen. Besides air, varying mixtures of oxygen, nitrogen, and helium are commonly used in diving. While these gases are discussed separately, the gases themselves are almost always used in some mixture. Air is a naturally occurring mixture of most of them. In certain types of diving applications, special mixtures may be blended using one or more of the gases with oxygen.
 
 ## Oxygen
@@ -286,7 +295,10 @@ Figure 2-6. Kinetic Energy. The kinetic energy of the molecules inside the conta
 ## GAS LAWS
 
 Gases are subject to three closely interrelated factors - temperature, pressure, and volume. As the kinetic theory of gases points out, a change in one of these factors must result in some measurable change in the other factors. Further, the theory indicates that the kinetic behavior of any one gas is the same for all gases or mixtures of gases. Consequently, basic laws have been established to help predict the changes that will be reflected in one factor as the conditions of one or both of the other factors change. A diver needs to know how changing pressure will effect the air in his suit and lungs as he moves up and down in the water. He must be able to determine whether an air compressor can deliver an adequate supply of air to a proposed operating depth. He also needs to be able to interpret the reading on the pressure gauge of his tanks under varying conditions of temperature and pressure. The answers to such questions are calculated using a set of rules called the gas laws. This section explains the gas laws of direct concern to divers.
-2-11.1 Boyle's Law. Boyle's law states that at constant temperature, the absolute pressure and the volume of gas are inversely proportional. As pressure increases the gas volume is reduced; as the pressure is reduced the gas volume increases. Boyle's law is important to divers because it relates to change in the volume of a gas caused by the change in pressure, due to depth, which defines the relationship of pressure and volume in breathing gas supplies.
+
+## Boyle's Law
+
+Boyle's law states that at constant temperature, the absolute pressure and the volume of gas are inversely proportional. As pressure increases the gas volume is reduced; as the pressure is reduced the gas volume increases. Boyle's law is important to divers because it relates to change in the volume of a gas caused by the change in pressure, due to depth, which defines the relationship of pressure and volume in breathing gas supplies.
 The formula for Boyle's law is: C = × P V
 Where:
 C = a constant
@@ -432,7 +444,10 @@ Fill in the known values and solve for V 1 :
 ## GAS MIXTURES
 
 If a diver used only one gas for all underwater work, at all depths, then the general gas law would suffice for most of his necessary calculations. However, to accom modate use of a single gas, oxygen would have to be chosen because it is the only one that provides life support. But 100 percent oxygen can be dangerous to a diver as depth and breathing time increase. Divers usually breathe gases in a mixture, either air (21 percent oxygen, 78 percent nitrogen, 1 percent other gases) or oxygen with one of the inert gases serving as a diluent for the oxygen. The human body has a wide range of physiological reactions to various gases under different conditions of pressure and for this reason another gas law is required to predict the effects of breathing those gases while under pressure.
-2-12.1 Dalton's Law. Dalton's law states: 'The total pressure exerted by a mixture of gases is equal to the sum of the pressures of each of the different gases making up the mixture, with each gas acting as if it alone was present and occupied the total volume.'
+
+## Dalton's Law
+
+Dalton's law states: 'The total pressure exerted by a mixture of gases is equal to the sum of the pressures of each of the different gases making up the mixture, with each gas acting as if it alone was present and occupied the total volume.'
 In a gas mixture, the portion of the total pressure contributed by a single gas is called the partial pressure (pp) of that gas. An easily understood example is that of a container at atmospheric pressure (14.7 psi). If the container were filled with oxygen alone, the partial pressure of the oxygen would be one atmosphere. If the same container at 1 atm were filled with dry air, the partial pressures of all the constituent gases would contribute to the total partial pressure, as shown in Table 2-3 .
 If the same container was filled with air to 2,000 psi (137 ata), the partial pressures of the various components would reflect the increased pressure in the same proportion as their percentage of the gas, as illustrated in Table 2-4.
 The formula for expressing Dalton's law is:
@@ -471,9 +486,9 @@ Convert from ata to fsw:
 
 Round down to a max safe depth of 356 fsw
 
-## Calculating Surface Equivalent Value (SEV)
+## Calculating Surface Equivalent Value (SEV). Dalton's law explains the potential consequences of exposure to increased partial pressures of various gasses
 
-Dalton's law explains the potential consequences of exposure to increased partial pressures of various gasses. For example, if the surface air were contaminated with 2 percent (0.02 ata) CO2, a level that could be readily accommodated by a person on the surface, the partial pressure at an increased depth could be dangerously high. The correlation of a gas inspired at depth to its equivalent physiological effect if the same concentration were breathed on the surface is referred to as surface equivalent value (SEV). The formula for calculating SEV is:
+For example, if the surface air were contaminated with 2 percent (0.02 ata) CO2, a level that could be readily accommodated by a person on the surface, the partial pressure at an increased depth could be dangerously high. The correlation of a gas inspired at depth to its equivalent physiological effect if the same concentration were breathed on the surface is referred to as surface equivalent value (SEV). The formula for calculating SEV is:
 
 Example: When breathing air on the surface 21% (0.21 ppO2) oxygen is being inspired. At 33 fsw (2ata) the pressure doubles to 0.42ppO2, the percentage by volume stays the same but the number of molecules inspired increased. Move the decimal point 2 places to the right to get a surface equivalent of 42% oxygen. It makes sense that we are breathing twice the molecules of O2 at 33 fsw since we are at twice the pressure.
 Sample problem 1. Your recompression chamber is on ascent from treatment depth at 1fpm and is at a depth of 127 fsw. The chamber CO2 monitor reads .23% CO2. The limit for chamber CO2 levels is 1.5 SEV. Is the chamber within safe limits for CO2?
@@ -548,78 +563,78 @@ The dissolved gas in a diver's body, regardless of quantity, depth, or pressure,
 3.  In the metric system, 10 MSW is defined as 1 BAR. Note that pressure conversion from MSW to FSW is different than length conversion; i.e., 10 MSW = 32.6336 FSW and 10 M = 32.8083 feet.
 Figure 2-7. Depth, Pressure, Atmosphere Graph.
 
-## Table 2-1
+## Table 2-1. Pressure Chart.
 
-Table 2-1 (capítulo 2, páginas 133-133).
+Table 2-1. Pressure Chart. (capítulo 2, páginas 133-133).
 
-## Table 2-2
+## Table 2-2. Components of Dry Atmospheric Air.
 
-Table 2-2 (capítulo 2, páginas 134-134).
+Table 2-2. Components of Dry Atmospheric Air. (capítulo 2, páginas 134-134).
 
-## Table 2-3
+## Table 2-3. Partial Pressure at 1 ata.
 
-Table 2-3 (capítulo 2, páginas 144-144).
+Table 2-3. Partial Pressure at 1 ata. (capítulo 2, páginas 144-144).
 
-## Table 2-4
+## Table 2-4. Partial Pressure at 137 ata.
 
-Table 2-4 (capítulo 2, páginas 144-145).
+Table 2-4. Partial Pressure at 137 ata. (capítulo 2, páginas 144-145).
 
-## Table 2-5
+## Table 2-5. Symbols and Values.
 
-Table 2-5 (capítulo 2, páginas 151-151).
+Table 2-5. Symbols and Values. (capítulo 2, páginas 151-151).
 
-## Table 2-6
+## Table 2-6. Buoyancy (In Pounds).
 
-Table 2-6 (capítulo 2, páginas 152-152).
+Table 2-6. Buoyancy (In Pounds). (capítulo 2, páginas 152-152).
 
-## Table 2-7
+## Table 2-7. Formulas for Area.
 
-Table 2-7 (capítulo 2, páginas 152-152).
+Table 2-7. Formulas for Area. (capítulo 2, páginas 152-152).
 
-## Table 2-8
+## Table 2-8. Formulas for Volumes.
 
-Table 2-8 (capítulo 2, páginas 152-152).
+Table 2-8. Formulas for Volumes. (capítulo 2, páginas 152-152).
 
 ## Table 2-9
 
 Table 2-9 (capítulo 2, páginas 152-152).
 
-## Table 2-10
+## Table 2-10. Pressure Equivalents.
 
-Table 2-10 (capítulo 2, páginas 153-153).
+Table 2-10. Pressure Equivalents. (capítulo 2, páginas 153-153).
 
-## Table 2-11
+## Table 2-11. Volume and Capacity Equivalents.
 
-Table 2-11 (capítulo 2, páginas 153-153).
+Table 2-11. Volume and Capacity Equivalents. (capítulo 2, páginas 153-153).
 
-## Table 2-12
+## Table 2-12. Length Equivalents.
 
-Table 2-12 (capítulo 2, páginas 154-154).
+Table 2-12. Length Equivalents. (capítulo 2, páginas 154-154).
 
-## Table 2-13
+## Table 2-13. Area Equivalents.
 
-Table 2-13 (capítulo 2, páginas 154-154).
+Table 2-13. Area Equivalents. (capítulo 2, páginas 154-154).
 
-## Table 2-14
+## Table 2-14. Velocity Equivalents.
 
-Table 2-14 (capítulo 2, páginas 154-154).
+Table 2-14. Velocity Equivalents. (capítulo 2, páginas 154-154).
 
-## Table 2-15
+## Table 2-15. Mass Equivalents.
 
-Table 2-15 (capítulo 2, páginas 155-155).
+Table 2-15. Mass Equivalents. (capítulo 2, páginas 155-155).
 
-## Table 2-16
+## Table 2-16. Energy or Work Equivalents.
 
-Table 2-16 (capítulo 2, páginas 155-155).
+Table 2-16. Energy or Work Equivalents. (capítulo 2, páginas 155-155).
 
-## Table 2-17
+## Table 2-17. Power Equivalents.
 
-Table 2-17 (capítulo 2, páginas 155-155).
+Table 2-17. Power Equivalents. (capítulo 2, páginas 155-155).
 
-## Table 2-18
+## Table 2-18. Temperature Equivalents.
 
-Table 2-18 (capítulo 2, páginas 156-156).
+Table 2-18. Temperature Equivalents. (capítulo 2, páginas 156-156).
 
-## Table 2-19
+## Table 2-19. Atmospheric Pressure at Altitude.
 
-Table 2-19 (capítulo 2, páginas 156-156).
+Table 2-19. Atmospheric Pressure at Altitude. (capítulo 2, páginas 156-156).

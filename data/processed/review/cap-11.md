@@ -159,11 +159,20 @@ Dry suit disadvantages are increased swimmer fatigue due to suit bulk, possible 
 The dry suit is an essential component of cold water diving because of its superior thermal protection. When using a VVDS, a BC or life preserver is not required because of the ability to control buoyancy with the dry suit. However, use of a pony bottle for suit inflation is highly recommended when diving SCUBA due to the limited air supply.
 Figure 11-2. Ice Diving with SCUBA in Dry Suits and AGA Divator FFM SCUBA.
 CAUTION Prior to the use of variable volume dry suits and hot water suits in cold and ice-covered waters, divers shall be trained in their use and be thoroughly familiar with the operation of these suits.
-11-2.9.3 Extreme Exposure Suits/Hot Water Suits. Hot water suits provide excellent thermal protection. If their use can be supported logistically, they are an excellent choice whenever bottom times are lengthy. They are impractical for use by standby divers exposed on the surface if the flow of hot water flowing through the suit cannot be regulated.
+
+## Extreme Exposure Suits/Hot Water Suits
+
+Hot water suits provide excellent thermal protection. If their use can be supported logistically, they are an excellent choice whenever bottom times are lengthy. They are impractical for use by standby divers exposed on the surface if the flow of hot water flowing through the suit cannot be regulated.
 A hot water system failure can be catastrophic for a diver in very cold water since the hot water is a life support system under such conditions. Hot water temperature must be carefully monitored to ensure that the water is delivered at the proper temperature. When using the hot water suit, wet suit liners must be worn. The hose on the surface must be monitored to ensure it does not melt into the ice. When not in use, the heater and hoses must be thoroughly drained and dried to prevent freezing and rupture.
-11-2.10 Clothing. Proper planning must include protecting tenders and topside support personnel from the environment. However, bulky clothing and heavy mittens make even routine tasks difficult for topside personnel. Waterproof outer gloves and boots may also be considered. Regardless of the type of clothing selected, the clothing must be properly fitted (loosely worn), and kept clean and dry to maximize insula tion. In planning operations for such conditions, reduced efficiency resulting in longer on-site time must be considered. Refer to the Polar Operations Manual for complete information on thermal protection of support personnel and equipment.
+
+## Clothing
+
+Proper planning must include protecting tenders and topside support personnel from the environment. However, bulky clothing and heavy mittens make even routine tasks difficult for topside personnel. Waterproof outer gloves and boots may also be considered. Regardless of the type of clothing selected, the clothing must be properly fitted (loosely worn), and kept clean and dry to maximize insula tion. In planning operations for such conditions, reduced efficiency resulting in longer on-site time must be considered. Refer to the Polar Operations Manual for complete information on thermal protection of support personnel and equipment.
 Figure 11-3. DRASH Brand 10-man tent erected over dive hole cut in ice.
-11-2.11 Ancillary Equipment. A detailed reconnaissance of the dive site will provide the planner with informa tion that is helpful in deciding what ancillary equipment is required. Diving under ice will require special accessory equipment such as a line with lights/strobes for under water navigation, ice-cutting tools, platforms, engine protection kits, and stainless steel ice screws, quick draw, and carabineers.
+
+## Ancillary Equipment
+
+A detailed reconnaissance of the dive site will provide the planner with informa tion that is helpful in deciding what ancillary equipment is required. Diving under ice will require special accessory equipment such as a line with lights/strobes for under water navigation, ice-cutting tools, platforms, engine protection kits, and stainless steel ice screws, quick draw, and carabineers.
 The method of cutting the hole through the ice depends on ice thickness and avail ability of equipment. Normally, two or more of the following tools are used: hand ice chipper, ice handsaw, ice auger, chain saw, thermal ice cutter or blasting equip ment. In addition, equipment to lift the ice block, remove the slush, and mark the hole is required. Sandbags, burlap bags, or pallets for the tenders to stand on are also needed. Personal flotation devices should be worn when in close proximity of an ice hole.
 If there is a possibility of surface support personnel falling through the ice, float able work platforms, such as an inflated Zodiac boat, should be used. With such flotation equipment, the operation could be continued or safely concluded if the ice breaks up.
 Gasoline and diesel engines must be cold-weather modified to prevent engine freeze-up. Vibrations of engines running on the ice can be a problem and vibration dampening platforms may be required.
@@ -238,8 +247,9 @@ With a properly fitting suit and all seals in place, the diver can usually be ke
 n Thermal protection suits should be checked carefully for fabric cuts and sepa rations. Thermal protection suits should expose only a minimum of facial area.
 n Mittens, boots, and seals should prevent water entry, while causing no restric tion of circulation. Wearing a knitted watchcap under the hood of a dry suit is effective in conserving body heat. With the cap pushed back far enough to per mit the suit's face seal to seat properly, the head will be relatively dry and comfortable.
 
-## On-Surface Precautions. While on the surface:
+## On-Surface Precautions
 
+While on the surface:
 n Suited divers should be protected from overheating and associated perspiring before entering the water. Overheating easily occurs when operating from a heated hut, especially if diver exertion is required to get to the dive site. The divers' comfort can be improved and sweating delayed before entering the water by cooling the divers face with a damp cloth and fanning every few min utes. Perspiration will dampen undergarments, greatly reducing their thermal insulating capabilities.
 n While waiting to enter the water, divers should avoid sitting on or resting their feet on the ice or cold floor of a hut. Even in an insulated hut, the temperature at the floor may be near freezing.
 n Time on the surface with the diver suited, but relatively inactive, should be minimized to prevent chilling of the diver. Surface time can also cool metal components of the diving gear, such as suit valves and SCUBA regulators, below the freezing point and cause the parts to ice up when the diver enters the water. Dressing rehearsals prior to diving will help minimize surface delays.

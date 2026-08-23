@@ -228,10 +228,10 @@ NITROX mixing, blending, and storage systems shall be designed for oxygen servic
 Figure 10-4. LP Air Supply NITROX Membrane Configuration.
 Figure 10-5. HP Air Supply NITROX Membrane Configuration.
 
-## Table 10-1
+## Table 10-1. Equivalent Air Depth Table.
 
-Table 10-1 (capítulo 10, páginas 520-520).
+Table 10-1. Equivalent Air Depth Table. (capítulo 10, páginas 520-520).
 
-## Table 10-2
+## Table 10-2. Oil Free Air.
 
-Table 10-2 (capítulo 10, páginas 527-527).
+Table 10-2. Oil Free Air. (capítulo 10, páginas 527-527).

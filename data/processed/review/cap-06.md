@@ -52,9 +52,8 @@ A common failure when planning an operation is to place excessive emphasis on th
 All dive planning must take into account that bottom time is at a premium. Planning efforts that reduce the required bottom time and increase diver effectiveness are critical (e.g., use of tools to limit underwater searching by divers such as underwater imaging systems and sidescan SONAR).
 Diving tasks/missions involve the following:
 
-## Underwater Ship Husbandry (UWSH)
+## Underwater Ship Husbandry (UWSH). UWSH is the inspection, maintenance, and repair of ship and submarine hulls and appendages while the vessel is waterborne (Figure 6-1). The objective of UWSH is to produce a permanent repair without drydocking the vessel.
 
-UWSH is the inspection, maintenance, and repair of ship and submarine hulls and appendages while the vessel is waterborne (Figure 6-1). The objective of UWSH is to produce a permanent repair without drydocking the vessel.
 NAVSEA 00C is the technical warrant holder for UWSH procedures and equipment. Divers performing UWSH tasks shall be trained and qualified for the work they are performing IAW NAVSEA Underwater Ship Husbandry Manual (S0600-AAPRO-010) and Personnel Qualification Standards (PQS). Divers shall follow strict Quality Assurance (QA) procedures IAW the Joint Fleet Maintenance Manual and NAVSEA Underwater Ship Husbandry Manual and work closely with the maintenance activity QA department and planners to ensure repairs comply with ship design specifications.
 If divers do not have a NAVSEA 00C approved procedure with which to accomplish a repair, they shall contact NA VSEA 00C to obtain technical approval prior to commencement of the repair. Dive Units shall not permit use of equipment in the water unless it is included on the ANU list or listed in the NA VSEA UWSH manual.
 NAVSEA 00C5 provides maintenance activities with onsite technical representatives to assist in complex repairs or new procedures. NAVSEA 00C5 can be reached at the contact information listed on SUPSALV's website (http://www.supsalv.org/).
@@ -70,7 +69,10 @@ Divers work to recover sunken or wrecked naval craft, submersibles, downed aircr
 aspects, no two salvage efforts are alike and the hazards from these operations must never be taken for granted.
 Figure 6-2. Salvage Diving. Surface-supplied divers on an aircraft recovery mission.
 Operations involving the recovery of an object from the bottom require knowledge of the dimensions and weight of the object. Other useful information includes floodable volume, established lifting points, construction material, length of time on the bottom, probable degree of embedment in mud or silt, and the nature and extent of damage. This data helps determine the type of lift to be used (e.g., boom, floating crane, lifting bags, pontoons), indicates whether mud suction may be an issue (high-pressure hoses may be needed to jet away mud or silt) and helps determine the disposition of the object after it is brought to the surface. Preliminary planning may find the object too heavy to be placed on the deck of the support ship, indicating the need for a barge and heavy lifting equipment. Planning resources include the U.S. Navy Salvage manuals, Emergency Ships Salvage Material (ESSM) catalog and the salvage experts at NAVSEA 00C2.
-6-2.1.4 Harbor Clearance. Harbor clearance involves port/harbor facilities opening, construction, clearance, and rehabilitation. Port facilities are fundamental to the movement of personnel and material for any military operation. Port facilities can either be improved for friendly forces or modified to deny use by the enemy. Harbor clearance may involve:
+
+## Harbor Clearance
+
+Harbor clearance involves port/harbor facilities opening, construction, clearance, and rehabilitation. Port facilities are fundamental to the movement of personnel and material for any military operation. Port facilities can either be improved for friendly forces or modified to deny use by the enemy. Harbor clearance may involve:
 Planning and Inspection. Divers assist in the planning of any port operation to help determine priorities of work or prepare work estimates. A completed inspection can provide the terminal commander with a report of existing conditions of underwater port facility structures.
 Hydrographic/Bathymetric Survey. Hydrographic surveys of the proposed area are conducted to determine water depths, sea-bottom contours, and the location
 of shipping channels and underwater obstacles. Divers conduct surveys to depict water depths and obstruction locations to determine the size of ship the port can support.
@@ -93,16 +95,22 @@ n UCT Conventional Inspection and Repair Techniques Manual NTRP 4-04.2.8
 n Expedient Underwater Repair Techniques NTRP 4-04.2.9
 n UCT Arctic Operations Manual NAVFAC P-992
 
-## Battle Damage Assessment and Repair (BDA/R)
+## Battle Damage Assessment and Repair (BDA/R). BDA/R involves UWSH in a remote, semi-permissive/permissive operating environment, which may require UWSH units to be prepared for immediate worldwide deployment.
 
-BDA/R involves UWSH in a remote, semi-permissive/permissive operating environment, which may require UWSH units to be prepared for immediate worldwide deployment.
+
 
 ## Combat Diver
 
 Combat divers conduct reconnaissance and neutralization of enemy ships, shore-based installations, and personnel. Some missions may require
 an underwater approach to reach coastal installations undetected. Reconnaissance missions and raids may expose the combat divers to additional risk but may be necessary to advance broader warfare objectives.
-6-2.1.10 Dive Training. Initial dive training occurs at Naval Diving Salvage Training Center (NDSTC), Panama City Florida and Basic Underwater Demolition School (BUDS), Coronado California. Advanced dive training occurs throughout the Fleet in various locations and by Type Commander (TYCOM) specific training units. Training is also conducted by unit level personnel and with foreign divers during Theater Security Cooperation exercises (TSCs). Planning for training conducted outside of formal venues is vital since it represents a high degree of risk. OPNAVINST 1500.75(series) governs the conduct of high risk training.
-6-2.1.11 Free Ascent/Escape Training and Operations. Free ascent operations are conducted by trained and qualified divers. Free ascent/escape training is conducted by qualified high risk instructors under approved training plans IAW OPNAVINST 1500.75 (series).
+
+## Dive Training
+
+Initial dive training occurs at Naval Diving Salvage Training Center (NDSTC), Panama City Florida and Basic Underwater Demolition School (BUDS), Coronado California. Advanced dive training occurs throughout the Fleet in various locations and by Type Commander (TYCOM) specific training units. Training is also conducted by unit level personnel and with foreign divers during Theater Security Cooperation exercises (TSCs). Planning for training conducted outside of formal venues is vital since it represents a high degree of risk. OPNAVINST 1500.75(series) governs the conduct of high risk training.
+
+## Free Ascent/Escape Training and Operations
+
+Free ascent operations are conducted by trained and qualified divers. Free ascent/escape training is conducted by qualified high risk instructors under approved training plans IAW OPNAVINST 1500.75 (series).
 Figure 6-4. Underwater Construction Diving.
 No ascent training may be conducted unless fully qualified instructors are present, a recompression chamber is available within 5 minutes, a Diving Medical Technician is on station, and a Diving Medical Officer is able to provide immediate response to a mishap.
 
@@ -111,9 +119,9 @@ No ascent training may be conducted unless fully qualified instructors are prese
 An initial analysis of forces available to complete the identified tasks is conducted and any modifications to the task organization and support relationships are considered. This step should also identify any critical shortfalls in subject matter expertise.
 Some examples of available forces and assets (in addition to organic forces and assets) include an underwater hydrographic survey team, pollution response team, light weight diving system, deep diving saturation system, EOD team, Mobile Diving and Salvage Company (MDS CO), or a port security team. The Multi Service Tactics, Techniques, and Procedures for Military Diving Operations (MDO) (NTTP 3-07.7) is a valuable resource in determining what resources may be available from other services and their capabilities.
 
-## Dive Techniques
+## Dive Techniques. (Figure 6-5) A dive mission may be accomplished with one or more dive techniques
 
-(Figure 6-5) A dive mission may be accomplished with one or more dive techniques. Selection of diving technique may depend upon:
+Selection of diving technique may depend upon:
 n Timeliness of the mission
 n Availability of equipment
 n Availability of trained personnel
@@ -222,9 +230,9 @@ n Determine Control Effects. With controls identified, the hazard should be re-a
 Implement Controls. Implementing controls relies on communicating to all involved personnel, establishing accountability, and providing necessary support.
 Supervise. Supervision is focused on determining effectiveness of controls. Supervisors determine the need for further assessment and capture lessons learned.
 
-## Time Critical Risk Management (TCRM)
+## Time Critical Risk Management (TCRM). Time critical risk management requires a high degree of situational awareness by supervisors
 
-Time critical risk management requires a high degree of situational awareness by supervisors. TRCM is the effective use of all available resources by individuals, crews, and teams to safely and effectively accomplish the mission or task using risk management concepts when time and resources are limited.
+TRCM is the effective use of all available resources by individuals, crews, and teams to safely and effectively accomplish the mission or task using risk management concepts when time and resources are limited.
 The U.S. Navy summarizes the time critical risk management process in a fourstep A-B-C-D model (Figure 6-7).
 A ssess the situation.
 The three conditions to Assess:
@@ -262,7 +270,11 @@ Figure 6-7. The Link Between Time Critical and Deliberate.
 
 ## TASK PLANNING AND EMERGENCY ASSISTANCE
 
-6-5.1 Task Planning and Scheduling. Dive plans and schedules should organize personnel and work objectives so that experienced personnel will always be available on site.
+
+
+## Task Planning and Scheduling
+
+Dive plans and schedules should organize personnel and work objectives so that experienced personnel will always be available on site.
 
 ## Task Schedule
 
@@ -355,9 +367,9 @@ The Diving Supervisor monitors progress, debriefs divers, updates instructions t
 Divers shall maintain situational awareness and keep topside personnel informed of conditions on the bottom, progress of the task, and of any developing problems that may indicate the need for changes to the plan. The diver shall always obey a signal from the surface and repeat all commands from the surface.
 Additionally, Dive Supervisors maintain situational awareness, exercise good decision making, and manage the fatigue and stress of the team to conduct safe diving. The Diving Supervisor must be aware of the cumulative effects of these factors on his, and the team's, ability to operate safely and mitigate them accordingly. NEDU Report TR-05-09 details these skills and they are summarized in this section.
 
-## Situational Awareness (SA)
+## Situational Awareness (SA). Maintaining good SA is critical
 
-Maintaining good SA is critical. Loss of SA is the greatest of all the causes of mishaps. Situational awareness involves:
+Loss of SA is the greatest of all the causes of mishaps. Situational awareness involves:
 n The detection of elements in the environment within a volume of space and time.
 n The comprehension of their meaning.
 n The projection of their status in the near future.
@@ -421,7 +433,10 @@ The Dive Supervisor must maintain an awareness of the effects of fatigue on the 
 ## Stress
 
 A certain amount of stress is normal and even beneficial to motivation and performance. The Dive Supervisor's concern is when stress adversely affects performance that may lead to mishaps.
-6-6.3.4.1 Chronic and Acute Stress. Stress is important to Navy Divers because both chronic and acute stresses are potential problems to divers. Chronic stress may result from any long periods of work such as ship's husbandry, in which there are continual deadlines and constant pressure to complete tasks over time. Acute stress, by contrast, may occur during an emergency in the water or on the dive side, or during shorter periods of high workload and production pressure.
+
+## Chronic and Acute Stress
+
+Stress is important to Navy Divers because both chronic and acute stresses are potential problems to divers. Chronic stress may result from any long periods of work such as ship's husbandry, in which there are continual deadlines and constant pressure to complete tasks over time. Acute stress, by contrast, may occur during an emergency in the water or on the dive side, or during shorter periods of high workload and production pressure.
 Indicators of chronic stress include:
 n Apathy
 n Reduced productivity
@@ -444,7 +459,10 @@ n Memory impairment
 n Reduced concentration
 n Difficulty making a decision
 Once symptoms of stress are present, they can adversely affect the health and performance of the individual and the team. Acute stress can result in a failure to manage a situation effectively and can end in equipment damage, injury, or loss of life. Chronic stress left untreated, may predispose a team member to mistakes, or affect the rest of the team, and lead to mishaps.
-6-6.4 Post Dive/Post Mission. A dive mission is completed when the objective has been met, the diving team demobilized, and records and reports are filed. Time shall be allocated to:
+
+## Post Dive/Post Mission
+
+A dive mission is completed when the objective has been met, the diving team demobilized, and records and reports are filed. Time shall be allocated to:
 n Debrief the dive team
 n Analyze the operation, compared the plan to how it was actually carried out for lessons learned.
 n Recover, clean, inspect, maintain, repair, and stow all equipment
@@ -483,13 +501,17 @@ Commercial
 (850) 230-3100
 Name/Phone Number
 DSN
-436-4351
+
+## 436-4351
+
 Navy Diving Salvage and Training Center (NDSTC)
 Response Time
 Commercial
 (850) 234-4651
 DSN
-436-4651
+
+## 436-4651
+
 Figure 6-8. Emergency Assistance Checklist
 Figure 6-9. Diving Planning ORM Worksheet (sheet 1 of 3).
 (Sheet 2 of 3)
@@ -706,10 +728,10 @@ CDO_ _______________________________________
 (signature of CDO)
 Figure 6-10. Ship Repair Safety Checklist for Diving (sheet 2 of 2).
 
-## Table 6-1
+## Table 6-1. Navy Recompression Chamber Support levels.
 
-Table 6-1 (capítulo 6, páginas 324-324).
+Table 6-1. Navy Recompression Chamber Support levels. (capítulo 6, páginas 324-324).
 
-## Table 6-2
+## Table 6-2. Air Diving Recompression Chamber Recommendations (Bottom Time in Minutes)
 
-Table 6-2 (capítulo 6, páginas 324-324).
+Table 6-2. Air Diving Recompression Chamber Recommendations (Bottom Time in Minutes) (capítulo 6, páginas 324-324).

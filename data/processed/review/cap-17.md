@@ -2,12 +2,23 @@
 
 ## INTRODUCTION
 
-17-1.1 Purpose. This chapter describes the diagnosis and treatment of diving disorders with recom pression therapy and/or hyperbaric oxygen therapy. Recompression therapy is indicated for treating DCS, AGE, and several other disorders unless the diver is critically ill or has experienced a drowning episode. In those cases where diagnosis or treatment are not clear, direct the patient to the highest level of medical care available and contact the Diving Medical Officers at NEDU or NDSTC for guidance. The recompression procedures described in this chapter are designed to handle most situations that will be encountered opera tionally. They are applicable to both surface-supplied and open and closed circuit SCUBA diving as well as recompression chamber operations, whether breathing air, nitrogenoxygen, helium-oxygen, or 100 percent oxygen. Treatment of decompression sickness during satu ration dives is covered separately in Chapter 13 of this manual. Periodic evaluation of U.S. Navy recompression treatment procedures has shown they are effective in relieving symptoms over 90 percent of the time when used as published.
-17-1.2 Scope. The procedures outlined in this chapter are to be performed only by trained personnel. Because these procedures are used to treat disorders ranging from mild pain to life-threatening disorders, the degree of medical expertise necessary to carry out proper treatment will vary. Certain procedures, such as starting intravenous (IV) fluid lines and inserting chest tubes, require special training and must not be attempted by untrained individuals. Treatment tables can be initiated without consulting a Dive Medical Officer (DMO), however a DMO should always be contacted at the earliest possible opportunity. A DMO must be contacted prior to releasing the treated individual.
+
+
+## Purpose
+
+This chapter describes the diagnosis and treatment of diving disorders with recom pression therapy and/or hyperbaric oxygen therapy. Recompression therapy is indicated for treating DCS, AGE, and several other disorders unless the diver is critically ill or has experienced a drowning episode. In those cases where diagnosis or treatment are not clear, direct the patient to the highest level of medical care available and contact the Diving Medical Officers at NEDU or NDSTC for guidance. The recompression procedures described in this chapter are designed to handle most situations that will be encountered opera tionally. They are applicable to both surface-supplied and open and closed circuit SCUBA diving as well as recompression chamber operations, whether breathing air, nitrogenoxygen, helium-oxygen, or 100 percent oxygen. Treatment of decompression sickness during satu ration dives is covered separately in Chapter 13 of this manual. Periodic evaluation of U.S. Navy recompression treatment procedures has shown they are effective in relieving symptoms over 90 percent of the time when used as published.
+
+## Scope
+
+The procedures outlined in this chapter are to be performed only by trained personnel. Because these procedures are used to treat disorders ranging from mild pain to life-threatening disorders, the degree of medical expertise necessary to carry out proper treatment will vary. Certain procedures, such as starting intravenous (IV) fluid lines and inserting chest tubes, require special training and must not be attempted by untrained individuals. Treatment tables can be initiated without consulting a Dive Medical Officer (DMO), however a DMO should always be contacted at the earliest possible opportunity. A DMO must be contacted prior to releasing the treated individual.
 
 ## MANNING REQUIREMENTS
 
-17-2.1 Recompression Chamber Team. A recompression chamber team is assembled in two situations; where a recompression chamber is part of a diving operation, and where a recompression chamber is maintained as an area response requirement. This section applies to both situations. The designation 'Chamber Supervisor' may be interchanged with 'Diving Supervisor' where a recompression chamber is part of an operation. During a complex recompression treatment, the minimum manning and emergency manning levels specified in Table 17-1 may not be adequate to keep up with the surge of activity required at various points during
+
+
+## Recompression Chamber Team
+
+A recompression chamber team is assembled in two situations; where a recompression chamber is part of a diving operation, and where a recompression chamber is maintained as an area response requirement. This section applies to both situations. The designation 'Chamber Supervisor' may be interchanged with 'Diving Supervisor' where a recompression chamber is part of an operation. During a complex recompression treatment, the minimum manning and emergency manning levels specified in Table 17-1 may not be adequate to keep up with the surge of activity required at various points during
 C H A P T E R 1 7
 Diagnosis and Treatment of Decompression Sickness and Arterial Gas Embolism
 the treatment and additional personnel should be obtained as soon as possible. A second team may be required to relieve the initial team during prolonged treatments.
@@ -197,13 +208,13 @@ These symptoms may be the result of involvement of any level of the nervous syst
 can cause disruption of urinary function. Some of these signs may be subtle and can be overlooked or dismissed by the stricken diver as being of no consequence.
 The occurrence of any neurological symptom after a dive is abnormal and should be considered a symptom of Type II decompression sickness or arterial gas embo lism, unless another specific cause can be found. Normal fatigue is not uncommon after long dives and, by itself, is not usually treated as decompression sickness. If the fatigue is unusually severe, a complete neurological examination is indicated to ensure there is no other neurological involvement.
 
-## Inner Ear Symptoms ('Staggers')
+## Inner Ear Symptoms ('Staggers'). The symptoms of inner ear decompression sickness include: tinnitus (ringing in the ears), hearing loss, vertigo, dizziness, nausea, and vomiting
 
-The symptoms of inner ear decompression sickness include: tinnitus (ringing in the ears), hearing loss, vertigo, dizziness, nausea, and vomiting. Inner ear decom pression sickness has occurred most often in helium-oxygen diving and during decompression when the diver switched from breathing helium-oxygen to air. Inner ear decompression sickness should be differentiated from inner ear barotrauma, since the treatments are different. The 'Staggers' has been used as another name for inner ear decompression sickness because of the afflicted diver's difficulty in walking due to vestibular system dysfunction. However, symptoms of imbalance may also be due to neurological decompression sickness involving the cerebellum. Typically, rapid involuntary eye movement (nystagmus) is not present in cerebellar decompression sickness.
+Inner ear decom pression sickness has occurred most often in helium-oxygen diving and during decompression when the diver switched from breathing helium-oxygen to air. Inner ear decompression sickness should be differentiated from inner ear barotrauma, since the treatments are different. The 'Staggers' has been used as another name for inner ear decompression sickness because of the afflicted diver's difficulty in walking due to vestibular system dysfunction. However, symptoms of imbalance may also be due to neurological decompression sickness involving the cerebellum. Typically, rapid involuntary eye movement (nystagmus) is not present in cerebellar decompression sickness.
 
-## Cardiopulmonary Symptoms ('Chokes')
+## Cardiopulmonary Symptoms ('Chokes'). If profuse intravascular bubbling occurs, symptoms of chokes may develop due to congestion of the lung circulation
 
-If profuse intravascular bubbling occurs, symptoms of chokes may develop due to congestion of the lung circulation. Chokes may start as chest pain aggravated by inspiration and/or as an irritating cough. Increased breathing rate is usually observed. Symptoms of increasing lung congestion may progress to complete circulatory collapse, loss of consciousness, and death if recompression is not insti tuted immediately. Careful examination for signs of pneumothorax should be performed on patients presenting with shortness of breath. Recompression is not indicated for pneumothorax if no other signs of DCS or AGE are present.
+Chokes may start as chest pain aggravated by inspiration and/or as an irritating cough. Increased breathing rate is usually observed. Symptoms of increasing lung congestion may progress to complete circulatory collapse, loss of consciousness, and death if recompression is not insti tuted immediately. Careful examination for signs of pneumothorax should be performed on patients presenting with shortness of breath. Recompression is not indicated for pneumothorax if no other signs of DCS or AGE are present.
 
 ## Differentiating Between Type II DCS and AGE
 
@@ -330,9 +341,8 @@ The occurrence of Type II symptoms after in-water recompression is an ominous si
 
 Air Treatment Tables 1A, 2A, and 3 (Figures 17-11, 17-12, and 17-13) are provided for use only as a last resort when oxygen is not available. Oxygen treatment tables are signifi cantly more effective than air treatment tables and shall be used whenever possible.
 
-## Treatment Table 5
+## Treatment Table 5. Treatment Table 5, Figure 17-4, may be used for the following:
 
-Treatment Table 5, Figure 17-4, may be used for the following:
 n Type I DCS (except for cutis marmorata) symptoms when a complete neurological examination has revealed no other abnormality. After arrival at 60 fsw a neurological exam shall be performed to ensure that no overt neuro logical symptoms (e.g., weakness, numbness, loss of coordination) are present. If any abnormalities are found, the stricken diver should be treated using Treatment Table 6 .
 n Asymptomatic omitted decompression
 n Treatment of resolved symptoms following in-water recompression
@@ -340,9 +350,8 @@ n Follow-up treatments for residual symptoms
 n Carbon monoxide poisoning
 n Gas gangrene
 
-## Treatment Table 6
+## Treatment Table 6. Treatment Table 6 , Figure 17-5, is used for the following:
 
-Treatment Table 6 , Figure 17-5, is used for the following:
 n Arterial gas embolism
 n Type II DCS symptoms
 n Type I DCS symptoms where relief is not complete within 10 minutes at 60 feet or where pain is severe and immediate recompression must be instituted before a neurological examination can be performed
@@ -352,21 +361,21 @@ n Asymptomatic omitted decompression
 n Symptomatic uncontrolled ascent
 n Recurrence of symptoms shallower than 60 fsw
 
-## Treatment Table 6A
+## Treatment Table 6A. Treatment Table 6A , Figure 17-6 , is used to treat arterial gas embolism or decom pression symptoms when severe symptoms remain unchanged or worsen within the first 20 minutes at 60 fsw
 
-Treatment Table 6A , Figure 17-6 , is used to treat arterial gas embolism or decom pression symptoms when severe symptoms remain unchanged or worsen within the first 20 minutes at 60 fsw. The patient is compressed to depth of relief (or signifi cant improvement), not to exceed 165 fsw. Once at the depth of relief, begin treatment gas (N 2 O 2 , HeO 2 ) if available. Consult with a Diving Medical Officer at the earliest opportunity. If the severity of the patient's condition warrants, the Diving Medical Officer may recommend conversion to a Treatment Table 4.
+The patient is compressed to depth of relief (or signifi cant improvement), not to exceed 165 fsw. Once at the depth of relief, begin treatment gas (N 2 O 2 , HeO 2 ) if available. Consult with a Diving Medical Officer at the earliest opportunity. If the severity of the patient's condition warrants, the Diving Medical Officer may recommend conversion to a Treatment Table 4.
 NOTE If deterioration or recurrence of symptoms is noted during ascent to 60 feet, treat as a recurrence of symptoms (Figure 17-3).
 
-## Treatment Table 4
+## Treatment Table 4. Treatment Table 4, Figure 17-7, is used when it is determined that the patient would receive additional benefit at depth of significant relief, not to exceed 165 fsw
 
-Treatment Table 4, Figure 17-7, is used when it is determined that the patient would receive additional benefit at depth of significant relief, not to exceed 165 fsw. The time at depth shall be between 30 to 120 minutes, based on the patient's response. If a shift from Treatment Table 6A to Treatment Table 4 is contemplated, a Diving Medical Officer should be consulted before the shift is made.
+The time at depth shall be between 30 to 120 minutes, based on the patient's response. If a shift from Treatment Table 6A to Treatment Table 4 is contemplated, a Diving Medical Officer should be consulted before the shift is made.
 If oxygen is available, the patient should begin oxygen breathing periods immedi ately upon arrival at the 60-foot stop. Breathing periods of 25 minutes on oxygen, interrupted by 5 minutes of air, are recommended because each cycle lasts 30 minutes. This simplifies timekeeping. Immediately upon arrival at 60 feet, a minimum of four oxygen breathing periods (for a total time of 2 hours) should be administered. After that, oxygen breathing should be administered to suit the patient's individual needs and operational conditions. Both the patient and tender must breathe oxygen for at least 4 hours (eight 25-minute oxygen, 5-minute air periods), beginning no later than 2 hours before ascent from 30 feet is begun. These oxygen-breathing periods may be divided up as convenient, but at least 2 hours' worth of oxygen breathing periods should be completed at 30 feet.
 NOTE If deterioration or recurrence of symptoms is noted during ascent to 60
 feet, treat as a recurrence of symptoms (Figure 17-3).
 
-## Treatment Table 7
+## Treatment Table 7. Treatment Table 7, Figure 17-8 , is an extension at 60 feet of Treatment Table 6 , 6A , or 4 (or any other nonstandard treatment table). This means that considerable treatment has already been administered
 
-Treatment Table 7, Figure 17-8 , is an extension at 60 feet of Treatment Table 6 , 6A , or 4 (or any other nonstandard treatment table). This means that considerable treatment has already been administered. Treatment Table 7 is considered a heroic measure for treating non-responding severe gas embolism or life-threatening decompression sickness and is not designed to treat all residual symptoms that do not improve at 60 feet and should never be used to treat residual pain. Treatment Table 7 should be used only when loss of life may result if the currently prescribed decompression from 60 feet is undertaken. Committing a patient to a Treatment Table 7 involves isolating the patient and having to minister to his medical needs in the recompression chamber for 48 hours or longer. Experienced diving medical personnel shall be on scene.
+Treatment Table 7 is considered a heroic measure for treating non-responding severe gas embolism or life-threatening decompression sickness and is not designed to treat all residual symptoms that do not improve at 60 feet and should never be used to treat residual pain. Treatment Table 7 should be used only when loss of life may result if the currently prescribed decompression from 60 feet is undertaken. Committing a patient to a Treatment Table 7 involves isolating the patient and having to minister to his medical needs in the recompression chamber for 48 hours or longer. Experienced diving medical personnel shall be on scene.
 A Diving Medical Officer should be consulted before shifting to a Treatment Table 7 and careful consideration shall be given to life support capability of the recompression facility. Because it is difficult to judge whether a particular patient's condition warrants Treatment Table 7, additional consultation may be obtained from either NEDU or NDSTC.
 When using Treatment Table 7 , a minimum of 12 hours should be spent at 60 feet, including time spent at 60 feet from Treatment Table 4, 6 , or 6A . Severe Type II decompression sickness and/or arterial gas embolism cases may continue to dete riorate significantly over the first several hours. This should not be cause for premature changes in depth. Do not begin decompression from 60 feet for at least 12 hours. At completion of the 12-hour stay, the decision must be made whether to decompress or spend additional time at 60 feet. If no improvement was noted during the first 12 hours, benefit from additional time at 60 feet is unlikely and decompression should be started. If the patient is improving but significant residual symptoms remain (e.g., limb paralysis, abnormal or absent respiration), additional time at 60 feet may be warranted. While the actual time that can be spent at 60 feet is unlimited, the actual additional amount of time beyond 12 hours that should be spent can only be determined by a Diving Medical Officer (in consultation with on-site supervisory personnel), based on the patient's response to therapy and operational factors. When the patient has progressed to the point of consciousness, can breathe independently, and can move all extremities, decom pression can be started and maintained as long as improvement continues. Solid evidence of continued benefit should be established for stays longer than 18 hours at 60 feet. Regardless of the duration at the recompression deeper than 60 feet, at least 12 hours must be spent at 60 feet and then Treatment Table 7 followed to the surface. Additional recompression below 60 feet in these cases should not be undertaken unless adequate life support capability is available.
 
@@ -399,13 +408,13 @@ Patients on Treatment Table 7 requiring intravenous fluid and/or drug therapy sh
 
 Before committing to a Treatment Table 7, the life-support considerations in para graph 17-7 must be addressed. Do not commit to a Treatment Table 7 if the internal chamber temperature cannot be maintained at 85°F (29°C) or less.
 
-## Treatment Table 8
+## Treatment Table 8. Treatment Table 8, Figure 17-9 , is an adaptation of Royal Navy Treatment Table 65 mainly for treating deep uncontrolled ascents (see Chapter 13 ) when more than 60 minutes of decompression have been missed
 
-Treatment Table 8, Figure 17-9 , is an adaptation of Royal Navy Treatment Table 65 mainly for treating deep uncontrolled ascents (see Chapter 13 ) when more than 60 minutes of decompression have been missed. Compress symptomatic patient to depth of relief not to exceed 225 fsw. Initiate Treatment Table 8 from depth of relief. The schedule for Treatment Table 8 from 60 fsw is the same as Treatment Table 7. The guidelines for sleeping and eating are the same as Treatment Table 7.
+Compress symptomatic patient to depth of relief not to exceed 225 fsw. Initiate Treatment Table 8 from depth of relief. The schedule for Treatment Table 8 from 60 fsw is the same as Treatment Table 7. The guidelines for sleeping and eating are the same as Treatment Table 7.
 
-## Treatment Table 9
+## Treatment Table 9. Treatment Table 9, Figure 17-10, is a hyperbaric oxygen treatment table providing 90 minutes of oxygen breathing at 45 feet
 
-Treatment Table 9, Figure 17-10, is a hyperbaric oxygen treatment table providing 90 minutes of oxygen breathing at 45 feet. This table is used only on the recommendation of a Diving Medical Officer cognizant of the patient's medical condition. Treatment Table 9 is used for the following:
+This table is used only on the recommendation of a Diving Medical Officer cognizant of the patient's medical condition. Treatment Table 9 is used for the following:
 Residual symptoms remaining after initial treatment of AGE/DCS
 Selected cases of carbon monoxide or cyanide poisoning
 Smoke inhalation
@@ -446,7 +455,10 @@ Internal chamber temperature should be maintained at a level comfortable to the 
 greater temperature/time combina tions than listed in Table 17-5 unless qualified medical personnel who can evaluate the trade-off between the projected heat stress and the anticipated treat ment benefit are consulted. A chamber temperature below 85°F (29°C) is always desirable, no matter which treatment table is used.
 For patients with brain or spinal cord damage, the current evidence recommends aggressive treatment of elevated body temperature. When treating victims of AGE or severe neurological DCS, hot environments that elevate body temperature above normal should be avoided, whenever possible. Patient tempera ture should be a routinely monitored vital sign.
 Internal chamber temperature can be kept considerably below ambient by venting or by using an installed chiller unit. Internal chamber temperature can be measured using electronic, bimetallic, alcohol, or liquid crystal thermometers. Never use a mercury thermometer in or around hyperbaric chambers. Since chamber ventilation will produce temperature swings during ventilation, the above limits should be used as averages when controlling temperature by ventilation. Always shade chamber from direct sunlight.
-17-8.3.1 Patient Hydration. Always ensure patients are adequately hydrated. Fully conscious patients may be given fluid by mouth to maintain adequate hydration. One to two liters of water, juice, or non-carbonated drink, over the course of a Treatment Table 5 or 6, is usually sufficient. Patients with Type II symptoms, or symptoms of arterial gas embolism, should be considered for IV fluids. Stuporous or unconscious patients should always be given IV fluids, using large-gauge plastic catheters. If trained personnel are present, an IV should be started as soon as possible and kept drip ping at a rate of 75 to 100 cc/hour, using isotonic fluids (Lactated Ringer's Solution, Normal Saline) until specific instructions regarding the rate and type of fluid administration are given by qualified medical personnel. Avoid solutions containing glucose (Dextrose) if brain or spinal cord injury is present. Intravenously administered glucose may worsen the outcome. In some cases, the bladder may be paralyzed. The victim's ability to void shall be assessed as soon as possible. If the patient cannot empty a full bladder, a urinary catheter shall be inserted as soon as possible by trained personnel. Always inflate catheter balloons with liquid, not air. Adequate fluid is being given when urine output is at least 0.5cc/kg/hr. Thirst is an unreliable indi cator of the water intake to compensate for heavy sweating. A useful indicator of proper hydration is a clear colorless urine.
+
+## Patient Hydration
+
+Always ensure patients are adequately hydrated. Fully conscious patients may be given fluid by mouth to maintain adequate hydration. One to two liters of water, juice, or non-carbonated drink, over the course of a Treatment Table 5 or 6, is usually sufficient. Patients with Type II symptoms, or symptoms of arterial gas embolism, should be considered for IV fluids. Stuporous or unconscious patients should always be given IV fluids, using large-gauge plastic catheters. If trained personnel are present, an IV should be started as soon as possible and kept drip ping at a rate of 75 to 100 cc/hour, using isotonic fluids (Lactated Ringer's Solution, Normal Saline) until specific instructions regarding the rate and type of fluid administration are given by qualified medical personnel. Avoid solutions containing glucose (Dextrose) if brain or spinal cord injury is present. Intravenously administered glucose may worsen the outcome. In some cases, the bladder may be paralyzed. The victim's ability to void shall be assessed as soon as possible. If the patient cannot empty a full bladder, a urinary catheter shall be inserted as soon as possible by trained personnel. Always inflate catheter balloons with liquid, not air. Adequate fluid is being given when urine output is at least 0.5cc/kg/hr. Thirst is an unreliable indi cator of the water intake to compensate for heavy sweating. A useful indicator of proper hydration is a clear colorless urine.
 
 ## Chamber Ventilation
 
@@ -673,7 +685,10 @@ All diving activities/commands shall maintain an automated external defibrillato
 CAUTION AED's are not currently approved for use under pressure (hyperbaric environment) due to electrical safety concerns.
 Figure 17-1. Treatment of Arterial Gas Embolism or Serious Decompression Sickness.
 Figure 17-2. Treatment of Type I Decompression Sickness.
-17-13.3 Advanced Cardiac Life Support (ACLS) Drugs and Equipment. All commands with chambers that participate in the local area bends watch shall maintain those drugs recommended by the American Heart Association for ACLS. These drugs need to be in sufficient quantities to support an event requiring Advanced Cardiac Life Support. These drugs are not required to be in every dive kit when multiple chambers/kits are present in a single command. In addition, medications for the treatment of anaphylaxis, which can occur related to marine life envenomation, including Epinephrine 1:1000 solution, Diphenhydramine IM or PO and Hydrocortisone Sodium Succinate IV will be maintained in adequate quantities to treat one patient.
+
+## Advanced Cardiac Life Support (ACLS) Drugs and Equipment
+
+All commands with chambers that participate in the local area bends watch shall maintain those drugs recommended by the American Heart Association for ACLS. These drugs need to be in sufficient quantities to support an event requiring Advanced Cardiac Life Support. These drugs are not required to be in every dive kit when multiple chambers/kits are present in a single command. In addition, medications for the treatment of anaphylaxis, which can occur related to marine life envenomation, including Epinephrine 1:1000 solution, Diphenhydramine IM or PO and Hydrocortisone Sodium Succinate IV will be maintained in adequate quantities to treat one patient.
 Emergency medical equipment in support of ACLS includes cuffed endotracheal tubes with adapters (7-8 mm), malleable stylet (approx. 12' in length), laryngoscope with blades (McIntosh #3 and #4, Miller #2 and #3). Additional mechanical devices for verification of endotracheal tube placement are also authorized, but not required (Toomey-type or 50cc catheter tip syringe or equivalent).
 NOTE Some vendors supply pre-packed ACLS kits with automated replenishment programs (examples of which can be found on the Naval Expeditionary Combat Command (NECC) AMAL).
 
@@ -705,38 +720,38 @@ Figure 17-11. Air Treatment Table 1A.
 Figure 17-12. Air Treatment Table 2A.
 Figure 17-13. Air Treatment Table 3.
 
-## Table 17-1
+## Table 17-1. Minimum Manning Levels for Recompression Treatments.
 
-Table 17-1 (capítulo 17, páginas 852-852).
+Table 17-1. Minimum Manning Levels for Recompression Treatments. (capítulo 17, páginas 852-852).
 
-## Table 17-2
+## Table 17-2. Rules for Recompression Treatment.
 
-Table 17-2 (capítulo 17, páginas 860-860).
+Table 17-2. Rules for Recompression Treatment. (capítulo 17, páginas 860-860).
 
-## Table 17-3
+## Table 17-3. Decompression
 
-Table 17-3 (capítulo 17, páginas 870-870).
+Table 17-3. Decompression (capítulo 17, páginas 870-870).
 
-## Table 17-4
+## Table 17-4. Guidelines for Conducting Hyperbaric Oxygen Therapy.
 
-Table 17-4 (capítulo 17, páginas 872-872).
+Table 17-4. Guidelines for Conducting Hyperbaric Oxygen Therapy. (capítulo 17, páginas 872-872).
 
-## Table 17-5
+## Table 17-5. Maximum Permissible Recompression Chamber Exposure Times at Various Internal Chamber Temperatures.
 
-Table 17-5 (capítulo 17, páginas 874-874).
+Table 17-5. Maximum Permissible Recompression Chamber Exposure Times at Various Internal Chamber Temperatures. (capítulo 17, páginas 874-874).
 
-## Table 17-6
+## Table 17-6. High Oxygen Treatment Gas Mixtures.
 
-Table 17-6 (capítulo 17, páginas 876-876).
+Table 17-6. High Oxygen Treatment Gas Mixtures. (capítulo 17, páginas 876-876).
 
-## Table 17-7
+## Table 17-7. Tender Oxygen Breathing Requirements. (Note 1)
 
-Table 17-7 (capítulo 17, páginas 879-879).
+Table 17-7. Tender Oxygen Breathing Requirements. (Note 1) (capítulo 17, páginas 879-879).
 
-## Table 17-8
+## Table 17-8. Primary Emergency Kit.
 
-Table 17-8 (capítulo 17, páginas 887-887).
+Table 17-8. Primary Emergency Kit. (capítulo 17, páginas 887-887).
 
-## Table 17-9
+## Table 17-9. Secondary Emergency Kit.
 
-Table 17-9 (capítulo 17, páginas 888-888).
+Table 17-9. Secondary Emergency Kit. (capítulo 17, páginas 888-888).

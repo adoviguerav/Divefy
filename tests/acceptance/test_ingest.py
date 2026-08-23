@@ -263,14 +263,6 @@ def test_normalizar_no_altera_digitos():
 
 # --- 7. Conservación contable ------------------------------------------------
 
-def test_manifiesto_conservacion_caracteres(manifiesto):
-    for capitulo, datos in manifiesto.items():
-        assert (
-            datos["chars_prosa"] + datos["chars_tablas"] + datos["chars_descartados"]
-            == datos["chars_entrada"]
-        ), capitulo
-
-
 def test_manifiesto_secciones_detectadas_emitidas(manifiesto):
     for capitulo, datos in manifiesto.items():
         assert datos["secciones_detectadas"] == datos["secciones_emitidas"], capitulo

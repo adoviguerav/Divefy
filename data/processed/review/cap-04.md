@@ -42,18 +42,18 @@ If PMS/MRC and applicable military O&M manual are inadequate or incorrect, the m
 NOTE For OEM technical manuals that are found to be deficient, contact NAVSEA 00C3 for guidance.
 Contact the applicable certification authority prior to disregarding any required maintenance procedures on certified diving equipment. Failure to do so may compromise certification.
 
-## Authorization For Navy Use (ANU)
+## Authorization For Navy Use (ANU). Equipment used to conduct diving operations shall be authorized for use by NAVSEA/00C in accordance with NAVSEAINST 10560.2 (series) or hold a current NAVSEA or NAVFAC system safety certification
 
-Equipment used to conduct diving operations shall be authorized for use by NAVSEA/00C in accordance with NAVSEAINST 10560.2 (series) or hold a current NAVSEA or NAVFAC system safety certification. ANU diving equipment shall be used in the as tested configuration (e.g., SCUBA first and second stage regulator of different manufacturers shall not be interchanged).
+ANU diving equipment shall be used in the as tested configuration (e.g., SCUBA first and second stage regulator of different manufacturers shall not be interchanged).
 Diving and related equipment authorized for military use is listed on NAVSEA/ 00C ANU list and may be found on http://www.supsalv.org website. Director of Diving Programs (Code 00C3) is the cognizant authority for the NAVSEA/00C ANU list. Refer to the common access card (CAC) enabled secure SUPSALV website (https://secure.supsalv.org) to provide feedback to the ANU program manager. For a complete description of the ANU program refer to NAVSEAINST 10560.2 (series):
 The ANU list addresses two categories of equipment.
 n Category I. Life support diving equipment that provides a safe, controlled environment for a diver by satisfying life support requirements of the intended diving operation.
 n Category II. Non-life support equipment which enhances the mission capability and is not essential for diver life support.
 Surface supplied diving systems, hyperbaric chamber systems, and select underwater breathing apparatus (e.g., MK-16, MK-25) shall be certified in accordance with U.S. Navy Diving and Manned Hyperbaric System Safety Certification Manual (SS521-AA-MAN-010).
 
-## System Certification Authority (SCA)
+## System Certification Authority (SCA). NAVSEA 00C Code 00C4 is SCA for all afloat and portable diving and hyperbaric systems
 
-NAVSEA 00C Code 00C4 is SCA for all afloat and portable diving and hyperbaric systems. Naval Facilities Engineering Command Code OFP- SCA is SCA for all shore based diving and hyperbaric systems. Naval Sea Systems Command Code 07Q is SCA for deep submergence systems.
+Naval Facilities Engineering Command Code OFP- SCA is SCA for all shore based diving and hyperbaric systems. Naval Sea Systems Command Code 07Q is SCA for deep submergence systems.
 
 ## Planned Maintenance System
 
@@ -126,8 +126,14 @@ When a commercial air supplier is unable to provide documentation that air meets
 ## Diver's Breathing Oxygen
 
 Oxygen used for breathing at 100-percent concentra tions and for mixing of diver's breathing gases shall meet Military Specification MIL-PRF-27210G, Oxygen, Aviators Breathing, Liquid and Gaseous. The purity standards are contained in Table 4-2.
-4-3.3 Diver's Breathing Helium. Helium used for diver's breathing gas shall meet Military Specification, MIL-PRF-27407D Propellant Pressurizing Agent Helium, Type I Gaseous Grade B, Respirable Helium. The purity standards are contained in Table 4-3.
-4-3.4 Diver's Breathing Nitrogen. Nitrogen used for divers breathing gas shall meet Federal Specification A-A-59155 Nitrogen, High Purity, Special Purpose. The purity standards are contained in Table 4-4.
+
+## Diver's Breathing Helium
+
+Helium used for diver's breathing gas shall meet Military Specification, MIL-PRF-27407D Propellant Pressurizing Agent Helium, Type I Gaseous Grade B, Respirable Helium. The purity standards are contained in Table 4-3.
+
+## Diver's Breathing Nitrogen
+
+Nitrogen used for divers breathing gas shall meet Federal Specification A-A-59155 Nitrogen, High Purity, Special Purpose. The purity standards are contained in Table 4-4.
 
 ## DIVER'S AIR SAMPLING PROGRAM
 
@@ -155,9 +161,9 @@ Commands will be notified by quickest means possible if any samples do not meet 
 Commands may use local government air analysis facilities (e.g., shipyards, ship repair facilities, government research laboratories) to analyze diver's air samples.
 Units may use local commercial air analysis facilities to analyze diver's air samples only after the facility has been certified by NA VSEA Code 00C. Commands interested in using local commercial facilities must contact NA VSEA 00C3 to arrange a quality survey at the facility. Commands may be required to bear the cost of certifying the commercial air analysis facility.
 
-## Portable Air Monitor (PAM)
+## Portable Air Monitor (PAM). The ANU approved PAM is a compact air monitor capable of field testing diver's air for oxygen, carbon monoxide, carbon dioxide, and volatile organic compounds
 
-The ANU approved PAM is a compact air monitor capable of field testing diver's air for oxygen, carbon monoxide, carbon dioxide, and volatile organic compounds. The PAM cannot test for water vapor, oil mist, or particulates. For this reason, the PAM is not a substitute for periodic sampling under the Diver's Air Sampling Program.
+The PAM cannot test for water vapor, oil mist, or particulates. For this reason, the PAM is not a substitute for periodic sampling under the Diver's Air Sampling Program.
 The PAM may be used to perform continuous on-line sampling or periodic verification of an ANU compressor's output and to sample non-U.S. Navy owned air sources IAW paragraph 4-3.1 and the Non-Navy Compressors Checklist. The Portable Air Monitor must be calibrated prior to use and safeguarded from rough handling.
 
 ## General Air Sampling Procedures
@@ -284,14 +290,14 @@ The pneumofathometer is given a final purge just before leaving bottom and not p
 
 Table 4-1 (capítulo 4, páginas 227-228).
 
-## Table 4-2
+## Table 4-2. Diver's Compressed Oxygen Breathing Purity Requirements.
 
-Table 4-2 (capítulo 4, páginas 229-229).
+Table 4-2. Diver's Compressed Oxygen Breathing Purity Requirements. (capítulo 4, páginas 229-229).
 
-## Table 4-3
+## Table 4-3. Diver's Compressed Helium Breathing Purity Requirements.
 
-Table 4-3 (capítulo 4, páginas 230-230).
+Table 4-3. Diver's Compressed Helium Breathing Purity Requirements. (capítulo 4, páginas 230-230).
 
-## Table 4-4
+## Table 4-4. Diver's Compressed Nitrogen Breathing Purity Requirements.
 
-Table 4-4 (capítulo 4, páginas 230-230).
+Table 4-4. Diver's Compressed Nitrogen Breathing Purity Requirements. (capítulo 4, páginas 230-230).

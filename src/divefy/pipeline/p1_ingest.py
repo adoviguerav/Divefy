@@ -14,13 +14,17 @@ CURLY_DOUBLE = {"“": '"', "”": '"'}
 CAPITULOS_CURADOS = {2, 3, 4, 6, 7, 9, 10, 11, 14, 17}
 
 _FILA_TOKEN_RE = re.compile(r"[\d:.\-/]*\d[\d:.\-/]*")
-_CAPTION_TABLE_RE = re.compile(r"^(Table\s+\d+-\d+)")
 _CONTINUED_SUFFIX_RE = re.compile(r"\s*\(Continued\)\.?\s*$")
 _FOOTER_PAGINA_RE = re.compile(r"(\d+)-(\d+)(?!\d)")
 _SECTION_ID_RE = re.compile(r"^\d+-\d+(?:\.\d+)*$")
 _TABLE_CAPTION_RE = re.compile(r"Table\s+\d+-\d+")
 _FIGURE_CAPTION_RE = re.compile(r"^Figure\s+\d+-\d+")
-_WARNING_CELL_RE = re.compile(r"(WARNING\s+[^|\n]+)")
+_WARNING_CELL_RE = re.compile(r"((?:WARNING|CAUTION)\b.*?)(?=(?:WARNING|CAUTION)\b|\Z)", re.DOTALL)
+# Título/cuerpo pegados en el mismo list_item ("9-3.2 Descent Time. El cuerpo..."):
+# solo se corta si delante del punto hay >=3 letras, para no partir abreviaturas
+# cortas de la forma "U.S." / "No." / "vs.".
+_TITULO_CUERPO_SPLIT_RE = re.compile(r"(?<=[A-Za-z]{3})\.\s+(?=[A-Z])")
+_TABLA_HUECO_PAGINAS_MAX = 3
 
 
 @dataclass(frozen=True)
@@ -64,12 +68,10 @@ def es_fila_distintiva(linea: str) -> bool:
 
 
 def plegar_caption(caption: str) -> str:
-    """"Table 9-9 ... (Continued)." -> "Table 9-9". Pliega continuaciones en su tabla madre."""
+    """"Table 9-9 Air Decompression Table (Continued)." -> "Table 9-9 Air Decompression
+    Table". Pliega continuaciones en su tabla madre sin perder la descripción real."""
     caption = caption.strip()
-    match = _CAPTION_TABLE_RE.match(caption)
-    if match:
-        return match.group(1)
-    return _CONTINUED_SUFFIX_RE.sub("", caption)
+    return _CONTINUED_SUFFIX_RE.sub("", caption).strip()
 
 
 def cargar_apuntes(directorio: Path) -> list[Registro]:
@@ -78,15 +80,20 @@ def cargar_apuntes(directorio: Path) -> list[Registro]:
     for fichero in sorted(directorio.glob("*.md")):
         texto = fichero.read_text(encoding="utf-8")
         secciones = list(re.finditer(r"^## (.+)$", texto, flags=re.MULTILINE))
+        ids_vistos: set[str] = set()
         for i, match in enumerate(secciones):
             inicio = match.end()
             fin = secciones[i + 1].start() if i + 1 < len(secciones) else len(texto)
             titulo = normalizar(match.group(1).strip())
             cuerpo = normalizar(texto[inicio:fin].strip())
+            section_id = f"{fichero.stem}#{titulo}"
+            if section_id in ids_vistos:
+                raise ValueError(f"section_id duplicado en {fichero.name}: {section_id!r}")
+            ids_vistos.add(section_id)
             registros.append(
                 Registro(
                     corpus="apuntes",
-                    section_id=f"{fichero.stem}#{titulo}",
+                    section_id=section_id,
                     titulo=titulo,
                     tipo="prosa",
                     texto=cuerpo,
@@ -153,6 +160,20 @@ def _buscar_caption_vecino(items: list, idx: int, patron: re.Pattern, radio: int
     return None
 
 
+def _chars_pdfplumber_rango(pdf: Path, rango: tuple[int, int]) -> int:
+    """Cuenta de caracteres de entrada por una vía TOTALMENTE independiente de
+    Docling (pdfplumber, sin modelo): la referencia real contra la que C2 valida
+    chars_entrada. No tiene por qué coincidir exacto — pipelines de extracción
+    distintos tratan cabeceras/pies/espacios distinto — pero sí quedarse cerca."""
+    import pdfplumber
+
+    total = 0
+    with pdfplumber.open(pdf) as doc:
+        for i in range(rango[0] - 1, rango[1]):
+            total += len(doc.pages[i].extract_text() or "")
+    return total
+
+
 def _table_section_id(caption_plegado: str) -> str | None:
     match = re.match(r"Table\s+(\d+)-(\d+)", caption_plegado)
     if not match:
@@ -160,14 +181,9 @@ def _table_section_id(caption_plegado: str) -> str | None:
     return f"table-{match.group(1)}-{match.group(2)}"
 
 
-def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int]) -> tuple[list[Registro], dict]:
-    from docling.datamodel.base_models import InputFormat
-    from docling.datamodel.pipeline_options import PdfPipelineOptions
-    from docling.document_converter import DocumentConverter, PdfFormatOption
+def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int], converter) -> tuple[list[Registro], dict]:
     from docling_core.types.doc import ContentLayer, DocItemLabel, TableItem, TextItem
 
-    opts = PdfPipelineOptions(force_backend_text=True, do_table_structure=True)
-    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=opts)})
     result = converter.convert(pdf, page_range=rango)
     doc = result.document
     items = list(doc.iterate_items(included_content_layers=set(ContentLayer)))
@@ -210,26 +226,37 @@ def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int]) -> tuple
                 caption = _buscar_caption_vecino(items, idx, _TABLE_CAPTION_RE) or ""
                 if not caption:
                     caption = _buscar_caption_vecino(items, idx, _FIGURE_CAPTION_RE) or ""
-            markdown = item.export_to_markdown(doc)
-            chars_item = len(caption) + len(markdown)
+            # C3: caracteres de origen (celdas crudas), no del markdown renderizado
+            # (que añade "|" y relleno de columnas y no guarda relación con el PDF).
+            chars_item = len(caption) + sum(len(c.text) for c in item.data.table_cells)
 
             if _FIGURE_CAPTION_RE.match(caption):
                 # figura/gráfico, no tabla de datos: fuera de alcance. Pero a veces
-                # arrastra una caja WARNING como fila de la rejilla (ej. Figure 7-3) —
-                # esa sí se salva como prosa de la sección abierta, el resto se tira.
-                match_warning = _WARNING_CELL_RE.search(markdown)
-                if match_warning and seccion_actual_id is not None:
-                    texto_warning = match_warning.group(1).strip()
-                    seccion_actual_texto.append(texto_warning)
-                    chars_prosa += len(texto_warning)
-                    chars_descartados += chars_item - len(texto_warning)
+                # arrastra una o más cajas WARNING/CAUTION como fila de la rejilla (ej.
+                # Figure 7-3) — esas sí se salvan como prosa de la sección abierta, el
+                # resto se tira.
+                markdown = item.export_to_markdown(doc)
+                fragmentos = []
+                for match_aviso in _WARNING_CELL_RE.finditer(markdown):
+                    fragmento = re.sub(r"\s*\|\s*", " ", match_aviso.group(1)).strip()
+                    fragmento = re.sub(r"\s+", " ", fragmento)
+                    if fragmento:
+                        fragmentos.append(fragmento)
+                if fragmentos and seccion_actual_id is not None:
+                    texto_avisos = "\n".join(fragmentos)
+                    seccion_actual_texto.append(texto_avisos)
+                    chars_prosa += len(texto_avisos)
+                    chars_descartados += max(0, chars_item - len(texto_avisos))
                 else:
                     chars_descartados += chars_item
                 continue
 
             if not caption:
-                if ultima_tabla_id is None:
-                    # fragmento huérfano sin tabla previa a la que unirse: se descarta
+                ultima_tabla = tablas_por_id.get(ultima_tabla_id) if ultima_tabla_id else None
+                if ultima_tabla is None or pagina - ultima_tabla["pagina_fin"] > _TABLA_HUECO_PAGINAS_MAX:
+                    # fragmento huérfano: sin tabla previa a la que unirse, o demasiado
+                    # lejos en páginas de la última tabla vista (probable tabla distinta
+                    # que también perdió su caption) — se descarta en vez de fundirlo
                     chars_descartados += chars_item
                     continue
                 section_id = ultima_tabla_id
@@ -265,41 +292,6 @@ def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int]) -> tuple
             chars_descartados += len(texto_item)
             continue
 
-        if label in (DocItemLabel.SECTION_HEADER, DocItemLabel.LIST_ITEM):
-            texto_normalizado = texto_item.strip()
-            primera_palabra = texto_normalizado.split(" ", 1)[0] if texto_normalizado else ""
-            if _SECTION_ID_RE.match(primera_palabra):
-                # Docling representa subsecciones (9-3.1, 9-3.2...) como list_item,
-                # con id+título+cuerpo en el mismo texto; las secciones de tope
-                # (section_header) traen solo el título, el cuerpo llega después.
-                _cerrar_seccion()
-                secciones_detectadas += 1
-                seccion_actual_id = primera_palabra
-                seccion_actual_pagina = item.prov[0].page_no
-                resto = texto_normalizado[len(primera_palabra):].strip()
-                if label == DocItemLabel.LIST_ITEM:
-                    partes = resto.split(". ", 1)
-                    seccion_actual_titulo = partes[0].strip() or primera_palabra
-                    seccion_actual_texto = [partes[1]] if len(partes) > 1 else []
-                else:
-                    seccion_actual_titulo = resto or primera_palabra
-                    seccion_actual_texto = []
-                chars_prosa += len(texto_item)
-            elif label == DocItemLabel.SECTION_HEADER and len(texto_normalizado.split()) <= 4:
-                # encabezado fantasma (fuga de pie/cabecera, ej. título de capítulo repetido:
-                # corto, sin id). Una caja WARNING real que Docling estiliza como
-                # section_header es mucho más larga y cae en la rama de abajo.
-                chars_descartados += len(texto_item)
-            else:
-                # bullet sin id propio, o caja destacada (WARNING/CAUTION) larga sin
-                # id: prosa de la sección abierta
-                if seccion_actual_id is None:
-                    chars_descartados += len(texto_item)
-                else:
-                    seccion_actual_texto.append(texto_item)
-                    chars_prosa += len(texto_item)
-            continue
-
         if label == DocItemLabel.TITLE:
             chars_descartados += len(texto_item)
             continue
@@ -325,10 +317,41 @@ def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int]) -> tuple
                 }
             continue
 
-        # texto normal / caption de figura: prosa de la sección abierta
-        if seccion_actual_id is None:
+        # C1: el chequeo de id se aplica a CUALQUIER TextItem que llegue hasta aquí,
+        # no solo a los que Docling etiquetó section_header/list_item — Docling
+        # también etiqueta encabezados reales como "text" plano, y antes se fundían
+        # en silencio en la sección anterior.
+        texto_normalizado = texto_item.strip()
+        primera_palabra = texto_normalizado.split(" ", 1)[0] if texto_normalizado else ""
+        if _SECTION_ID_RE.match(primera_palabra):
+            # Docling representa subsecciones (9-3.1, 9-3.2...) como list_item, con
+            # id+título+cuerpo en el mismo texto; las secciones de tope (section_header,
+            # o "text" cuando Docling falla al etiquetar) traen solo el título, el
+            # cuerpo llega después en items propios.
+            _cerrar_seccion()
+            secciones_detectadas += 1
+            seccion_actual_id = primera_palabra
+            seccion_actual_pagina = item.prov[0].page_no
+            resto = texto_normalizado[len(primera_palabra):].strip()
+            # El split título/cuerpo no depende del label: Docling no es consistente
+            # sobre qué labels traen el cuerpo pegado al título en el mismo texto (no
+            # es solo list_item) — si hay un punto de frase real, se corta ahí siempre;
+            # si no lo hay (título de tope sin cuerpo propio, ej. "MANNING
+            # REQUIREMENTS"), el split no encuentra nada y todo el resto es el título.
+            partes = _TITULO_CUERPO_SPLIT_RE.split(resto, maxsplit=1)
+            seccion_actual_titulo = partes[0].strip() or primera_palabra
+            seccion_actual_texto = [partes[1]] if len(partes) > 1 else []
+            chars_prosa += len(texto_item)
+        elif label == DocItemLabel.SECTION_HEADER and len(texto_normalizado.split()) <= 4:
+            # encabezado fantasma (fuga de pie/cabecera, ej. título de capítulo repetido:
+            # corto, sin id). Una caja WARNING real que Docling estiliza como
+            # section_header es mucho más larga y cae en la rama de abajo.
+            chars_descartados += len(texto_item)
+        elif seccion_actual_id is None:
             chars_descartados += len(texto_item)  # preámbulo antes de la primera sección real
         else:
+            # bullet/texto sin id propio, caja destacada (WARNING/CAUTION), o caption
+            # de figura: prosa de la sección abierta
             seccion_actual_texto.append(texto_item)
             chars_prosa += len(texto_item)
 
@@ -366,17 +389,29 @@ def _parsear_capitulo(pdf: Path, capitulo: int, rango: tuple[int, int]) -> tuple
 def parsear_manual(pdf: Path, solo_capitulos: set[int] | None = None) -> tuple[list[Registro], dict]:
     """Parsea los capítulos pedidos (o todos los curados) con Docling. Los rangos de
     página salen del pie de página real, no de una lista fija."""
+    from docling.datamodel.base_models import InputFormat
+    from docling.datamodel.pipeline_options import PdfPipelineOptions
+    from docling.document_converter import DocumentConverter, PdfFormatOption
+
     capitulos = solo_capitulos if solo_capitulos is not None else CAPITULOS_CURADOS
     mapa = _mapa_paginas_por_capitulo(pdf)
+
+    opts = PdfPipelineOptions(force_backend_text=True, do_table_structure=True)
+    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=opts)})
 
     registros: list[Registro] = []
     manifiesto: dict = {}
     for capitulo in sorted(capitulos):
         paginas = mapa.get(capitulo)
         if not paginas:
-            continue
+            raise ValueError(
+                f"capítulo {capitulo} pedido pero ausente del mapa de páginas "
+                "(ningún pie de página del PDF lo reporta)"
+            )
         rango = _rango_contiguo_mas_largo(paginas)
-        registros_cap, manifiesto_cap = _parsear_capitulo(pdf, capitulo, rango)
+        print(f"parseando capítulo {capitulo} (páginas {rango[0]}-{rango[1]})...")
+        registros_cap, manifiesto_cap = _parsear_capitulo(pdf, capitulo, rango, converter)
+        manifiesto_cap["chars_entrada_pdfplumber"] = _chars_pdfplumber_rango(pdf, rango)
         registros.extend(registros_cap)
         manifiesto[str(capitulo)] = manifiesto_cap
 
@@ -420,9 +455,14 @@ def main() -> None:
     raw_dir = Path("data/raw")
     processed_dir = Path("data/processed")
 
+    pdf = raw_dir / "navy-diving-manual-rev7.pdf"
+    if not pdf.exists():
+        raise FileNotFoundError(f"PDF no encontrado: {pdf}")
+
     registros = cargar_apuntes(raw_dir / "PADI_course")
-    registros_manual, manifiesto = parsear_manual(raw_dir / "navy-diving-manual-rev7.pdf")
+    registros_manual, manifiesto = parsear_manual(pdf)
     registros.extend(registros_manual)
+    print(f"listo: {len(registros)} registros ({len(registros_manual)} del manual)")
 
     escribir_corpus(registros, manifiesto, processed_dir)
 

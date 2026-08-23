@@ -311,9 +311,9 @@ The diver ascends on oxygen to 20 fsw and spends a total of 35 minutes on oxygen
 Upon completion of the 20 fsw stop time, the diver ascends to the surface on 100% oxygen at 30 fsw/min. The total ascent time, including the air break is 59 minutes 40 seconds, not counting the time required to shift the divers to oxygen at 30 fsw. The repetitive group designator for this dive is 'Z'.
 This dive is illustrated in Figure 9-5.
 
-## Surface Decompression on Oxygen (SurDO 2 )
+## Surface Decompression on Oxygen (SurDO 2 ). Surface decompression is a technique for fulfilling all or a portion of a diver's decompression obligation in a recompression chamber instead of in the water
 
-Surface decompression is a technique for fulfilling all or a portion of a diver's decompression obligation in a recompression chamber instead of in the water. Decompression in the water column is time consuming, uncomfortable, and inhibits the ability of the support vessel to get underway. Advantages of surface decompression include:
+Decompression in the water column is time consuming, uncomfortable, and inhibits the ability of the support vessel to get underway. Advantages of surface decompression include:
 n Reduces the time a diver must spend in the water.
 n Enhanced diver's safety.
 n Shorter exposure time in the water keeps divers from chilling to a dangerous level when diving in cold water.
@@ -1105,38 +1105,38 @@ AIR/O 2
 AIR/O 2
 AIR/O 2
 
-## Table 9-1
+## Table 9-1. Pneumofathometer Correction Factors.
 
-Table 9-1 (capítulo 9, páginas 437-437).
+Table 9-1. Pneumofathometer Correction Factors. (capítulo 9, páginas 437-437).
 
-## Table 9-2
+## Table 9-2. Management of Extended Surface Interval and Type I Decompression Sickness during the Surface Interval.
 
-Table 9-2 (capítulo 9, páginas 471-471).
+Table 9-2. Management of Extended Surface Interval and Type I Decompression Sickness during the Surface Interval. (capítulo 9, páginas 471-471).
 
-## Table 9-3
+## Table 9-3. Management of Asymptomatic Omitted Decompression.
 
-Table 9-3 (capítulo 9, páginas 473-473).
+Table 9-3. Management of Asymptomatic Omitted Decompression. (capítulo 9, páginas 473-473).
 
-## Table 9-4
+## Table 9-4. Sea Level Equivalent Depth (fsw).
 
-Table 9-4 (capítulo 9, páginas 478-478).
+Table 9-4. Sea Level Equivalent Depth (fsw). (capítulo 9, páginas 478-478).
 
-## Table 9-5
+## Table 9-5. Repetitive Groups Associated with Initial Ascent to Altitude.
 
-Table 9-5 (capítulo 9, páginas 480-480).
+Table 9-5. Repetitive Groups Associated with Initial Ascent to Altitude. (capítulo 9, páginas 480-480).
 
-## Table 9-6
+## Table 9-6. Required Surface Interval Before Ascent to Altitude After Diving.
 
-Table 9-6 (capítulo 9, páginas 492-492).
+Table 9-6. Required Surface Interval Before Ascent to Altitude After Diving. (capítulo 9, páginas 492-492).
 
-## Table 9-7
+## Table 9-7. No-Decompression Limits and Repetitive Group Designators for No-Decompression Air Dives.
 
-Table 9-7 (capítulo 9, páginas 493-493).
+Table 9-7. No-Decompression Limits and Repetitive Group Designators for No-Decompression Air Dives. (capítulo 9, páginas 493-493).
 
-## Table 9-8
+## Table 9-8. Residual Nitrogen Time Table for Repetitive Air Dives.
 
-Table 9-8 (capítulo 9, páginas 494-494).
+Table 9-8. Residual Nitrogen Time Table for Repetitive Air Dives. (capítulo 9, páginas 494-494).
 
-## Table 9-9
+## Table 9-9. Air Decompression Table. (DESCENT RATE 75 FPM-ASCENT RATE 30 FPM)
 
-Table 9-9 (capítulo 9, páginas 495-516).
+Table 9-9. Air Decompression Table. (DESCENT RATE 75 FPM-ASCENT RATE 30 FPM) (capítulo 9, páginas 495-516).

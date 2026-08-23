@@ -11,6 +11,10 @@ dependencies = [
 [dependency-groups]
 dev = ["pytest>=8"]
 
+[tool.pytest.ini_options]
+markers = ["slow: corre el parser Docling en vivo sobre el PDF real (minutos, no en el gate rápido)"]
+addopts = "-m 'not slow'"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
