@@ -1,0 +1,92 @@
+{
+  "2": {
+    "chars_prosa": 64249,
+    "chars_tablas": 33555,
+    "chars_descartados": 1424,
+    "chars_entrada": 99228,
+    "secciones_detectadas": 69,
+    "secciones_emitidas": 69,
+    "descartes_altos": false
+  },
+  "3": {
+    "chars_prosa": 159608,
+    "chars_tablas": 3803,
+    "chars_descartados": 3158,
+    "chars_entrada": 166569,
+    "secciones_detectadas": 133,
+    "secciones_emitidas": 133,
+    "descartes_altos": false
+  },
+  "4": {
+    "chars_prosa": 36301,
+    "chars_tablas": 30957,
+    "chars_descartados": 644,
+    "chars_entrada": 67902,
+    "secciones_detectadas": 42,
+    "secciones_emitidas": 42,
+    "descartes_altos": false
+  },
+  "6": {
+    "chars_prosa": 61733,
+    "chars_tablas": 5513,
+    "chars_descartados": 39069,
+    "chars_entrada": 106315,
+    "secciones_detectadas": 43,
+    "secciones_emitidas": 43,
+    "descartes_altos": true
+  },
+  "7": {
+    "chars_prosa": 100641,
+    "chars_tablas": 1751,
+    "chars_descartados": 21416,
+    "chars_entrada": 123808,
+    "secciones_detectadas": 98,
+    "secciones_emitidas": 98,
+    "descartes_altos": true
+  },
+  "9": {
+    "chars_prosa": 114791,
+    "chars_tablas": 1639107,
+    "chars_descartados": 138177,
+    "chars_entrada": 1892075,
+    "secciones_detectadas": 88,
+    "secciones_emitidas": 88,
+    "descartes_altos": true
+  },
+  "10": {
+    "chars_prosa": 20717,
+    "chars_tablas": 110360,
+    "chars_descartados": 773,
+    "chars_entrada": 131850,
+    "secciones_detectadas": 25,
+    "secciones_emitidas": 25,
+    "descartes_altos": false
+  },
+  "11": {
+    "chars_prosa": 33968,
+    "chars_tablas": 0,
+    "chars_descartados": 754,
+    "chars_entrada": 34722,
+    "secciones_detectadas": 41,
+    "secciones_emitidas": 41,
+    "descartes_altos": false
+  },
+  "14": {
+    "chars_prosa": 14967,
+    "chars_tablas": 0,
+    "chars_descartados": 510,
+    "chars_entrada": 15477,
+    "secciones_detectadas": 15,
+    "secciones_emitidas": 15,
+    "descartes_altos": false
+  },
+  "17": {
+    "chars_prosa": 102235,
+    "chars_tablas": 29652,
+    "chars_descartados": 4601,
+    "chars_entrada": 136488,
+    "secciones_detectadas": 122,
+    "secciones_emitidas": 122,
+    "descartes_altos": false
+  }
+}

@@ -1,15 +1,13 @@
 # Buceo — Física
 
-## Comparación de medios: agua vs aire
+## Densidad y compresibilidad del agua frente al aire
 
-| Característica | Aire | Agua | Por qué importa en buceo |
-|---|---|---|---|
-| Densidad relativa | 1 (referencia) | ~800× más densa que el aire | Causa la presión que aumenta con la profundidad y el empuje/flotabilidad |
-| Compresibilidad | Alta — se comprime fácil (Ley de Boyle) | Prácticamente incompresible | Por eso el BCD, la máscara y los pulmones cambian de volumen con la presión, pero la botella (metal rígido) no |
-| Índice de refracción (n) | ~1,00 | ~1,33 | La luz se dobla al pasar de uno a otro → efecto lupa de la máscara (objetos ~33% más grandes/25% más cerca) |
-| Velocidad del sonido | ~343 m/s | ~1481 m/s (~4,3× más rápido) | El oído no distingue bien la dirección del sonido bajo el agua |
-| Absorción de luz por color | Mínima (recorridos cortos) | Absorbe antes las longitudes de onda largas (rojo) que las cortas (azul) | El rojo desaparece primero al bajar; el azul penetra más |
-| Conductividad térmica (k) | ~0,025 W/(m·K) | ~0,6 W/(m·K) (~24× mayor) | El agua se lleva el calor de tu cuerpo mucho más rápido — te enfrías incluso en agua "cálida" |
+**Densidad**: el agua es unas 800 veces más densa que el aire. Por eso la presión sube tan
+rápido con la profundidad (1 atm cada 10 m) y por eso existe el empuje que te hace flotar.
+
+**Compresibilidad**: el aire se comprime con facilidad (Ley de Boyle), el agua prácticamente
+no. Por eso los espacios con aire — BCD, máscara, pulmones — cambian de volumen con la
+presión, pero la botella (metal rígido, sin aire libre dentro) no se ve afectada.
 
 ## Resistencia al avance (por qué cuesta el cuádruple de energía al doblar velocidad)
 
@@ -37,7 +35,7 @@ Dos propiedades distintas, no una sola:
 
 Presión absoluta por profundidad: 0 m = 1 atm, 10 m = 2 atm, 20 m = 3 atm, 30 m = 4 atm... Sube de 1 en 1 atm cada 10 m, siempre. Y la densidad del aire respirado es proporcional a esa presión absoluta: 2× a 10 m, 3× a 20 m, 4× a 30 m (el regulador entrega el aire a presión ambiente).
 
-**Por qué la botella no le pasa nada con esto:** es rígida, y ya aguanta ~200 bar de diferencia interna desde que la llenaron. El cambio extra que le añade la profundidad (1-4 bar) es ruido comparado con eso — por eso solo los espacios *flexibles* (oídos, senos, máscara, BCD, pulmón en apnea) se ven afectados.
+**Por qué la botella no le pasa nada con esto:** es rígida, y ya aguanta ~200 bar de diferencia interna desde que la llenaron. El cambio extra que le añade la profundidad (1-4 bar) es ruido comparado con eso — por eso solo los espacios _flexibles_ (oídos, senos, máscara, BCD, pulmón en apnea) se ven afectados.
 
 ### Descenso — la presión aumenta
 
@@ -49,6 +47,7 @@ Presión absoluta por profundidad: 0 m = 1 atm, 10 m = 2 atm, 20 m = 3 atm, 30 m
 ### En profundidad — respirar y consumo de aire
 
 **Las reglas de respiración, tal cual las da el curso:**
+
 - Ante un problema: detenerte y, a continuación, mantener o recuperar una respiración lenta y profunda.
 - Respirar regularmente y nunca jamás aguantar la respiración.
 - Respirar lenta y profundamente.
@@ -67,6 +66,7 @@ Gastas más aire de la botella cuanto más profundo estás, aunque respires igua
 - No bucear con congestión pulmonar: el aire se puede quedar atrapado y provocar la misma lesión.
 
 **Bloqueos inversos (compresión inversa):**
+
 - Es cuando el aire en expansión se queda atrapado en un espacio en vez de salir al subir.
 - Causa típica: descongestionante que se pasa de efecto durante la inmersión → congestión atrapa el aire en oídos/senos. Por eso nunca bucear resfriado, ni con medicación.
 - Gas en estómago/intestino: se evita no comiendo alimentos que produzcan gas antes de bucear y no tragando aire durante la inmersión.
@@ -88,6 +88,7 @@ Empuje = ρ · g · V
 **Por qué el empuje = peso del agua desplazada:** al hacer la cuenta de presión × área en toda tu superficie, el resultado da siempre exactamente el peso que tendría el agua si ocupara tu mismo volumen. No es una regla aparte, es lo que sale de sumar las presiones. "Agua desplazada" es solo el nombre de ese resultado, no una causa en sí misma.
 
 **Flotabilidad = comparar dos fuerzas:**
+
 - Tu peso real (tú + equipo), hacia abajo — **no cambia con la profundidad**.
 - El empuje, hacia arriba — **tampoco cambia solo por la profundidad**: si tu volumen fuera fijo, la diferencia de presión entre tu cabeza y tus pies sería la misma a 0 m que a 40 m (sube la presión absoluta, pero sube igual arriba y abajo).
 - Peso > empuje → flotabilidad negativa (te hundes). Peso < empuje → positiva (flotas). Iguales → neutra.
@@ -97,6 +98,7 @@ Empuje = ρ · g · V
 **Agua salada vs dulce:** la salada es más densa (por la sal disuelta), así que el mismo volumen tuyo desplaza agua que pesa más → más empuje → flotas más en salada. Necesitas más plomo en salada que en dulce para llegar al mismo punto neutro.
 
 **Las dos piezas de equipo para controlar flotabilidad:**
+
 - **Lastre (plomo):** añade peso sin apenas añadir volumen → te ayuda a hundirte, contrarresta la flotabilidad positiva por defecto (tuya + del traje).
 - **BCD:** mete/saca aire → cambia tu volumen sin apenas cambiar tu peso → ajuste activo durante la inmersión.
 - **Respiración:** inhalar expande el pecho (más volumen, más flotabilidad); exhalar lo contrario. Cambio pequeño, se usa para ajuste fino sin tocar el BCD.
