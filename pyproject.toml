@@ -5,8 +5,10 @@ description = "Copiloto conversacional RAG de seguridad en buceo, sobre un banco
 requires-python = ">=3.12"
 dependencies = [
     "docling>=2.121.0",
+    "google-genai>=2.19.0",
     "langchain-text-splitters>=1.1.2",
     "pymupdf>=1.24",
+    "python-dotenv>=1.2.3",
     "transformers>=5.8.1",
 ]
 

@@ -20,6 +20,7 @@ class Chunk:
 
     texto: str
     origen: list[Record]
+    id: str = ""  # calculado en trocear_registros — de contenido, no de posición
 
     @property
     def corpus(self) -> str:
@@ -57,6 +58,7 @@ class Chunk:
         """Forma plana para chunks.jsonl — el contrato de fichero no cambia,
         solo cómo vive en memoria."""
         return {
+            "id": self.id,
             "corpus": self.corpus,
             "section_ids": self.section_ids,
             "titulo": self.titulo,
@@ -69,47 +71,64 @@ class Chunk:
         }
 
 
+UMBRAL_MINUSCULA = 50  # tokens BGE-M3: por debajo, la sección se funde con una vecina (PRD Fase 2)
+
+
 def _clave_frontera(r: Record) -> tuple:
-    """Frontera de documento que el splitter nunca puede cruzar: mismo fichero en
+    """Frontera de documento que una fusión nunca puede cruzar: mismo fichero en
     apuntes, mismo capítulo en el manual."""
     return (r.corpus, r.fichero if r.corpus == "apuntes" else r.capitulo)
 
 
+def _texto_fundido(fundido: list[Record]) -> str:
+    return "\n\n".join(r.texto for r in fundido)
+
+
+def fundir_minusculas(
+    registros: list[Record], contar: Callable[[str], int], umbral: int = UMBRAL_MINUSCULA
+) -> list[list[Record]]:
+    """Agrupa por frontera de documento (fichero/capítulo — ya vienen contiguos en
+    corpus.jsonl) y, dentro de cada grupo, funde cada sección bajo el umbral con la
+    anterior ya aceptada. Si la(s) primera(s) del grupo siguen bajo el umbral al no
+    tener anterior, se funden hacia la que sigue."""
+    resultado: list[list[Record]] = []
+    for _clave, grupo in groupby(registros, key=_clave_frontera):
+        fundidos: list[list[Record]] = []
+        for r in grupo:
+            if fundidos and contar(r.texto) < umbral:
+                fundidos[-1].append(r)
+            else:
+                fundidos.append([r])
+
+        while len(fundidos) > 1 and contar(_texto_fundido(fundidos[0])) < umbral:
+            fundidos[1] = fundidos[0] + fundidos[1]
+            fundidos.pop(0)
+
+        resultado.extend(fundidos)
+    return resultado
+
+
 def trocear_registros(registros: list[Record], tope: int, contar: Callable[[str], int]) -> list[Chunk]:
-    """Prosa: por cada frontera de documento, une el texto de sus secciones y deja
-    que RecursiveCharacterTextSplitter empaquete libremente hasta el tope (junta
-    secciones pequeñas, parte las que no caben). Cada trozo resultante se atribuye a
-    las secciones de origen con las que solapa, por posición de caracteres. Punteros
-    de tabla: pasan sin tocar, ya son un trozo por tabla (Fase 1)."""
+    """Prosa: cada sección es su propio trozo, salvo que sea minúscula (funde con una
+    vecina, ver `fundir_minusculas`) o se pase del tope (se parte con el splitter
+    recursivo de LangChain — los trozos resultantes heredan las secciones de origen).
+    Punteros de tabla: pasan sin tocar, ya son un trozo por tabla (Fase 1)."""
     prosa = [r for r in registros if r.tipo == "prosa"]
     punteros = [r for r in registros if r.tipo == "puntero_tabla"]
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=tope, chunk_overlap=0, length_function=contar)
 
     chunks: list[Chunk] = []
-    for _clave, grupo_iter in groupby(prosa, key=_clave_frontera):
-        grupo = list(grupo_iter)
-        texto_completo = "\n\n".join(r.texto for r in grupo)
-
-        rangos = []  # (inicio, fin, registro) — posición de cada sección en texto_completo
-        cursor = 0
-        for i, r in enumerate(grupo):
-            if i > 0:
-                cursor += 2  # el "\n\n" del join
-            rangos.append((cursor, cursor + len(r.texto), r))
-            cursor += len(r.texto)
-
-        cursor_busqueda = 0
-        for parte in splitter.split_text(texto_completo):
-            pos = texto_completo.find(parte, cursor_busqueda)
-            fin = pos + len(parte)
-            cursor_busqueda = fin  # avanza más allá de este trozo: sin solape (chunk_overlap=0),
-            # evita reencontrar una ocurrencia anterior si el texto repite una frase
-            solapan = [r for inicio_r, fin_r, r in rangos if inicio_r < fin and fin_r > pos]
-            chunks.append(Chunk(texto=parte, origen=solapan))
+    for fundido in fundir_minusculas(prosa, contar):
+        texto = _texto_fundido(fundido)
+        partes = splitter.split_text(texto) if contar(texto) > tope else [texto]
+        base_id = "|".join(r.section_id for r in fundido)
+        for i, parte in enumerate(partes):
+            id_parte = base_id if len(partes) == 1 else f"{base_id}#{i}"
+            chunks.append(Chunk(texto=parte, origen=fundido, id=id_parte))
 
     for r in punteros:
-        chunks.append(Chunk(texto=r.texto, origen=[r]))
+        chunks.append(Chunk(texto=r.texto, origen=[r], id=r.section_id))
 
     return chunks
 
@@ -130,6 +149,11 @@ def cargar_corpus(processed_dir: Path) -> list[Record]:
 
 
 def escribir_chunks(chunks: list[Chunk], processed_dir: Path) -> None:
+    ids = [c.id for c in chunks]
+    if len(ids) != len(set(ids)):
+        repetidos = sorted({i for i in ids if ids.count(i) > 1})
+        raise ValueError(f"ids de chunk repetidos (no debería pasar nunca): {repetidos}")
+
     processed_dir.mkdir(parents=True, exist_ok=True)
     with (processed_dir / "chunks.jsonl").open("w", encoding="utf-8") as f:
         for c in chunks:
