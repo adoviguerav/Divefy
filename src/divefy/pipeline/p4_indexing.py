@@ -1,1 +1,207 @@
-"""Fase 4 — Embeddings e índice: BGE-M3 / Qwen3-0.6B sobre Chroma, una colección canónica por config."""
+"""Fase 4 — Embeddings e índice: BGE-M3 / Qwen3-Embedding-0.6B/8B / OpenAI text-embedding-3-large
+sobre Chroma, tres colecciones canónicas (base/contextual/hype) por corpus y modelo."""
+
+import json
+import logging
+from pathlib import Path
+from typing import Callable
+
+from dotenv import load_dotenv
+from langchain_core.embeddings import Embeddings
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
+
+from divefy.pipeline.p4_vectorstore import canonical_name, get_collection
+
+CORPUS_VALUES = ("apuntes", "manual", "combined")
+BATCH_SIZE = 32  # 702 textos de golpe tumbó el servidor local de Ollama (plan Notas, T-06)
+
+logger = logging.getLogger(__name__)
+
+
+def _filter_by_corpus(records: list[dict], corpus: str) -> list[dict]:
+    """"combined" es un centinela: sin filtro, todas las filas."""
+    if corpus == "combined":
+        return list(records)
+    return [r for r in records if r["corpus"] == corpus]
+
+
+def build_rows(chunks: list[dict], enrich: list[dict], corpus: str) -> dict[str, list[dict]]:
+    """{"base": [...], "contextual": [...], "hype": [...]}, filtrado a `corpus`.
+    Pura — sin llamadas a modelo ni red. Cada fila trae `id`/`document`/`metadata`
+    (lo que va a Chroma) y `embed_text` (lo que de verdad se embebe — distinto del
+    document en contextual/hype, ver plan Decision 6). `enrich` no trae `corpus`
+    propio: se une por pertenencia del id a los chunks ya filtrados. puntero_tabla
+    nunca se indexa — solo tipo=="prosa" (tablas fuera de alcance, EXPERIMENTOS.md)."""
+    corpus_chunks = [c for c in _filter_by_corpus(chunks, corpus) if c["tipo"] == "prosa"]
+    chunk_ids = {c["id"] for c in corpus_chunks}
+    chunk_by_id = {c["id"]: c for c in corpus_chunks}
+    corpus_enrich = [r for r in enrich if r["id"] in chunk_ids]
+
+    missing_enrich = chunk_ids - {r["id"] for r in corpus_enrich}
+    if missing_enrich:
+        raise ValueError(
+            f"{len(missing_enrich)} chunks de prosa de corpus={corpus!r} sin entrada en "
+            f"enrich.jsonl (¿Fase 3 no corrió, o se cortó a mitad?): "
+            f"{sorted(missing_enrich)[:5]}"
+        )
+
+    base_rows = [
+        {
+            "id": c["id"],
+            "document": c["texto"],
+            "metadata": {"entry_type": "chunk"},
+            "embed_text": c["texto"],
+        }
+        for c in corpus_chunks
+    ]
+
+    contextual_rows = [
+        {
+            "id": r["id"],
+            "document": chunk_by_id[r["id"]]["texto"],
+            "metadata": {"entry_type": "chunk", "contexto": r["contexto"]},
+            "embed_text": f"{r['contexto']}\n\n{chunk_by_id[r['id']]['texto']}",
+        }
+        for r in corpus_enrich
+    ]
+
+    hype_rows = list(contextual_rows)
+    for r in corpus_enrich:
+        for i, pregunta in enumerate(r["preguntas"]):
+            hype_rows.append(
+                {
+                    "id": f"{r['id']}::hype::{i}",
+                    "document": pregunta,
+                    "metadata": {"entry_type": "hype", "parent_chunk_id": r["id"]},
+                    "embed_text": pregunta,
+                }
+            )
+
+    return {"base": base_rows, "contextual": contextual_rows, "hype": hype_rows}
+
+
+class LazyEmbeddings(Embeddings):
+    """Envuelve un `Embeddings` real, difiriendo su construcción (que puede implicar
+    descargar/cargar un modelo entero, o validar una API key) hasta la primera
+    llamada real — importar este módulo no debe pagar ese coste (plan Notas, T-04)."""
+
+    def __init__(self, factory: Callable[[], Embeddings]):
+        self._factory = factory
+        self._real: Embeddings | None = None
+
+    def _get(self) -> Embeddings:
+        if self._real is None:
+            self._real = self._factory()
+        return self._real
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        return self._get().embed_documents(texts)
+
+    def embed_query(self, text: str) -> list[float]:
+        return self._get().embed_query(text)
+
+
+def _openai_embeddings() -> Embeddings:
+    load_dotenv()
+    return OpenAIEmbeddings(model="text-embedding-3-large")
+
+
+MODELS: dict[str, Embeddings] = {
+    "bgem3": LazyEmbeddings(lambda: HuggingFaceEmbeddings(model_name="BAAI/bge-m3")),
+    "qwen06b": LazyEmbeddings(lambda: HuggingFaceEmbeddings(model_name="Qwen/Qwen3-Embedding-0.6B")),
+    # Q8_0 vía Ollama, no HuggingFaceEmbeddings: en fp16 pesa ~15GB, arriesgado en
+    # 24GB de memoria unificada; Q8_0 (~8GB) es casi sin pérdida frente al 4-bit por
+    # defecto de Ollama, que sí sesgaría la comparación con bgem3/qwen06b (plan Notas, T-04).
+    "qwen8b": LazyEmbeddings(lambda: OllamaEmbeddings(model="qwen3-embedding:8b-q8_0")),
+    "openai3large": LazyEmbeddings(_openai_embeddings),
+}
+
+
+def _batched(items: list, size: int) -> list[list]:
+    return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+def index_model(
+    model: str,
+    embeddings: Embeddings,
+    rows: dict[str, list[dict]],
+    corpus: str,
+    cap: int,
+    cache: dict[str, list[float]] | None = None,
+) -> None:
+    """Puebla las 3 colecciones canónicas de (corpus, model) desde `rows` (salida de
+    build_rows). Cada `embed_text` distinto se embebe una sola vez — contextual y hype
+    comparten sus filas de chunk, así que sin este cache se re-embebería el mismo
+    texto dos veces (plan Decision 1) — y en lotes de BATCH_SIZE, no todos de golpe.
+    `cache` es opcional: si el llamador comparte el mismo dict entre varias pasadas de
+    corpus para un modelo, "combined" (== apuntes ∪ manual) reutiliza los vectores ya
+    calculados en vez de recomputarlos (plan Notas, T-06).
+
+    Escribe con `collection._collection.upsert(...)`, NO `Chroma.add_texts` — add_texts
+    siempre reembebe `texts` con `self._embedding_function` internamente e ignora
+    cualquier `embeddings=` que se le pase (plan Notas, T-07: confirmado leyendo su
+    código fuente). Con add_texts nunca se habría respetado embed_text (contexto
+    fusionado en contextual/hype) — se habría embebido el document crudo siempre."""
+    cache = {} if cache is None else cache
+
+    distinct_texts = []
+    seen = set(cache)
+    for extras_rows in rows.values():
+        for row in extras_rows:
+            text = row["embed_text"]
+            if text not in seen:
+                seen.add(text)
+                distinct_texts.append(text)
+
+    for batch in _batched(distinct_texts, BATCH_SIZE):
+        for text, vector in zip(batch, embeddings.embed_documents(batch)):
+            cache[text] = vector
+
+    for extras, extras_rows in rows.items():
+        name = canonical_name(corpus, cap, extras, model)
+        collection = get_collection(name, embeddings)
+        collection.reset_collection()
+        if not extras_rows:
+            continue
+        collection._collection.upsert(
+            ids=[row["id"] for row in extras_rows],
+            embeddings=[cache[row["embed_text"]] for row in extras_rows],
+            documents=[row["document"] for row in extras_rows],
+            metadatas=[row["metadata"] for row in extras_rows],
+        )
+        logger.info("[%s] %s: %d filas", corpus, name, len(extras_rows))
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    with path.open(encoding="utf-8") as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+def main(cap: int = 512) -> None:
+    processed_dir = Path("data/processed")
+    chunks = _read_jsonl(processed_dir / "chunks.jsonl")
+    enrich = _read_jsonl(processed_dir / "enrich.jsonl")
+
+    for model, embeddings in MODELS.items():
+        logger.info("preflight %s...", model)
+        embeddings.embed_query("prueba")
+
+    # Modelo por fuera, corpus por dentro: solo un cache de embeddings vive a la vez
+    # (antes, con corpus por fuera, los 4 caches de los 4 modelos coexistían en
+    # memoria durante toda la pasada — ~1.2GB de más en una máquina de 24GB, revisión
+    # de código, T-07). "combined" es exactamente apuntes ∪ manual (mismo embed_text),
+    # así que reutiliza los vectores ya calculados en las 2 pasadas anteriores de este
+    # mismo modelo en vez de re-embeberlos (plan Notas, T-06).
+    for model, embeddings in MODELS.items():
+        cache: dict[str, list[float]] = {}
+        for corpus in CORPUS_VALUES:
+            rows = build_rows(chunks, enrich, corpus)
+            logger.info("=== %s / %s ===", corpus, model)
+            index_model(model, embeddings, rows, corpus=corpus, cap=cap, cache=cache)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
+    main()
