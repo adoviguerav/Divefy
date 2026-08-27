@@ -1,17 +1,68 @@
 """Andamiaje del implementador para las funciones puras de Fase 4 (indexing).
 No es el examen — tests/acceptance es lo que congela y evalúa /verify.
 Fixtures hechas a mano (no jsonl reales) por velocidad y determinismo, mismo estilo
-que test_p2_chunking_core.py / test_p3_enrich_core.py."""
+que test_p2_chunking_core.py / test_p3_enrich_core.py. Esquema de chunk = el real de
+chunks.jsonl (contrato en docs/modelo-datos.md), incluido n_tokens."""
+
+import json
 
 import pytest
 
 from divefy.pipeline.p4_indexing import build_rows
 
 CHUNKS = [
-    {"id": "a1", "corpus": "apuntes", "texto": "texto a1", "tipo": "prosa"},
-    {"id": "a2", "corpus": "apuntes", "texto": "texto a2", "tipo": "prosa"},
-    {"id": "m1", "corpus": "manual", "texto": "texto m1", "tipo": "prosa"},
-    {"id": "m2", "corpus": "manual", "texto": "texto m2", "tipo": "puntero_tabla"},
+    {
+        "id": "a1",
+        "corpus": "apuntes",
+        "section_ids": ["Física#a1"],
+        "titulo": "A1",
+        "tipo": "prosa",
+        "texto": "texto a1",
+        "fichero": "Física",
+        "capitulo": None,
+        "pagina": None,
+        "pagina_fin": None,
+        "n_tokens": 3,
+    },
+    {
+        "id": "a2",
+        "corpus": "apuntes",
+        "section_ids": ["Física#a2"],
+        "titulo": "A2",
+        "tipo": "prosa",
+        "texto": "texto a2",
+        "fichero": "Física",
+        "capitulo": None,
+        "pagina": None,
+        "pagina_fin": None,
+        "n_tokens": 3,
+    },
+    {
+        "id": "m1",
+        "corpus": "manual",
+        "section_ids": ["9-1", "9-2"],
+        "titulo": "M1",
+        "tipo": "prosa",
+        "texto": "texto m1",
+        "fichero": None,
+        "capitulo": 9,
+        "pagina": 100,
+        "pagina_fin": 101,
+        "n_tokens": 3,
+    },
+    {
+        "id": "m2",
+        "corpus": "manual",
+        "section_ids": ["9-3"],
+        "titulo": "M2",
+        "tipo": "puntero_tabla",
+        "texto": "texto m2",
+        "fichero": None,
+        "capitulo": 9,
+        "pagina": 102,
+        "pagina_fin": 102,
+        "n_tokens": 3,
+    },
 ]
 
 # Todo chunk de prosa tiene su entrada — un chunk de prosa sin enrich es un fallo de
@@ -44,11 +95,8 @@ def test_contextual_incluye_todos_los_chunks_prosa_del_corpus():
 
 
 def test_build_rows_lanza_si_falta_enrich_de_un_chunk_prosa():
-    chunks_incompletos = [
-        {"id": "a1", "corpus": "apuntes", "texto": "texto a1", "tipo": "prosa"},
-        {"id": "a2", "corpus": "apuntes", "texto": "texto a2", "tipo": "prosa"},
-    ]
-    enrich_incompleto = [{"id": "a1", "contexto": "contexto a1", "preguntas": ["p1"]}]  # falta a2
+    chunks_incompletos = [c for c in CHUNKS if c["id"] in {"a1", "a2"}]
+    enrich_incompleto = [e for e in ENRICH if e["id"] == "a1"]  # falta a2
     with pytest.raises(ValueError, match="a2"):
         build_rows(chunks_incompletos, enrich_incompleto, "apuntes")
 
@@ -58,6 +106,33 @@ def test_contextual_document_es_texto_crudo_y_embed_text_va_fusionado():
     fila = rows["contextual"][0]
     assert fila["document"] == "texto a1"
     assert fila["embed_text"] == "contexto a1\n\ntexto a1"
+
+
+def test_metadata_de_fila_chunk_cumple_el_contrato():
+    rows = build_rows(CHUNKS, ENRICH, "combined")
+
+    meta = next(r for r in rows["base"] if r["id"] == "a1")["metadata"]
+    assert meta["entry_type"] == "chunk"
+    assert meta["corpus"] == "apuntes"
+    assert json.loads(meta["section_ids"]) == ["Física#a1"]
+    assert meta["titulo"] == "A1"
+    assert meta["n_tokens"] == 3
+    assert meta["fichero"] == "Física"
+    for clave in ("capitulo", "pagina", "pagina_fin"):
+        assert clave not in meta  # None se omite, nunca se escribe null
+
+    meta_m = next(r for r in rows["base"] if r["id"] == "m1")["metadata"]
+    assert (meta_m["capitulo"], meta_m["pagina"], meta_m["pagina_fin"]) == (9, 100, 101)
+    assert "fichero" not in meta_m
+    assert json.loads(meta_m["section_ids"]) == ["9-1", "9-2"]
+
+
+def test_contextual_anade_contexto_a_la_metadata_completa_del_chunk():
+    rows = build_rows(CHUNKS, ENRICH, "apuntes")
+    meta = next(r for r in rows["contextual"] if r["id"] == "a1")["metadata"]
+    assert meta["contexto"] == "contexto a1"
+    assert meta["entry_type"] == "chunk"
+    assert json.loads(meta["section_ids"]) == ["Física#a1"]
 
 
 def test_hype_incluye_las_filas_de_contextual_mas_una_por_pregunta():
@@ -74,11 +149,17 @@ def test_hype_id_de_pregunta_y_parent_chunk_id():
     assert all(r["metadata"]["parent_chunk_id"] in {"a1", "a2"} for r in preguntas)
 
 
-def test_hype_pregunta_no_se_fusiona_con_el_chunk():
+def test_hype_pregunta_es_autocontenida():
     rows = build_rows(CHUNKS, ENRICH, "apuntes")
     pregunta = next(r for r in rows["hype"] if r["id"] == "a1::hype::0")
-    assert pregunta["document"] == "p1"
-    assert pregunta["embed_text"] == "p1"
+    assert pregunta["document"] == "texto a1"  # el texto del padre, no la pregunta
+    assert pregunta["embed_text"] == "p1"  # lo embebido sigue siendo la pregunta
+    meta = pregunta["metadata"]
+    assert meta["entry_type"] == "hype"
+    assert meta["parent_chunk_id"] == "a1"
+    assert meta["pregunta"] == "p1"
+    assert meta["contexto"] == "contexto a1"
+    assert json.loads(meta["section_ids"]) == ["Física#a1"]
 
 
 def test_ninguna_fila_usa_la_clave_de_metadato_tipo():

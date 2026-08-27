@@ -27,11 +27,31 @@ def _filter_by_corpus(records: list[dict], corpus: str) -> list[dict]:
     return [r for r in records if r["corpus"] == corpus]
 
 
+def _chunk_metadata(c: dict) -> dict:
+    """Metadata autocontenida de fila chunk según docs/modelo-datos.md — cada campo
+    con consumidor nombrado. Chroma solo admite escalares: listas van como JSON
+    string, y los campos a None (capitulo/pagina en apuntes, fichero en manual) se
+    omiten en vez de escribirse como null."""
+    metadata = {
+        "entry_type": "chunk",
+        "corpus": c["corpus"],
+        "section_ids": json.dumps(c["section_ids"], ensure_ascii=False),
+        "titulo": c["titulo"],
+        "n_tokens": c["n_tokens"],
+    }
+    for key in ("fichero", "capitulo", "pagina", "pagina_fin"):
+        if c[key] is not None:
+            metadata[key] = c[key]
+    return metadata
+
+
 def build_rows(chunks: list[dict], enrich: list[dict], corpus: str) -> dict[str, list[dict]]:
     """{"base": [...], "contextual": [...], "hype": [...]}, filtrado a `corpus`.
     Pura — sin llamadas a modelo ni red. Cada fila trae `id`/`document`/`metadata`
     (lo que va a Chroma) y `embed_text` (lo que de verdad se embebe — distinto del
-    document en contextual/hype, ver plan Decision 6). `enrich` no trae `corpus`
+    document en contextual/hype, ver plan Decision 6). `document` es SIEMPRE texto
+    crudo de chunk: en las filas de pregunta HyPE, el del chunk padre — la pregunta
+    solo se embebe y queda en metadata (plan Decision 22). `enrich` no trae `corpus`
     propio: se une por pertenencia del id a los chunks ya filtrados. puntero_tabla
     nunca se indexa — solo tipo=="prosa" (tablas fuera de alcance, EXPERIMENTOS.md)."""
     corpus_chunks = [c for c in _filter_by_corpus(chunks, corpus) if c["tipo"] == "prosa"]
@@ -51,7 +71,7 @@ def build_rows(chunks: list[dict], enrich: list[dict], corpus: str) -> dict[str,
         {
             "id": c["id"],
             "document": c["texto"],
-            "metadata": {"entry_type": "chunk"},
+            "metadata": _chunk_metadata(c),
             "embed_text": c["texto"],
         }
         for c in corpus_chunks
@@ -61,7 +81,7 @@ def build_rows(chunks: list[dict], enrich: list[dict], corpus: str) -> dict[str,
         {
             "id": r["id"],
             "document": chunk_by_id[r["id"]]["texto"],
-            "metadata": {"entry_type": "chunk", "contexto": r["contexto"]},
+            "metadata": {**_chunk_metadata(chunk_by_id[r["id"]]), "contexto": r["contexto"]},
             "embed_text": f"{r['contexto']}\n\n{chunk_by_id[r['id']]['texto']}",
         }
         for r in corpus_enrich
@@ -69,12 +89,19 @@ def build_rows(chunks: list[dict], enrich: list[dict], corpus: str) -> dict[str,
 
     hype_rows = list(contextual_rows)
     for r in corpus_enrich:
+        parent = chunk_by_id[r["id"]]
         for i, pregunta in enumerate(r["preguntas"]):
             hype_rows.append(
                 {
                     "id": f"{r['id']}::hype::{i}",
-                    "document": pregunta,
-                    "metadata": {"entry_type": "hype", "parent_chunk_id": r["id"]},
+                    "document": parent["texto"],
+                    "metadata": {
+                        **_chunk_metadata(parent),
+                        "contexto": r["contexto"],
+                        "entry_type": "hype",
+                        "parent_chunk_id": r["id"],
+                        "pregunta": pregunta,
+                    },
                     "embed_text": pregunta,
                 }
             )

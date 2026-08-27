@@ -55,6 +55,7 @@ docs/                # golden dataset, idea original, limitaciones hardware
 
 ## Referencias
 
+- `docs/modelo-datos.md` — contrato de datos del pipeline: entidades, esquema de la fila de Chroma, invariantes. Los JSONL son el system of record; cada colección es vista materializada regenerable.
 - `.claude/plans/PRD.md` — el plan completo, §7 con las 9 fases cerradas (orden de decisión = orden de implementación).
 - `.claude/plans/EXPERIMENTOS.md` — cuaderno de laboratorio: base, variantes, resultados, descartes con motivo.
 - Reglas universales (testing, security, git…) en `~/.claude/rules/`, cargadas por el CLAUDE.md global.

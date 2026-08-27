@@ -24,6 +24,11 @@ CORPUS_VALUES = ("apuntes", "manual", "combined")  # "combined" = no corpus filt
 EXTRAS_LEVELS = ("base", "contextual", "hype")
 CAP = 512
 
+# Chunk fields written to metadata only when not None in the source chunk (contract:
+# None is omitted, never written as null/sentinel — apuntes rows lack capitulo/pagina/
+# pagina_fin, manual rows lack fichero).
+OPTIONAL_PROVENANCE_FIELDS = ("fichero", "capitulo", "pagina", "pagina_fin")
+
 
 def _read_jsonl(path):
     with path.open(encoding="utf-8") as f:
@@ -59,6 +64,11 @@ def corpus_chunk_ids(corpus_chunk_records):
 
 
 @pytest.fixture(scope="module")
+def corpus_chunks_by_id(corpus_chunk_records):
+    return {corpus: {c["id"]: c for c in records} for corpus, records in corpus_chunk_records.items()}
+
+
+@pytest.fixture(scope="module")
 def corpus_enrich_records(enrich_records, corpus_chunk_ids):
     """{corpus_value: [enrich rows whose id belongs to that corpus's chunks]},
     "combined" being unfiltered."""
@@ -69,6 +79,14 @@ def corpus_enrich_records(enrich_records, corpus_chunk_ids):
             else [r for r in enrich_records if r["id"] in corpus_chunk_ids[corpus]]
         )
         for corpus in CORPUS_VALUES
+    }
+
+
+@pytest.fixture(scope="module")
+def corpus_contexto_by_id(corpus_enrich_records):
+    return {
+        corpus: {r["id"]: r["contexto"] for r in records}
+        for corpus, records in corpus_enrich_records.items()
     }
 
 
@@ -120,24 +138,28 @@ def test_each_base_collection_has_one_row_per_chunk_of_its_corpus(all_collection
         assert len(result["ids"]) == expected, (corpus, model_name)
 
 
-def test_each_contextual_collection_has_one_row_per_enriched_chunk_of_its_corpus(
-    all_collections, corpus_enrich_records
+def test_each_contextual_collection_has_one_row_per_prosa_chunk_of_its_corpus(
+    all_collections, corpus_chunk_records
 ):
+    """Invariant 2 (docs/modelo-datos.md): |contextual| == prosa chunk count of the
+    corpus, always derived from chunks.jsonl at test time, never hardcoded."""
     for (corpus, extras, model_name), result in all_collections.items():
         if extras != "contextual":
             continue
-        expected = len(corpus_enrich_records[corpus])
+        expected = len(corpus_chunk_records[corpus])
         assert len(result["ids"]) == expected, (corpus, model_name)
 
 
-def test_each_hype_collection_has_enriched_chunk_count_plus_dynamically_computed_question_count_rows(
-    all_collections, corpus_enrich_records
+def test_each_hype_collection_has_prosa_chunk_count_plus_dynamically_computed_question_count_rows(
+    all_collections, corpus_chunk_records, corpus_enrich_records
 ):
+    """Invariant 2 (docs/modelo-datos.md): |hype| == prosa chunk count + Σ preguntas."""
     for (corpus, extras, model_name), result in all_collections.items():
         if extras != "hype":
             continue
-        enriched = corpus_enrich_records[corpus]
-        expected = len(enriched) + sum(len(r["preguntas"]) for r in enriched)
+        expected = len(corpus_chunk_records[corpus]) + sum(
+            len(r["preguntas"]) for r in corpus_enrich_records[corpus]
+        )
         assert len(result["ids"]) == expected, (corpus, model_name, expected)
 
 
@@ -150,6 +172,7 @@ def test_every_hype_question_row_references_a_real_parent_chunk_id(all_collectio
                 continue
             parent_id = metadata.get("parent_chunk_id")
             assert parent_id in corpus_chunk_ids[corpus], (corpus, model_name, row_id, parent_id)
+            assert row_id.startswith(f"{parent_id}::hype::"), (corpus, model_name, row_id, parent_id)
 
 
 def test_no_row_in_any_collection_uses_a_metadata_key_called_tipo(all_collections):
@@ -158,27 +181,82 @@ def test_no_row_in_any_collection_uses_a_metadata_key_called_tipo(all_collection
             assert "tipo" not in metadata, key
 
 
-def test_contextual_and_hype_documents_are_always_the_raw_chunk_text_never_fused_with_contexto(
-    all_collections, corpus_chunk_records, corpus_enrich_records
+def test_every_chunk_row_metadata_matches_the_contract(
+    all_collections, corpus_chunks_by_id, corpus_contexto_by_id
 ):
-    chunk_text_by_id_per_corpus = {
-        corpus: {c["id"]: c["texto"] for c in records} for corpus, records in corpus_chunk_records.items()
-    }
-    contexto_by_id_per_corpus = {
-        corpus: {r["id"]: r["contexto"] for r in records} for corpus, records in corpus_enrich_records.items()
-    }
+    """Contract (docs/modelo-datos.md): every chunk row carries entry_type="chunk",
+    corpus, section_ids (JSON string decoding to a non-empty list — invariant 3),
+    titulo, n_tokens (int), provenance fields only when not None in the source chunk,
+    and contexto only in contextual/hype collections."""
+    for (corpus, extras, model_name), result in all_collections.items():
+        chunk_by_id = corpus_chunks_by_id[corpus]
+        contexto_by_id = corpus_contexto_by_id[corpus]
+        for row_id, metadata in zip(result["ids"], result["metadatas"]):
+            key = (corpus, extras, model_name, row_id)
+            assert metadata.get("entry_type") in ("chunk", "hype"), key
+            if metadata["entry_type"] != "chunk":
+                continue
+            chunk = chunk_by_id[row_id]
+            assert metadata["corpus"] == chunk["corpus"], key
+            section_ids = json.loads(metadata["section_ids"])
+            assert isinstance(section_ids, list) and section_ids, key
+            assert section_ids == chunk["section_ids"], key
+            assert metadata["titulo"] == chunk["titulo"], key
+            assert isinstance(metadata["n_tokens"], int), key
+            assert metadata["n_tokens"] == chunk["n_tokens"], key
+            for field in OPTIONAL_PROVENANCE_FIELDS:
+                if chunk[field] is None:
+                    assert field not in metadata, (key, field)
+                else:
+                    assert metadata[field] == chunk[field], (key, field)
+            if extras == "base":
+                assert "contexto" not in metadata, key
+            else:
+                assert metadata["contexto"] == contexto_by_id[row_id], key
 
+
+def test_hype_question_rows_are_self_contained_copies_of_their_parent_chunk_row(
+    all_collections, corpus_chunks_by_id, corpus_enrich_records
+):
+    """D3 (docs/modelo-datos.md): a hype question row's document is the raw text of its
+    PARENT chunk (the question is never shown to anyone), and its metadata is the parent
+    chunk row's metadata in that same collection (contexto included) plus exactly
+    entry_type="hype", parent_chunk_id and pregunta (the question that was embedded)."""
+    for (corpus, extras, model_name), result in all_collections.items():
+        if extras != "hype":
+            continue
+        chunk_by_id = corpus_chunks_by_id[corpus]
+        preguntas_by_id = {r["id"]: r["preguntas"] for r in corpus_enrich_records[corpus]}
+        metadata_by_row_id = dict(zip(result["ids"], result["metadatas"]))
+        for row_id, document, metadata in zip(result["ids"], result["documents"], result["metadatas"]):
+            if metadata.get("entry_type") != "hype":
+                continue
+            key = (corpus, model_name, row_id)
+            parent_id = metadata["parent_chunk_id"]
+            assert document == chunk_by_id[parent_id]["texto"], key
+            assert metadata["pregunta"] in preguntas_by_id[parent_id], key
+            own_fields = {"entry_type", "parent_chunk_id", "pregunta"}
+            inherited = {k: v for k, v in metadata.items() if k not in own_fields}
+            parent_metadata = metadata_by_row_id[parent_id]
+            expected = {k: v for k, v in parent_metadata.items() if k != "entry_type"}
+            assert inherited == expected, key
+
+
+def test_contextual_and_hype_documents_are_always_the_raw_chunk_text_never_fused_with_contexto(
+    all_collections, corpus_chunks_by_id, corpus_contexto_by_id
+):
     for (corpus, extras, model_name), result in all_collections.items():
         if extras not in ("contextual", "hype"):
             continue
-        chunk_text_by_id = chunk_text_by_id_per_corpus[corpus]
-        contexto_by_id = contexto_by_id_per_corpus[corpus]
+        chunk_by_id = corpus_chunks_by_id[corpus]
+        contexto_by_id = corpus_contexto_by_id[corpus]
         for row_id, document, metadata in zip(result["ids"], result["documents"], result["metadatas"]):
-            if metadata.get("entry_type") == "hype":
-                continue  # question rows legitimately store the question text, not chunk text
-            expected_text = chunk_text_by_id[row_id]
+            # hype question rows are self-contained (D3): their document is the raw
+            # text of the PARENT chunk, never the question itself
+            source_id = metadata.get("parent_chunk_id", row_id)
+            expected_text = chunk_by_id[source_id]["texto"]
             assert document == expected_text, (corpus, model_name, extras, row_id)
-            contexto = contexto_by_id.get(row_id)
+            contexto = contexto_by_id.get(source_id)
             if contexto is not None:
                 fused = contexto + "\n\n" + expected_text
                 assert document != fused, (corpus, model_name, extras, row_id)
@@ -206,6 +284,7 @@ SAMPLE_CHUNKS = [
         "capitulo": None,
         "pagina": None,
         "pagina_fin": None,
+        "n_tokens": 118,
     },
     {
         "id": "Física#Resistencia al avance (por qué cuesta el cuádruple de energía al doblar velocidad)",
@@ -220,6 +299,7 @@ SAMPLE_CHUNKS = [
         "capitulo": None,
         "pagina": None,
         "pagina_fin": None,
+        "n_tokens": 24,
     },
     {
         "id": "Física#Pérdida de calor en el agua",
@@ -232,6 +312,7 @@ SAMPLE_CHUNKS = [
         "capitulo": None,
         "pagina": None,
         "pagina_fin": None,
+        "n_tokens": 12,
     },
 ]
 
@@ -326,8 +407,9 @@ def test_index_model_stores_the_embed_text_vector_not_the_document_vector(tmp_pa
     """Guards the exact bug Decision #20 exists to prevent: Chroma.add_texts silently
     re-embeds `document` itself and ignores any precomputed vector, so a regression
     back to add_texts would still pass every other test in this file. This one checks
-    the stored vector reflects `embed_text` (contexto fusionado), not the shorter raw
-    document."""
+    the stored vector reflects `embed_text`, not the document: contexto fusionado vs
+    raw chunk text in contextual rows, the question vs parent chunk text in
+    hype question rows (D3)."""
     from divefy.pipeline import p4_indexing, p4_vectorstore
 
     monkeypatch.setattr(p4_vectorstore, "chroma_directory", lambda: tmp_path)
@@ -345,3 +427,14 @@ def test_index_model_stores_the_embed_text_vector_not_the_document_vector(tmp_pa
     document_length = len(stored["documents"][0])
     assert stored_vector_length != document_length
     assert stored_vector_length == len(contextual_row["embed_text"])
+
+    hype_name = p4_vectorstore.canonical_name("apuntes", CAP, "hype", "bgem3")
+    hype_collection = p4_vectorstore.get_collection(hype_name, fake_embeddings)
+    question_row = next(r for r in rows["hype"] if "::hype::" in r["id"])
+    stored_question = hype_collection._collection.get(
+        ids=[question_row["id"]], include=["embeddings", "documents"]
+    )
+
+    stored_question_vector_length = stored_question["embeddings"][0][0]
+    assert stored_question_vector_length == len(question_row["embed_text"])
+    assert stored_question_vector_length != len(stored_question["documents"][0])

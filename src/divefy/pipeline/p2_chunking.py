@@ -21,6 +21,7 @@ class Chunk:
     texto: str
     origen: list[Record]
     id: str = ""  # calculado en trocear_registros — de contenido, no de posición
+    n_tokens: int = 0  # tokens BGE-M3 de `texto` — la vara única del grid (docs/modelo-datos.md)
 
     @property
     def corpus(self) -> str:
@@ -68,6 +69,7 @@ class Chunk:
             "capitulo": self.capitulo,
             "pagina": self.pagina,
             "pagina_fin": self.pagina_fin,
+            "n_tokens": self.n_tokens,
         }
 
 
@@ -125,10 +127,10 @@ def trocear_registros(registros: list[Record], tope: int, contar: Callable[[str]
         base_id = "|".join(r.section_id for r in fundido)
         for i, parte in enumerate(partes):
             id_parte = base_id if len(partes) == 1 else f"{base_id}#{i}"
-            chunks.append(Chunk(texto=parte, origen=fundido, id=id_parte))
+            chunks.append(Chunk(texto=parte, origen=fundido, id=id_parte, n_tokens=contar(parte)))
 
     for r in punteros:
-        chunks.append(Chunk(texto=r.texto, origen=[r], id=r.section_id))
+        chunks.append(Chunk(texto=r.texto, origen=[r], id=r.section_id, n_tokens=contar(r.texto)))
 
     return chunks
 
