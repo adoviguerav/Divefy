@@ -100,6 +100,12 @@ ni `None`):
 3. `section_ids` nunca vacío en filas chunk (el recall@k de F5 depende de él).
 4. Todo chunk de prosa tiene enriquecimiento (lo valida `build_rows` con error ruidoso).
 5. Ids únicos por colección; ids hype = `{parent_id}::hype::{i}`.
+6. Una colección solo es válida si existe su marcador `data/chroma/{nombre}.complete`
+   (el indexador lo borra antes del reset y lo crea al terminar de escribir — review
+   2026-08-28, #2). Sin marcador = construcción interrumpida: los consumidores (F5,
+   corrector) deben negarse a leerla, no devolver 0 resultados en silencio. Va en
+   fichero y no en la metadata de colección porque `modify` de Chroma la reemplaza
+   entera y langchain lee `hnsw:space` de ahí.
 
 ## Decisiones (Adolfo, 2026-08-27)
 

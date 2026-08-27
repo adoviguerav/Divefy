@@ -3,6 +3,7 @@ sobre Chroma, tres colecciones canónicas (base/contextual/hype) por corpus y mo
 
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Callable
 
@@ -12,10 +13,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
 
+from divefy.pipeline import p4_vectorstore
 from divefy.pipeline.p4_vectorstore import canonical_name, get_collection
 
 CORPUS_VALUES = ("apuntes", "manual", "combined")
 BATCH_SIZE = 32  # 702 textos de golpe tumbó el servidor local de Ollama (plan Notas, T-06)
+EMBED_RETRIES = 3  # un 429 o un tosido de Ollama no debe tirar una pasada de horas (review 2026-08-28, #4)
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +132,12 @@ class LazyEmbeddings(Embeddings):
     def embed_query(self, text: str) -> list[float]:
         return self._get().embed_query(text)
 
+    def release(self) -> None:
+        """Suelta el backend real (review 2026-08-28, #3): sin esto, el preflight deja
+        los ~GB de bgem3/qwen06b residentes en memoria durante toda la pasada aunque
+        solo trabaje un modelo a la vez. La siguiente llamada real lo recarga."""
+        self._real = None
+
 
 def _openai_embeddings() -> Embeddings:
     load_dotenv()
@@ -148,6 +157,21 @@ MODELS: dict[str, Embeddings] = {
 
 def _batched(items: list, size: int) -> list[list]:
     return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+def _embed_with_retry(embeddings: Embeddings, texts: list[str]) -> list[list[float]]:
+    """Reintenta con espera creciente antes de rendirse — un fallo transitorio del
+    backend no debe descartar todo lo embebido hasta ahora (review 2026-08-28, #4)."""
+    for attempt in range(1, EMBED_RETRIES + 1):
+        try:
+            return embeddings.embed_documents(texts)
+        except Exception:
+            if attempt == EMBED_RETRIES:
+                raise
+            wait = 5 * attempt
+            logger.warning("embed_documents falló (intento %d/%d), reintento en %ds", attempt, EMBED_RETRIES, wait)
+            time.sleep(wait)
+    raise AssertionError("unreachable")
 
 
 def index_model(
@@ -170,34 +194,43 @@ def index_model(
     siempre reembebe `texts` con `self._embedding_function` internamente e ignora
     cualquier `embeddings=` que se le pase (plan Notas, T-07: confirmado leyendo su
     código fuente). Con add_texts nunca se habría respetado embed_text (contexto
-    fusionado en contextual/hype) — se habría embebido el document crudo siempre."""
+    fusionado en contextual/hype) — se habría embebido el document crudo siempre.
+
+    Post-review 2026-08-28: valida cap contra n_tokens antes de tocar nada (#1),
+    escribe por lotes según embebe en vez de todo al final (#4/#8 — decisión de
+    Adolfo; de paso ningún upsert se acerca al máximo local de Chroma, 5461 filas),
+    y deja un fichero marcador `{colección}.complete` junto a la colección al
+    terminar (#2) — sin marcador, quedó a medias entre reset y escritura y NO es
+    válida. Va en fichero y no en la metadata de colección porque `modify` la
+    reemplaza entera y langchain lee `hnsw:space` de ahí (probado en vivo)."""
     cache = {} if cache is None else cache
 
-    distinct_texts = []
-    seen = set(cache)
     for extras_rows in rows.values():
         for row in extras_rows:
-            text = row["embed_text"]
-            if text not in seen:
-                seen.add(text)
-                distinct_texts.append(text)
-
-    for batch in _batched(distinct_texts, BATCH_SIZE):
-        for text, vector in zip(batch, embeddings.embed_documents(batch)):
-            cache[text] = vector
+            if row["metadata"]["n_tokens"] > cap:
+                raise ValueError(
+                    f"{row['id']!r} mide {row['metadata']['n_tokens']} tokens > cap={cap}: "
+                    f"la colección llevaría un tope falso en el nombre (review 2026-08-28, #1)"
+                )
 
     for extras, extras_rows in rows.items():
         name = canonical_name(corpus, cap, extras, model)
         collection = get_collection(name, embeddings)
+        marker = p4_vectorstore.chroma_directory() / f"{name}.complete"
+        marker.unlink(missing_ok=True)
         collection.reset_collection()
-        if not extras_rows:
-            continue
-        collection._collection.upsert(
-            ids=[row["id"] for row in extras_rows],
-            embeddings=[cache[row["embed_text"]] for row in extras_rows],
-            documents=[row["document"] for row in extras_rows],
-            metadatas=[row["metadata"] for row in extras_rows],
-        )
+        for batch in _batched(extras_rows, BATCH_SIZE):
+            missing = list(dict.fromkeys(r["embed_text"] for r in batch if r["embed_text"] not in cache))
+            if missing:
+                for text, vector in zip(missing, _embed_with_retry(embeddings, missing)):
+                    cache[text] = vector
+            collection._collection.upsert(
+                ids=[row["id"] for row in batch],
+                embeddings=[cache[row["embed_text"]] for row in batch],
+                documents=[row["document"] for row in batch],
+                metadatas=[row["metadata"] for row in batch],
+            )
+        marker.touch()
         logger.info("[%s] %s: %d filas", corpus, name, len(extras_rows))
 
 
@@ -214,6 +247,7 @@ def main(cap: int = 512) -> None:
     for model, embeddings in MODELS.items():
         logger.info("preflight %s...", model)
         embeddings.embed_query("prueba")
+        embeddings.release()  # el preflight valida, no debe dejar los 4 modelos cargados (review #3)
 
     # Modelo por fuera, corpus por dentro: solo un cache de embeddings vive a la vez
     # (antes, con corpus por fuera, los 4 caches de los 4 modelos coexistían en
@@ -227,6 +261,7 @@ def main(cap: int = 512) -> None:
             rows = build_rows(chunks, enrich, corpus)
             logger.info("=== %s / %s ===", corpus, model)
             index_model(model, embeddings, rows, corpus=corpus, cap=cap, cache=cache)
+        embeddings.release()  # suelta este modelo antes de cargar el siguiente (review #3)
 
 
 if __name__ == "__main__":

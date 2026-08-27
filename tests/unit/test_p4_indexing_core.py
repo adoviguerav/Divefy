@@ -167,3 +167,71 @@ def test_ninguna_fila_usa_la_clave_de_metadato_tipo():
     for extras_rows in rows.values():
         for fila in extras_rows:
             assert "tipo" not in fila["metadata"]
+
+
+# --- Fixes de la review 2026-08-28 (hallazgos 1, 2, 4) ---
+
+
+class _OkEmbeddings:
+    def embed_documents(self, texts):
+        return [[0.0, 0.0] for _ in texts]
+
+    def embed_query(self, text):
+        return [0.0, 0.0]
+
+
+class _FlakyEmbeddings(_OkEmbeddings):
+    """Falla la primera llamada y luego funciona — un 429 o un tosido de Ollama."""
+
+    def __init__(self):
+        self.calls = 0
+
+    def embed_documents(self, texts):
+        self.calls += 1
+        if self.calls == 1:
+            raise RuntimeError("fallo transitorio")
+        return super().embed_documents(texts)
+
+
+def test_index_model_valida_cap_contra_n_tokens(tmp_path, monkeypatch):
+    """Hallazgo 1: cap no puede ser solo texto del nombre — si un chunk lo supera,
+    error ruidoso antes de tocar Chroma o embeber nada. El monkeypatch no sobra
+    aunque el guard salte antes de Chroma: si el guard regresa, este test escribiría
+    colecciones cap=2 en el data/chroma REAL (pasó en su primera pasada en RED)."""
+    from divefy.pipeline import p4_indexing, p4_vectorstore
+
+    monkeypatch.setattr(p4_vectorstore, "chroma_directory", lambda: tmp_path)
+
+    rows = build_rows(CHUNKS, ENRICH, "apuntes")  # n_tokens=3 en las fixtures
+    with pytest.raises(ValueError, match="cap"):
+        p4_indexing.index_model("bgem3", _OkEmbeddings(), rows, corpus="apuntes", cap=2)
+
+
+def test_index_model_reintenta_ante_fallo_transitorio(tmp_path, monkeypatch):
+    """Hallazgo 4: un fallo puntual del backend no tira la pasada — se reintenta."""
+    from divefy.pipeline import p4_indexing, p4_vectorstore
+
+    monkeypatch.setattr(p4_vectorstore, "chroma_directory", lambda: tmp_path)
+    monkeypatch.setattr(p4_indexing.time, "sleep", lambda s: None)
+
+    rows = build_rows(CHUNKS, ENRICH, "apuntes")
+    flaky = _FlakyEmbeddings()
+    p4_indexing.index_model("bgem3", flaky, rows, corpus="apuntes", cap=512)
+    assert flaky.calls >= 2  # falló una vez y la pasada sobrevivió
+
+
+def test_index_model_deja_marcador_complete_al_terminar(tmp_path, monkeypatch):
+    """Hallazgo 2: una colección solo es válida con su marcador `{nombre}.complete`
+    junto a ella en data/chroma/ — una interrumpida entre reset y escritura no lo
+    lleva (se borra antes del reset, se crea al terminar). No va en la metadata de
+    colección porque `modify` la reemplaza entera y langchain lee `hnsw:space` de ahí."""
+    from divefy.pipeline import p4_indexing, p4_vectorstore
+
+    monkeypatch.setattr(p4_vectorstore, "chroma_directory", lambda: tmp_path)
+
+    rows = build_rows(CHUNKS, ENRICH, "apuntes")
+    p4_indexing.index_model("bgem3", _OkEmbeddings(), rows, corpus="apuntes", cap=512)
+
+    for extras in ("base", "contextual", "hype"):
+        name = p4_vectorstore.canonical_name("apuntes", 512, extras, "bgem3")
+        assert (tmp_path / f"{name}.complete").exists(), extras
