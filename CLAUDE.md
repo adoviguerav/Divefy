@@ -30,15 +30,15 @@ src/divefy/
                      # vacío hasta tener el segundo backend real
 data/raw/            # fuentes: navy-diving-manual-rev7.pdf + PADI_course/ (apuntes, NO regenerables)
 data/processed/      # salida de ingesta (regenerable)
-data/eval/           # etiquetas y cachés del eval
+data/eval/           # golden dataset (el examen), etiquetas y cachés del eval
 results/             # una fila de métricas por config, nunca se sobreescriben
-docs/                # golden dataset, idea original, limitaciones hardware
+docs/                # idea original, limitaciones hardware, modelo de datos
 .claude/plans/       # PRD.md y EXPERIMENTOS.md (locales, gitignored)
 ```
 
 ## Reglas inmutables
 
-1. **El golden dataset NUNCA se indexa** (`docs/Buceo - Golden dataset.jsonl`): es el examen. El corrector usa solo `uso=eval` (84 preguntas).
+1. **El golden dataset NUNCA se indexa** (`data/eval/golden.jsonl`): es el examen. El corrector usa solo `uso=eval` (84 preguntas).
 2. **PADI manda** en conflictos doctrinales con el manual Navy; se citan ambos cuando difieren.
 3. **Números de seguridad textuales del corpus, jamás traducidos ni parafraseados**; todo número emitido pasa el guardarraíl determinista o se convierte en abstención.
 4. **Sin soporte en el corpus → abstención plantilla**, nunca generación sin grounding.
