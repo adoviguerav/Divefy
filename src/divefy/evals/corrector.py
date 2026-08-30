@@ -1,99 +1,103 @@
-"""Fases 5 y 7 — El corrector: config -> fila de métricas versionada (recall@k, MRR, numérica, juez, abstención, latencia, coste)."""
+"""Fases 5 y 7 — El corrector: config -> fila de métricas versionada (hit_rate, recall, precision, MRR, tokens; juez/abstención/latencia/coste en F7)."""
 
 import argparse
 import difflib
 import json
-import re
 from pathlib import Path
+
+from ranx import Qrels, Run
+from ranx import evaluate as ranx_evaluate
 
 from divefy.config import RetrievalConfig
 from divefy.pipeline import p4_vectorstore, p5_retrieve
+from divefy.pipeline.p4_indexing import MODELS
 
-GOLDEN_PATH = Path("data/eval/golden.jsonl")
-LABELS_PATH = Path("data/eval/labels.jsonl")
-RESULTS_DIR = Path("results")
-
-_NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)?")
-
-
-def extract_numbers(text: str) -> set[float]:
-    """Números del texto con coma decimal normalizada a punto (Decision 7)."""
-    return {float(match.replace(",", ".")) for match in _NUMBER_RE.findall(text)}
+# Rutas ancladas a la raíz del repo — el corrector funciona desde cualquier CWD
+# (review 2026-08-30, #9).
+GOLDEN_PATH = p4_vectorstore.REPO_ROOT / "data" / "eval" / "golden.jsonl"
+LABELS_PATH = p4_vectorstore.REPO_ROOT / "data" / "eval" / "labels.jsonl"
+RESULTS_DIR = p4_vectorstore.REPO_ROOT / "results"
 
 
-def evaluate(golden, labels_by_id, retrieved_by_id, rows_by_chunk_id):
+def evaluate(golden, labels_by_id, retrieved_by_id, chunk_sections, chunk_tokens, k):
     """Métricas puras sobre datos ya recuperados: (resumen, detalle).
 
-    Las preguntas sin_respuesta quedan fuera de recall/MRR (no hay sección
-    correcta que recuperar) pero se listan en el detalle como insumo de
-    abstención para F7 (Decision 6)."""
+    La métrica sigue la etiqueta (metricas-framework.md): un chunk cuenta si su
+    procedencia toca la etiqueta; el denominador del recall es lo que la etiqueta
+    lista. Agregados SOLO de ranx — una única fuente de cálculo. Las preguntas
+    sin_respuesta quedan fuera de los agregados de ranking pero en el detalle,
+    como insumo de abstención para F7."""
     detalle = []
-    aciertos = mrr_total = con_etiqueta = 0
-    aciertos_apuntes = con_apuntes = aciertos_manual = con_manual = 0
-    matches_numericos = con_numeros = tokens_total = 0
+    tokens_total = 0
+    # espacios chunk (hit_rate/precision/mrr): global + desglose por corpus
+    spaces = {name: ({}, {}) for name in ("global", "apuntes", "manual")}
+    qrels_secciones, run_secciones = {}, {}
 
     for pregunta in golden:
         qid = pregunta["id"]
         label = labels_by_id[qid]
         recuperados = retrieved_by_id[qid]
-        filas = [rows_by_chunk_id[chunk_id] for chunk_id in recuperados]
-        tokens = sum(fila["n_tokens"] for fila in filas)
+        tokens = sum(chunk_tokens[cid] for cid in recuperados)
         tokens_total += tokens
-
-        etiquetadas_apuntes = set(label["secciones_apuntes"])
-        etiquetadas_manual = set(label["secciones_manual"])
-        etiquetadas = etiquetadas_apuntes | etiquetadas_manual
-
-        if label["sin_respuesta"]:
-            acierto = rank = acierto_apuntes = acierto_manual = None
-        else:
-            con_etiqueta += 1
-            rank = next(
-                (i for i, fila in enumerate(filas, start=1) if etiquetadas & set(fila["section_ids"])),
-                None,
-            )
-            acierto = rank is not None
-            aciertos += acierto
-            mrr_total += 1 / rank if rank else 0
-            acierto_apuntes = acierto_manual = None
-            if etiquetadas_apuntes:
-                con_apuntes += 1
-                acierto_apuntes = any(etiquetadas_apuntes & set(f["section_ids"]) for f in filas)
-                aciertos_apuntes += acierto_apuntes
-            if etiquetadas_manual:
-                con_manual += 1
-                acierto_manual = any(etiquetadas_manual & set(f["section_ids"]) for f in filas)
-                aciertos_manual += acierto_manual
-
-        numeros = extract_numbers(" ".join(pregunta["respuesta_esperada"]))
-        match_numerico = None
-        if numeros:
-            con_numeros += 1
-            match_numerico = numeros <= extract_numbers(" ".join(f["texto"] for f in filas))
-            matches_numericos += match_numerico
-
         detalle.append(
-            {
-                "id": qid,
-                "recuperados": recuperados,
-                "acierto": acierto,
-                "rank": rank,
-                "acierto_apuntes": acierto_apuntes,
-                "acierto_manual": acierto_manual,
-                "tokens": tokens,
-                "match_numerico": match_numerico,
-                "sin_respuesta": label["sin_respuesta"],
-            }
+            {"id": qid, "recuperados": recuperados, "tokens": tokens,
+             "sin_respuesta": label["sin_respuesta"]}
         )
 
+        etiquetas = {
+            "global": set(label["secciones_apuntes"]) | set(label["secciones_manual"]),
+            "apuntes": set(label["secciones_apuntes"]),
+            "manual": set(label["secciones_manual"]),
+        }
+        if not etiquetas["global"]:
+            continue
+
+        ranking = {cid: 1.0 / rank for rank, cid in enumerate(recuperados, start=1)}
+        for name, etiquetadas in etiquetas.items():
+            if not etiquetadas:
+                continue
+            qrels, run = spaces[name]
+            relevantes = {cid: 1 for cid, secs in chunk_sections.items() if secs & etiquetadas}
+            # etiqueta entera fuera de esta colección (p.ej. solo-manual sobre
+            # apuntes): centinela para que la pregunta cuente como fallo, no crashee
+            qrels[qid] = relevantes or {"__sin_cobertura__": 1}
+            run[qid] = ranking
+
+        qrels_secciones[qid] = {sid: 1 for sid in etiquetas["global"]}
+        cubiertas = {}
+        for rank, cid in enumerate(recuperados, start=1):
+            for sid in chunk_sections.get(cid, ()):
+                cubiertas.setdefault(sid, 1.0 / rank)  # mejor posición
+        run_secciones[qid] = cubiertas
+
+    def hit_rate(name):
+        qrels, run = spaces[name]
+        if not qrels:
+            return None
+        return round(ranx_evaluate(Qrels(qrels), Run(run), f"hit_rate@{k}"), 4)
+
+    qrels_global, run_global = spaces["global"]
+    if qrels_global:
+        scores = ranx_evaluate(
+            Qrels(qrels_global), Run(run_global),
+            [f"hit_rate@{k}", f"precision@{k}", f"mrr@{k}"],
+        )
+        recall = ranx_evaluate(Qrels(qrels_secciones), Run(run_secciones), "recall")
+    else:  # todas sin_respuesta: sin métricas de ranking definibles
+        scores, recall = {}, None
+
     resumen = {
-        "recall_at_k": round(aciertos / con_etiqueta, 4) if con_etiqueta else None,
-        "recall_apuntes": round(aciertos_apuntes / con_apuntes, 4) if con_apuntes else None,
-        "recall_manual": round(aciertos_manual / con_manual, 4) if con_manual else None,
-        "mrr": round(mrr_total / con_etiqueta, 4) if con_etiqueta else None,
+        "hit_rate": round(scores[f"hit_rate@{k}"], 4) if scores else None,
+        "recall": round(recall, 4) if recall is not None else None,
+        "precision": round(scores[f"precision@{k}"], 4) if scores else None,
+        "mrr": round(scores[f"mrr@{k}"], 4) if scores else None,
+        "hit_rate_apuntes": hit_rate("apuntes"),
+        "hit_rate_manual": hit_rate("manual"),
         "tokens_recuperados_media": round(tokens_total / len(golden), 2),
-        "match_numerico": round(matches_numericos / con_numeros, 4) if con_numeros else None,
         "n_preguntas": len(golden),
+        # cuántas puntuaron de verdad en los agregados de ranking — sin esto, dos
+        # filas de tandas de etiquetado distintas serían incomparables en silencio
+        "n_puntuadas": len(qrels_global),
     }
     return resumen, detalle
 
@@ -132,9 +136,14 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 def run(config: RetrievalConfig) -> dict:
     """Una config → {"config", "resumen", "detalle"}. Lee solo Chroma en runtime
-    (Decision 8): section_ids/corpus/n_tokens salen de la metadata de las filas
-    recuperadas, sin join contra chunks.jsonl."""
+    (Decision 8): la procedencia y n_tokens salen de la metadata de las filas
+    chunk de la colección, sin join contra chunks.jsonl."""
     golden = [g for g in _read_jsonl(GOLDEN_PATH) if g.get("uso") == "eval"]
+    if not golden:
+        raise ValueError(
+            f"{GOLDEN_PATH} no tiene ninguna fila uso=eval — fichero truncado o "
+            "campo renombrado; el examen son 84 preguntas."
+        )
     labels_by_id = {row["id"]: row for row in _read_jsonl(LABELS_PATH)}
     if [g["id"] for g in golden] != list(labels_by_id):
         raise ValueError(
@@ -148,22 +157,17 @@ def run(config: RetrievalConfig) -> dict:
         for g in golden
     }
 
-    from divefy.pipeline.p4_indexing import MODELS  # perezoso: solo por la firma de get_collection
-
     collection = p4_vectorstore.get_collection(config.collection, MODELS[config.embedding])
-    chunk_ids = sorted({cid for ids in retrieved_by_id.values() for cid in ids})
-    data = collection.get(ids=chunk_ids)
-    rows_by_chunk_id = {
-        row_id: {
-            "section_ids": json.loads(metadata["section_ids"]),
-            "corpus": metadata["corpus"],
-            "n_tokens": metadata["n_tokens"],
-            "texto": document,
-        }
-        for row_id, document, metadata in zip(data["ids"], data["documents"], data["metadatas"])
-    }
+    data = collection.get()
+    chunk_sections, chunk_tokens = {}, {}
+    for row_id, metadata in zip(data["ids"], data["metadatas"]):
+        if metadata["entry_type"] == "chunk":
+            chunk_sections[row_id] = set(json.loads(metadata["section_ids"]))
+            chunk_tokens[row_id] = metadata["n_tokens"]
 
-    resumen, detalle = evaluate(golden, labels_by_id, retrieved_by_id, rows_by_chunk_id)
+    resumen, detalle = evaluate(
+        golden, labels_by_id, retrieved_by_id, chunk_sections, chunk_tokens, config.k
+    )
     config_dict = {
         "corpus": config.corpus, "cap": config.cap, "extras": config.extras,
         "embedding": config.embedding, "search": config.search, "k": config.k,
@@ -172,25 +176,146 @@ def run(config: RetrievalConfig) -> dict:
     return {"config": config_dict, "resumen": resumen, "detalle": detalle}
 
 
+def _run_and_write(config: RetrievalConfig) -> dict:
+    data = run(config)
+    estado = write_result(data, RESULTS_DIR / f"{config.run_id}.json")
+    return {"estado": estado, "resumen": data["resumen"]}
+
+
+def paso0() -> None:
+    """T-07: cruce denso corpus×extras×modelo — 36 pasadas k=5, una fila cada una.
+    Reanudable: filas ya escritas salen como [identica] y la caché de vectores
+    persiste tras cada embedding."""
+    import time
+
+    from divefy.config import CORPUS_VALUES, EMBEDDING_VALUES, EXTRAS_VALUES
+
+    queries = [g["pregunta"] for g in _read_jsonl(GOLDEN_PATH) if g.get("uso") == "eval"]
+    total = len(EMBEDDING_VALUES) * len(CORPUS_VALUES) * len(EXTRAS_VALUES)
+    pasada = 0
+    for model in EMBEDDING_VALUES:
+        t = time.time()
+        p5_retrieve.ensure_query_vectors(model, queries)
+        if hasattr(MODELS[model], "release"):
+            MODELS[model].release()
+        print(f"[cache] {model}: {len(queries)} vectores listos en {time.time() - t:.1f}s", flush=True)
+        for corpus in CORPUS_VALUES:
+            for extras in EXTRAS_VALUES:
+                pasada += 1
+                config = RetrievalConfig(
+                    corpus=corpus, extras=extras, embedding=model, search="densa", k=5
+                )
+                t = time.time()
+                salida = _run_and_write(config)
+                r = salida["resumen"]
+                print(
+                    f"[{pasada:2}/{total}] [{salida['estado']}] {config.run_id}: "
+                    f"hit_rate={r['hit_rate']} recall={r['recall']} "
+                    f"precision={r['precision']} mrr={r['mrr']} "
+                    f"apuntes={r['hit_rate_apuntes']} manual={r['hit_rate_manual']} "
+                    f"tokens={r['tokens_recuperados_media']} ({time.time() - t:.1f}s)",
+                    flush=True,
+                )
+    print("PASO 0 COMPLETO", flush=True)
+
+
+def tabla() -> None:
+    """`results/RESUMEN.html`: una fila por run con sus métricas (sin detalle),
+    con filtros y ordenación. Vista derivada y regenerable — la única pieza de
+    results/ que SÍ se sobreescribe, porque no es record, es vista."""
+    filas = [
+        json.loads(path.read_text(encoding="utf-8"))
+        for path in sorted(RESULTS_DIR.glob("*.json"))
+    ]
+    if not filas:
+        print(f"{RESULTS_DIR} vacío — nada que resumir")
+        return
+    claves = list(filas[0]["resumen"])
+    html = RESULTS_DIR / "RESUMEN.html"
+    html.write_text(_tabla_html(filas, claves), encoding="utf-8")
+    print(f"{html}: {len(filas)} runs — abrir con `open {html}`")
+
+
+_CONFIG_COLS = ("corpus", "extras", "embedding", "search", "k", "cap")
+
+
+def _tabla_html(filas: list[dict], claves: list[str]) -> str:
+    """Vista HTML autocontenida: un desplegable de filtro por columna de config y
+    ordenación clicando la cabecera de cualquier métrica."""
+    datos = [
+        {**{c: fila["config"][c] for c in _CONFIG_COLS},
+         **{k: fila["resumen"][k] for k in claves}}
+        for fila in filas
+    ]
+    columnas = list(_CONFIG_COLS) + claves
+    return f"""<!doctype html><html><head><meta charset="utf-8"><title>results — resumen</title>
+<style>
+body{{font-family:ui-monospace,monospace;font-size:13px;margin:16px}}
+table{{border-collapse:collapse;width:100%}}
+th,td{{border:1px solid #ccc;padding:3px 7px;text-align:right;white-space:nowrap}}
+th{{background:#f0f0f0;cursor:pointer;position:sticky;top:0}}
+td:nth-child(-n+6),th:nth-child(-n+6){{text-align:left}}
+tr:hover{{background:#fffbe6}} select{{margin:0 6px 10px 0}}
+.max{{background:#d7f5d7;font-weight:bold}}
+</style></head><body>
+<h3>results/ — {len(datos)} runs (vista derivada; regenerar con --tabla)</h3>
+<div id="filtros"></div><table id="t"><thead><tr></tr></thead><tbody></tbody></table>
+<script>
+const COLS={json.dumps(columnas)},CONFIG={json.dumps(list(_CONFIG_COLS))},DATA={json.dumps(datos, ensure_ascii=False)};
+let orden=null,desc=true;
+const filtros={{}};
+CONFIG.forEach(c=>{{
+  const vals=[...new Set(DATA.map(d=>String(d[c])))].sort();
+  const s=document.createElement('select');
+  s.innerHTML=`<option value="">${{c}}: todos</option>`+vals.map(v=>`<option>${{v}}</option>`).join('');
+  s.onchange=()=>{{filtros[c]=s.value;pinta()}};
+  document.getElementById('filtros').appendChild(s);
+}});
+document.querySelector('thead tr').innerHTML=COLS.map(c=>`<th onclick="ordenar('${{c}}')">${{c}}</th>`).join('');
+function ordenar(c){{desc=(orden===c)?!desc:true;orden=c;pinta()}}
+function pinta(){{
+  let rows=DATA.filter(d=>CONFIG.every(c=>!filtros[c]||String(d[c])===filtros[c]));
+  if(orden)rows=[...rows].sort((a,b)=>(a[orden]>b[orden]?1:-1)*(desc?-1:1));
+  const maxs={{}};
+  COLS.slice(CONFIG.length).forEach(c=>maxs[c]=Math.max(...rows.map(r=>r[c]??-Infinity)));
+  document.querySelector('tbody').innerHTML=rows.map(r=>'<tr>'+COLS.map(c=>
+    `<td class="${{typeof r[c]==='number'&&r[c]===maxs[c]?'max':''}}">${{r[c]??'—'}}</td>`).join('')+'</tr>').join('');
+}}
+pinta();
+</script></body></html>"""
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Corrector v1: config → results/{run_id}.json")
-    parser.add_argument("--corpus", required=True)
-    parser.add_argument("--extras", required=True)
-    parser.add_argument("--embedding", required=True)
-    parser.add_argument("--search", required=True)
-    parser.add_argument("--k", type=int, required=True)
+    parser = argparse.ArgumentParser(description="Corrector: config → results/{run_id}.json")
+    parser.add_argument("--paso0", action="store_true",
+                        help="las 36 pasadas densas k=5 del cruce corpus×extras×modelo (T-07)")
+    parser.add_argument("--tabla", action="store_true",
+                        help="regenera results/RESUMEN.html (métricas de cada run, con filtros)")
+    parser.add_argument("--corpus")
+    parser.add_argument("--extras")
+    parser.add_argument("--embedding")
+    parser.add_argument("--search")
+    parser.add_argument("--k", type=int)
     parser.add_argument("--cap", type=int, default=512)
     args = parser.parse_args()
+
+    if args.paso0:
+        paso0()
+        tabla()
+        return
+    if args.tabla:
+        tabla()
+        return
+    if not all((args.corpus, args.extras, args.embedding, args.search, args.k)):
+        parser.error("o --paso0, o la config completa: --corpus --extras --embedding --search --k")
 
     config = RetrievalConfig(
         corpus=args.corpus, extras=args.extras, embedding=args.embedding,
         search=args.search, k=args.k, cap=args.cap,
     )
-    data = run(config)
-    path = RESULTS_DIR / f"{config.run_id}.json"
-    estado = write_result(data, path)
-    print(f"[{estado}] {path}")
-    print(json.dumps(data["resumen"], ensure_ascii=False, indent=2))
+    salida = _run_and_write(config)
+    print(f"[{salida['estado']}] {RESULTS_DIR / (config.run_id + '.json')}")
+    print(json.dumps(salida["resumen"], ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

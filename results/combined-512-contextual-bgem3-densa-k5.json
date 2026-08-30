@@ -1,0 +1,1033 @@
+{
+  "config": {
+    "corpus": "combined",
+    "cap": 512,
+    "extras": "contextual",
+    "embedding": "bgem3",
+    "search": "densa",
+    "k": 5,
+    "collection": "combined-512-contextual-bgem3",
+    "run_id": "combined-512-contextual-bgem3-densa-k5"
+  },
+  "resumen": {
+    "hit_rate": 0.869,
+    "recall": 0.5534,
+    "precision": 0.3024,
+    "mrr": 0.7508,
+    "hit_rate_apuntes": 0.7711,
+    "hit_rate_manual": 0.4833,
+    "tokens_recuperados_media": 1578.15,
+    "n_preguntas": 84,
+    "n_puntuadas": 84
+  },
+  "detalle": [
+    {
+      "id": "q001",
+      "recuperados": [
+        "2-6.4",
+        "2-6",
+        "2-6.3",
+        "Física#Ver y oír bajo el agua#0",
+        "Física#Ver y oír bajo el agua#1"
+      ],
+      "tokens": 1188,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q002",
+      "recuperados": [
+        "2-6.1",
+        "2-6.2",
+        "2-6.4",
+        "2-6.3",
+        "2-6"
+      ],
+      "tokens": 1080,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q005",
+      "recuperados": [
+        "7-8.4",
+        "7-7.3",
+        "Habilidades prácticas#Nadar y moverse",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Habilidades prácticas#Nadar en la superficie"
+      ],
+      "tokens": 926,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q007",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Fisiología y salud#Salud y forma física#0",
+        "Habilidades prácticas#Flotabilidad neutra: flotación inmóvil",
+        "Habilidades prácticas#Quitarse y ponerse el equipo bajo el agua",
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)"
+      ],
+      "tokens": 1323,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q009",
+      "recuperados": [
+        "7-8.1",
+        "9-12.2#0",
+        "17-5.4#2",
+        "17-5.4#3",
+        "9-12.11#0"
+      ],
+      "tokens": 2226,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q011",
+      "recuperados": [
+        "7-8.8#1",
+        "11-5.1",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Habilidades prácticas#Uso de la fuente de aire alternativa (AAS)",
+        "7-8.8#2"
+      ],
+      "tokens": 1359,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q013",
+      "recuperados": [
+        "Habilidades prácticas#Sistema de compañeros#1",
+        "2-12.1#2",
+        "14-2.3#0",
+        "Física#Flotabilidad — cadena causal completa#0",
+        "2-11.3#1"
+      ],
+      "tokens": 2013,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q015",
+      "recuperados": [
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#2",
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "11-5.1",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Habilidades prácticas#Quitarse y ponerse el equipo bajo el agua"
+      ],
+      "tokens": 1529,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q017",
+      "recuperados": [
+        "Habilidades prácticas#Descensos en aguas abiertas",
+        "7-7.2",
+        "7-6.1#0",
+        "7-7.4",
+        "7-6.4"
+      ],
+      "tokens": 1778,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q019",
+      "recuperados": [
+        "11-4.5",
+        "3-10.2#2",
+        "2-8.3",
+        "2-9.4|2-10#1",
+        "3-10.2#0"
+      ],
+      "tokens": 1717,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q021",
+      "recuperados": [
+        "Habilidades prácticas#Ascensos en aguas abiertas#0",
+        "17-8.11",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "10-4.4",
+        "11-5.1"
+      ],
+      "tokens": 1628,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q023",
+      "recuperados": [
+        "Habilidades prácticas#Ascensos y regreso a la superficie",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "Habilidades prácticas#Ascensos en aguas abiertas#0",
+        "Habilidades prácticas#Sistema de compañeros#1",
+        "Habilidades prácticas#Uso de la fuente de aire alternativa (AAS)"
+      ],
+      "tokens": 1676,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q025",
+      "recuperados": [
+        "7-9.4",
+        "7-7.1#0",
+        "9-13.4#0",
+        "Habilidades prácticas#Ascensos en aguas abiertas#1",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1"
+      ],
+      "tokens": 1552,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q027",
+      "recuperados": [
+        "Habilidades prácticas#Mantenerse caliente",
+        "Material y equipo#Trajes de protección",
+        "7-4.1#0",
+        "11-4.3",
+        "2-8.2"
+      ],
+      "tokens": 1452,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q029",
+      "recuperados": [
+        "Habilidades prácticas#Mantenerse caliente",
+        "Material y equipo#Trajes de protección",
+        "Entornos y condiciones#Bucear desde la orilla",
+        "11-4.4",
+        "11-4.3"
+      ],
+      "tokens": 1664,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q031",
+      "recuperados": [
+        "7-3.6",
+        "11-3.4",
+        "Material y equipo#Herramientas cortantes",
+        "11-2.11",
+        "7-6.1#1"
+      ],
+      "tokens": 1582,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q033",
+      "recuperados": [
+        "Física#Densidad y compresibilidad del agua frente al aire",
+        "3-4.8#1",
+        "Física#Física de la inmersión — por fase#1",
+        "Física#Física de la inmersión — por fase#0",
+        "3-9.3#0"
+      ],
+      "tokens": 1467,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q035",
+      "recuperados": [
+        "Habilidades prácticas#Descenso y compensación",
+        "3-7.1#0",
+        "3-6.2#0",
+        "2-7.2#0",
+        "3-6.2#1"
+      ],
+      "tokens": 1706,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q037",
+      "recuperados": [
+        "Habilidades prácticas#Descenso y compensación",
+        "17-8.11",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "Habilidades prácticas#Hinchado oral del chaleco bajo el agua",
+        "Gestión de problemas#Problemas bajo el agua#0"
+      ],
+      "tokens": 1608,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q039",
+      "recuperados": [
+        "Habilidades prácticas#Descenso y compensación",
+        "9-11|9-11.1",
+        "9-13.4#0",
+        "Habilidades prácticas#Descensos en aguas abiertas",
+        "9-6.3"
+      ],
+      "tokens": 1051,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q041",
+      "recuperados": [
+        "Fisiología y salud#Salud y forma física#1",
+        "Fisiología y salud#Salud y forma física#0",
+        "Fisiología y salud#Inmersiones con frío o agotadoras",
+        "3-12.9",
+        "11-4.1"
+      ],
+      "tokens": 1141,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q043",
+      "recuperados": [
+        "Material y equipo#Botellas",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Habilidades prácticas#Protección del entorno subacuático",
+        "Física#Física de la inmersión — por fase#0"
+      ],
+      "tokens": 1239,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q044",
+      "recuperados": [
+        "7-8.1",
+        "3-5.2#2",
+        "3-6.6",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "3-5.5"
+      ],
+      "tokens": 1968,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q046",
+      "recuperados": [
+        "Fisiología y salud#Lesiones disbáricas (LD) y primeros auxilios",
+        "3-12.2",
+        "3-8",
+        "3-8.3#1",
+        "Física#Física de la inmersión — por fase#2"
+      ],
+      "tokens": 1870,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q048",
+      "recuperados": [
+        "3-7.1#1",
+        "3-7.1#0",
+        "3-6.2#1",
+        "3-7.2",
+        "3-6.2#3"
+      ],
+      "tokens": 1681,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q050",
+      "recuperados": [
+        "Física#Física de la inmersión — por fase#0",
+        "Física#Flotabilidad — cadena causal completa#2",
+        "Física#Densidad y compresibilidad del agua frente al aire",
+        "3-4.8#1",
+        "Habilidades prácticas#Nadar sin máscara"
+      ],
+      "tokens": 1249,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q053",
+      "recuperados": [
+        "Entornos y condiciones#Entornos y condiciones#1",
+        "Física#Flotabilidad — cadena causal completa#3",
+        "Física#Pérdida de calor en el agua",
+        "Física#Flotabilidad — cadena causal completa#2",
+        "Física#Densidad y compresibilidad del agua frente al aire"
+      ],
+      "tokens": 1656,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q054",
+      "recuperados": [
+        "2-9.4|2-10#0",
+        "Física#Flotabilidad — cadena causal completa#2",
+        "Física#Densidad y compresibilidad del agua frente al aire",
+        "2-6.1",
+        "3-12.1#0"
+      ],
+      "tokens": 1876,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q056",
+      "recuperados": [
+        "Habilidades prácticas#Sistema de compañeros#0",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Habilidades prácticas#Entrada sentado rodando hacia atrás",
+        "Habilidades prácticas#Entrada sentado controlada + equipo en el agua",
+        "Entornos y condiciones#Evaluar las condiciones y decidir si bucear"
+      ],
+      "tokens": 984,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q058",
+      "recuperados": [
+        "Material y equipo#Bolsas para el equipo",
+        "Material y equipo#Elegir y cuidar el equipo — clave general",
+        "7-6.1#2",
+        "7-6.3",
+        "14-3.1"
+      ],
+      "tokens": 1270,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q060",
+      "recuperados": [
+        "Material y equipo#Regulador",
+        "Gestión de problemas#Problemas bajo el agua#0",
+        "Habilidades prácticas#Respirar de un regulador en flujo continuo (práctica)",
+        "3-4.7",
+        "Habilidades prácticas#Vaciar el regulador"
+      ],
+      "tokens": 1416,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q062",
+      "recuperados": [
+        "10-8.1",
+        "Material y equipo#Regulador",
+        "11-2.4#0",
+        "7-3.1#2",
+        "11-2.4#1"
+      ],
+      "tokens": 1826,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q064",
+      "recuperados": [
+        "Habilidades prácticas#Hinchar y deshinchar el chaleco",
+        "Física#Flotabilidad — cadena causal completa#1",
+        "Habilidades prácticas#Descensos, natación y ascensos cerca de entornos sensibles",
+        "Habilidades prácticas#Flotabilidad neutra: flotación inmóvil",
+        "Material y equipo#Sistemas de lastre"
+      ],
+      "tokens": 981,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q067",
+      "recuperados": [
+        "2-7.2#0",
+        "2-7",
+        "Física#Ver y oír bajo el agua#0",
+        "2-7.2#1",
+        "2-7.1"
+      ],
+      "tokens": 1403,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q069",
+      "recuperados": [
+        "Habilidades prácticas#Vaciar el regulador",
+        "Habilidades prácticas#Respirar de un regulador en flujo continuo (práctica)",
+        "Habilidades prácticas#Respirar de forma eficaz",
+        "Material y equipo#Regulador",
+        "3-4.7"
+      ],
+      "tokens": 1363,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q072",
+      "recuperados": [
+        "Habilidades prácticas#Sistema de compañeros#0",
+        "7-7.3",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "Entornos y condiciones#Bucear desde la orilla"
+      ],
+      "tokens": 1522,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q074",
+      "recuperados": [
+        "7-4.1#5",
+        "11-2.4#1",
+        "Habilidades prácticas#Uso de la fuente de aire alternativa (AAS)",
+        "7-5.3#1",
+        "Habilidades prácticas#Sistema de compañeros#1"
+      ],
+      "tokens": 1236,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q076",
+      "recuperados": [
+        "Material y equipo#Botellas",
+        "7-6.1#1",
+        "Habilidades prácticas#Recuperación del regulador",
+        "Fisiología y salud#Aire contaminado",
+        "3-4.8#0"
+      ],
+      "tokens": 1436,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q079",
+      "recuperados": [
+        "Material y equipo#Sistemas de lastre",
+        "Habilidades prácticas#Quitarse y ponerse el lastre en superficie",
+        "Habilidades prácticas#Quitarse y ponerse el lastre bajo el agua",
+        "Habilidades prácticas#Liberación de emergencia del lastre",
+        "7-3.5"
+      ],
+      "tokens": 1129,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q081",
+      "recuperados": [
+        "11-3.6",
+        "2-6.2",
+        "Entornos y condiciones#Entornos y condiciones#0",
+        "2-6.4",
+        "11-2.2"
+      ],
+      "tokens": 1348,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q083",
+      "recuperados": [
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#0",
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Entornos y condiciones#Entornos y condiciones#1",
+        "Habilidades prácticas#Navegación con brújula#0"
+      ],
+      "tokens": 2334,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q085",
+      "recuperados": [
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#0",
+        "Habilidades prácticas#Salida quitándose el equipo en el agua",
+        "Habilidades prácticas#Ayudar a un compañero cansado"
+      ],
+      "tokens": 1576,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q087",
+      "recuperados": [
+        "Habilidades prácticas#Descensos, natación y ascensos cerca de entornos sensibles",
+        "Entornos y condiciones#Entornos y condiciones#1",
+        "Entornos y condiciones#Entornos y condiciones#2",
+        "11-4.4",
+        "Entornos y condiciones#Bucear desde la orilla"
+      ],
+      "tokens": 1561,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q089",
+      "recuperados": [
+        "Fisiología y salud#Salud y forma física#1",
+        "3-6.7",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Material y equipo#Máscara",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)"
+      ],
+      "tokens": 864,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q091",
+      "recuperados": [
+        "Entornos y condiciones#Evaluar las condiciones y decidir si bucear",
+        "Habilidades prácticas#Planificación de inmersiones (4 fases)",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#0",
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)"
+      ],
+      "tokens": 1416,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q093",
+      "recuperados": [
+        "Entornos y condiciones#Bucear dentro de tus límites",
+        "Fisiología y salud#Volar después de bucear y buceo en altitud",
+        "Física#Física de la inmersión — por fase#2",
+        "Fisiología y salud#Salud y forma física#0",
+        "Habilidades prácticas#Protección del entorno subacuático"
+      ],
+      "tokens": 1873,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q095",
+      "recuperados": [
+        "Entornos y condiciones#Bucear dentro de tus límites",
+        "7-8",
+        "7-9.1#1",
+        "3-12.6#1",
+        "Habilidades prácticas#Uso de la fuente de aire alternativa (AAS)"
+      ],
+      "tokens": 993,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q097",
+      "recuperados": [
+        "Entornos y condiciones#Vida acuática#1",
+        "Habilidades prácticas#Protección del entorno subacuático",
+        "Gestión de problemas#Problemas bajo el agua#0",
+        "7-7.3",
+        "7-8.7"
+      ],
+      "tokens": 1641,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q099",
+      "recuperados": [
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#0",
+        "17-5.4#3",
+        "17-5.4#2",
+        "Entornos y condiciones#Bucear desde un barco#2"
+      ],
+      "tokens": 2252,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q101",
+      "recuperados": [
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Entornos y condiciones#Entornos y condiciones#1",
+        "Entornos y condiciones#Entornos y condiciones#0",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#0",
+        "Fisiología y salud#Salud y forma física#0"
+      ],
+      "tokens": 2274,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q103",
+      "recuperados": [
+        "Entornos y condiciones#Bucear desde un barco#0",
+        "Habilidades prácticas#Navegación con brújula#0",
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "7-3.7",
+        "Habilidades prácticas#Entrada sentado controlada + equipo en el agua"
+      ],
+      "tokens": 1761,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q105",
+      "recuperados": [
+        "7-7.1#0",
+        "Entornos y condiciones#Bucear desde la orilla",
+        "Habilidades prácticas#Entrada sentado controlada + equipo en el agua",
+        "7-7.1#3",
+        "Habilidades prácticas#Entrada sentado rodando hacia atrás"
+      ],
+      "tokens": 1616,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q107",
+      "recuperados": [
+        "Entornos y condiciones#Bucear desde un barco#1",
+        "Habilidades prácticas#Ascensos en aguas abiertas#0",
+        "17-3.3#1",
+        "Habilidades prácticas#Descensos y ascensos sin referencia",
+        "17-5.4#1"
+      ],
+      "tokens": 1468,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q109",
+      "recuperados": [
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "Material y equipo#Flotadores de superficie y banderas de buceo",
+        "Material y equipo#Herramientas cortantes",
+        "Habilidades prácticas#Salida quitándose el equipo en el agua",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1"
+      ],
+      "tokens": 1658,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q111",
+      "recuperados": [
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "7-9.4",
+        "Habilidades prácticas#Descensos y ascensos sin referencia",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "Habilidades prácticas#Salida quitándose el equipo en el agua"
+      ],
+      "tokens": 1535,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q114",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#0",
+        "11-4.4",
+        "Habilidades prácticas#Nadar en la superficie",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "9-12.7#1"
+      ],
+      "tokens": 1464,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q116",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#0",
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "7-8.8#4"
+      ],
+      "tokens": 1868,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q118",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "7-8.8#4",
+        "Gestión de problemas#Primeros auxilios (buceador que ha estado o está inconsciente)"
+      ],
+      "tokens": 1888,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q121",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "7-8.8#4",
+        "Gestión de problemas#Primeros auxilios (buceador que ha estado o está inconsciente)",
+        "Gestión de problemas#Problemas bajo el agua#1"
+      ],
+      "tokens": 1888,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q123",
+      "recuperados": [
+        "Habilidades prácticas#Uso de la fuente de aire alternativa (AAS)",
+        "Habilidades prácticas#Ejercicio combinado sin aire + fuente de aire alternativa",
+        "Gestión de problemas#Problemas bajo el agua#1",
+        "11-5.1",
+        "9-12.2#0"
+      ],
+      "tokens": 1419,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q126",
+      "recuperados": [
+        "Material y equipo#Dispositivos de señalización en superficie",
+        "7-4.1#3",
+        "Material y equipo#Flotadores de superficie y banderas de buceo",
+        "7-4.1#2",
+        "7-7.1#1"
+      ],
+      "tokens": 1895,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q128",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "7-9.4",
+        "Entornos y condiciones#Oleaje, corrientes de playa y mareas#1",
+        "Fisiología y salud#Salud y forma física#0",
+        "Gestión de problemas#Problemas en superficie (buceador inconsciente)"
+      ],
+      "tokens": 1806,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q130",
+      "recuperados": [
+        "Habilidades prácticas#Entrada sentado controlada + equipo en el agua",
+        "Habilidades prácticas#Quitarse y ponerse el lastre en superficie",
+        "Material y equipo#Accesorios#0",
+        "Material y equipo#Bolsas para el equipo",
+        "Habilidades prácticas#Sistema de compañeros#1"
+      ],
+      "tokens": 1367,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q136",
+      "recuperados": [
+        "Fisiología y salud#Salud y forma física#0",
+        "Habilidades prácticas#Planificación de inmersiones (4 fases)",
+        "Fisiología y salud#Salud y forma física#1",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "11-4.1"
+      ],
+      "tokens": 1666,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q137",
+      "recuperados": [
+        "Fisiología y salud#Salud y forma física#0",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "Habilidades prácticas#Protección del entorno subacuático",
+        "Entornos y condiciones#Entornos y condiciones#0",
+        "Fisiología y salud#Volar después de bucear y buceo en altitud"
+      ],
+      "tokens": 1847,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q138",
+      "recuperados": [
+        "Fisiología y salud#Salud y forma física#0",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#0",
+        "Fisiología y salud#Salud y forma física#1",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Fisiología y salud#Lesiones disbáricas (LD) y primeros auxilios"
+      ],
+      "tokens": 1451,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q140",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Habilidades prácticas#Entrada sentado controlada + equipo en el agua",
+        "Habilidades prácticas#Nadar sin máscara",
+        "Fisiología y salud#Salud y forma física#0",
+        "Habilidades prácticas#Salida quitándose el equipo en el agua"
+      ],
+      "tokens": 1117,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q142",
+      "recuperados": [
+        "10-8.1",
+        "Fisiología y salud#Problemas con el oxígeno",
+        "10-8.3",
+        "10-7",
+        "10-10"
+      ],
+      "tokens": 1062,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q144",
+      "recuperados": [
+        "Fisiología y salud#Aire contaminado",
+        "3-5.2#3",
+        "3-9.3#8",
+        "Fisiología y salud#Narcosis por gas",
+        "3-5.1#1"
+      ],
+      "tokens": 1921,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q148",
+      "recuperados": [
+        "Fisiología y salud#Enfermedad descompresiva (ED)",
+        "3-9.3#8",
+        "17-4",
+        "3-9.3#0",
+        "17-4.8"
+      ],
+      "tokens": 1565,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q150",
+      "recuperados": [
+        "Fisiología y salud#Inmersiones con frío o agotadoras",
+        "Fisiología y salud#Enfermedad descompresiva (ED)",
+        "Fisiología y salud#Lesiones disbáricas (LD) y primeros auxilios",
+        "17-4.8",
+        "3-9.3#9"
+      ],
+      "tokens": 1342,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q156",
+      "recuperados": [
+        "9-9.4",
+        "9-11.3|9-12#0",
+        "3-4.8#1",
+        "9-3.2",
+        "9-12.2#0"
+      ],
+      "tokens": 1790,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q157",
+      "recuperados": [
+        "Fisiología y salud#Planificar y bucear con el ordenador#1",
+        "Fisiología y salud#Planificar y bucear con el ordenador#0",
+        "Material y equipo#Accesorios#1",
+        "Fisiología y salud#Cómo funcionan los ordenadores y tablas de buceo",
+        "Habilidades prácticas#Navegación con brújula#1"
+      ],
+      "tokens": 1629,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q160",
+      "recuperados": [
+        "9-13.4#0",
+        "9-6.4|9-6.5",
+        "9-8.3#3",
+        "9-3.14",
+        "9-12.2#0"
+      ],
+      "tokens": 1672,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q162",
+      "recuperados": [
+        "Fisiología y salud#Planificar y bucear con el ordenador#1",
+        "Fisiología y salud#Planificar y bucear con el ordenador#0",
+        "Material y equipo#Accesorios#1",
+        "Fisiología y salud#Inmersiones sucesivas",
+        "7-8.8#0"
+      ],
+      "tokens": 2088,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q165",
+      "recuperados": [
+        "9-11.3|9-12#0",
+        "9-15#1",
+        "17-6.6#1",
+        "9-13.4#0",
+        "9-9.1#0"
+      ],
+      "tokens": 2420,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q169",
+      "recuperados": [
+        "Fisiología y salud#Volar después de bucear y buceo en altitud",
+        "17-9.3",
+        "9-14#0",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "Habilidades prácticas#Nadar sin máscara"
+      ],
+      "tokens": 1611,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q171",
+      "recuperados": [
+        "2-8.3",
+        "3-10.2#0",
+        "11-4.5",
+        "3-12.1#0",
+        "11-4.6"
+      ],
+      "tokens": 1732,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q173",
+      "recuperados": [
+        "Fisiología y salud#Paradas de descompresión de emergencia",
+        "9-12.10#1",
+        "9-12.10#2",
+        "Fisiología y salud#Buceo sin paradas#1",
+        "9-11.3|9-12#2"
+      ],
+      "tokens": 1975,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q176",
+      "recuperados": [
+        "9-12.2#0",
+        "9-11.3|9-12#2",
+        "9-12.2#1",
+        "Fisiología y salud#Paradas de descompresión de emergencia",
+        "9-12.8#0"
+      ],
+      "tokens": 1712,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q179",
+      "recuperados": [
+        "3-9.3#9",
+        "17-4",
+        "Fisiología y salud#Lesiones disbáricas (LD) y primeros auxilios",
+        "17-5.4#0",
+        "9-12.11#0"
+      ],
+      "tokens": 1947,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q181",
+      "recuperados": [
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#0",
+        "Gestión de problemas#Problemas en superficie (buceador consciente)#1",
+        "Gestión de problemas#Problemas bajo el agua#0",
+        "2-6.3",
+        "7-7.3"
+      ],
+      "tokens": 1408,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q184",
+      "recuperados": [
+        "Habilidades prácticas#Navegación con brújula#0",
+        "Habilidades prácticas#Navegación con brújula#1",
+        "Entornos y condiciones#Bucear desde un barco#2",
+        "Material y equipo#Flotadores de superficie y banderas de buceo",
+        "11-3.6"
+      ],
+      "tokens": 1697,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q186",
+      "recuperados": [
+        "Habilidades prácticas#Checklists de inmersiones del curso",
+        "9-3.6",
+        "Habilidades prácticas#Buceo en apnea (freediving básico)",
+        "Entornos y condiciones#Bucear dentro de tus límites",
+        "Habilidades prácticas#Miniinmersión"
+      ],
+      "tokens": 1377,
+      "sin_respuesta": false
+    }
+  ]
+}

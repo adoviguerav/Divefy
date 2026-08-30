@@ -13,10 +13,9 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
 
+from divefy.config import CORPUS_VALUES  # config es la fuente única (review 2026-08-30, #5)
 from divefy.pipeline import p4_vectorstore
 from divefy.pipeline.p4_vectorstore import canonical_name, get_collection
-
-CORPUS_VALUES = ("apuntes", "manual", "combined")
 BATCH_SIZE = 32  # 702 textos de golpe tumbó el servidor local de Ollama (plan Notas, T-06)
 EMBED_RETRIES = 3  # un 429 o un tosido de Ollama no debe tirar una pasada de horas (review 2026-08-28, #4)
 

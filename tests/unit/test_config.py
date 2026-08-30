@@ -55,3 +55,12 @@ def test_es_inmutable():
 def test_valor_categorico_invalido_lanza_error_ruidoso(campo, valor):
     with pytest.raises(ValueError, match=campo):
         base_config(**{campo: valor})
+
+
+def test_corpus_values_es_fuente_unica_compartida_con_el_indexado():
+    """Review 2026-08-30, #5: config es la base; p4_indexing importa de ahí —
+    la misma tupla, no una copia que pueda derivar."""
+    from divefy.config import CORPUS_VALUES
+    from divefy.pipeline import p4_indexing
+
+    assert p4_indexing.CORPUS_VALUES is CORPUS_VALUES

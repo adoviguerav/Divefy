@@ -1,0 +1,1033 @@
+{
+  "config": {
+    "corpus": "manual",
+    "cap": 512,
+    "extras": "base",
+    "embedding": "qwen06b",
+    "search": "densa",
+    "k": 5,
+    "collection": "manual-512-base-qwen06b",
+    "run_id": "manual-512-base-qwen06b-densa-k5"
+  },
+  "resumen": {
+    "hit_rate": 0.4167,
+    "recall": 0.161,
+    "precision": 0.1119,
+    "mrr": 0.3018,
+    "hit_rate_apuntes": 0.0,
+    "hit_rate_manual": 0.5833,
+    "tokens_recuperados_media": 1276.38,
+    "n_preguntas": 84,
+    "n_puntuadas": 84
+  },
+  "detalle": [
+    {
+      "id": "q001",
+      "recuperados": [
+        "2-6.4",
+        "2-6",
+        "2-6.2",
+        "2-6.1",
+        "2-6.3"
+      ],
+      "tokens": 1080,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q002",
+      "recuperados": [
+        "2-6.4",
+        "2-6.2",
+        "2-6.1",
+        "2-6",
+        "2-6.3"
+      ],
+      "tokens": 1080,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q005",
+      "recuperados": [
+        "7-8.4",
+        "7-8.7",
+        "7-7.3",
+        "2-9.4|2-10#1",
+        "2-7"
+      ],
+      "tokens": 858,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q007",
+      "recuperados": [
+        "7-7.3",
+        "7-9.3#1",
+        "3-6.2#3",
+        "11-5.1",
+        "3-12.7#0"
+      ],
+      "tokens": 1048,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q009",
+      "recuperados": [
+        "3-5.4#0",
+        "3-5.4#1",
+        "7-8.1",
+        "7-8.7",
+        "3-5.1#1"
+      ],
+      "tokens": 1775,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q011",
+      "recuperados": [
+        "7-8.8#1",
+        "7-8.8#3",
+        "7-8.8#2",
+        "11-5.1",
+        "17-8.11"
+      ],
+      "tokens": 1923,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q013",
+      "recuperados": [
+        "2-9.1",
+        "2-11.1",
+        "2-11.3#1",
+        "2-9",
+        "14-2.3#1"
+      ],
+      "tokens": 1383,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q015",
+      "recuperados": [
+        "7-9.4",
+        "11-4.6",
+        "7-8.4",
+        "7-7.3",
+        "7-9.3#1"
+      ],
+      "tokens": 899,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q017",
+      "recuperados": [
+        "7-7.2",
+        "17-8.8",
+        "7-7.4",
+        "9-11.2",
+        "7-7.1#2"
+      ],
+      "tokens": 1109,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q019",
+      "recuperados": [
+        "3-12.1#0",
+        "7-8.7",
+        "3-10.2#2",
+        "3-10.2#0",
+        "11-4.5"
+      ],
+      "tokens": 1954,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q021",
+      "recuperados": [
+        "11-5.1",
+        "17-8.11",
+        "7-8.8#1",
+        "17-8.8",
+        "9-12.5#1"
+      ],
+      "tokens": 1134,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q023",
+      "recuperados": [
+        "9-11|9-11.1",
+        "9-6.3",
+        "17-11.1#1",
+        "7-9.1#0",
+        "17-8.8"
+      ],
+      "tokens": 908,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q025",
+      "recuperados": [
+        "7-9.4",
+        "11-4.6",
+        "7-9.3#1",
+        "17-11.1#1",
+        "9-11.2"
+      ],
+      "tokens": 795,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q027",
+      "recuperados": [
+        "3-10.1",
+        "11-4.3",
+        "11-4.6",
+        "2-8.1",
+        "11-2.9#0"
+      ],
+      "tokens": 1364,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q029",
+      "recuperados": [
+        "11-4.3",
+        "11-4.4",
+        "11-2.9#1",
+        "11-4.6",
+        "11-2.10"
+      ],
+      "tokens": 1440,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q031",
+      "recuperados": [
+        "7-3.6",
+        "7-8.6",
+        "11-3.4",
+        "11-2.11",
+        "11-3.5"
+      ],
+      "tokens": 1215,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q033",
+      "recuperados": [
+        "3-4.8#1",
+        "7-8.1",
+        "2-11.1",
+        "3-5",
+        "3-5.2#2"
+      ],
+      "tokens": 1578,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q035",
+      "recuperados": [
+        "3-6.5",
+        "3-6.2#2",
+        "2-7.2#0",
+        "3-7.1#1",
+        "3-6.8#3"
+      ],
+      "tokens": 1903,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q037",
+      "recuperados": [
+        "2-9.4|2-10#1",
+        "3-12.5",
+        "11-5.1",
+        "7-8",
+        "7-8.7"
+      ],
+      "tokens": 937,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q039",
+      "recuperados": [
+        "9-8.3#5",
+        "17-8.8",
+        "7-9.3#0",
+        "9-12.2#1",
+        "9-3.20"
+      ],
+      "tokens": 1273,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q041",
+      "recuperados": [
+        "11-4.6",
+        "11-4.1",
+        "11-5.3",
+        "3-12.1#1",
+        "3-12.7#0"
+      ],
+      "tokens": 1164,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q043",
+      "recuperados": [
+        "7-7.3",
+        "2-9.4|2-10#1",
+        "3-12.6#1",
+        "7-9.3#1",
+        "2-9.4|2-10#0"
+      ],
+      "tokens": 1059,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q044",
+      "recuperados": [
+        "3-6.6",
+        "3-5.4#0",
+        "3-5.5",
+        "3-5.1#1",
+        "3-5.7"
+      ],
+      "tokens": 2198,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q046",
+      "recuperados": [
+        "3-8",
+        "3-9.2#0",
+        "3-12.6#0",
+        "17-8.10#1",
+        "3-12.2"
+      ],
+      "tokens": 2091,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q048",
+      "recuperados": [
+        "3-6.5",
+        "3-7.1#1",
+        "3-6.2#3",
+        "3-6.2#2",
+        "3-6.2#0"
+      ],
+      "tokens": 1677,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q050",
+      "recuperados": [
+        "3-4.8#1",
+        "9-7.1",
+        "9-12.1",
+        "9-9.4",
+        "3-4.8#0"
+      ],
+      "tokens": 1593,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q053",
+      "recuperados": [
+        "2-7.1",
+        "2-6.4",
+        "2-7",
+        "2-6.2",
+        "11-2.2"
+      ],
+      "tokens": 903,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q054",
+      "recuperados": [
+        "2-9.4|2-10#0",
+        "2-7",
+        "2-9.4|2-10#1",
+        "2-2",
+        "2-6.4"
+      ],
+      "tokens": 1189,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q056",
+      "recuperados": [
+        "7-7.3",
+        "2-9.4|2-10#1",
+        "7-9.3#1",
+        "7-3.6",
+        "7-2.2#1"
+      ],
+      "tokens": 1098,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q058",
+      "recuperados": [
+        "2-4",
+        "6-3.1",
+        "11-3.2",
+        "4-2.1",
+        "7-3.6"
+      ],
+      "tokens": 639,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q060",
+      "recuperados": [
+        "3-5.7",
+        "3-4.7",
+        "7-8.1",
+        "7-3.1#1",
+        "3-5.6"
+      ],
+      "tokens": 2049,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q062",
+      "recuperados": [
+        "10-8.1",
+        "7-3.1#1",
+        "6-6.2#1",
+        "11-2.4#0",
+        "7-8.3"
+      ],
+      "tokens": 1595,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q064",
+      "recuperados": [
+        "2-9.4|2-10#1",
+        "2-9.4|2-10#0",
+        "7-3.4",
+        "6-2.1#2",
+        "7-3.5"
+      ],
+      "tokens": 1963,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q067",
+      "recuperados": [
+        "2-7.2#0",
+        "2-7.1",
+        "2-7",
+        "3-6.5",
+        "3-12.7#0"
+      ],
+      "tokens": 1210,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q069",
+      "recuperados": [
+        "7-8.3",
+        "7-3.1#1",
+        "3-4.7",
+        "7-3.1#0",
+        "11-2.4#0"
+      ],
+      "tokens": 1913,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q072",
+      "recuperados": [
+        "3-12.1#1",
+        "7-9.3#1",
+        "3-12.6#1",
+        "7-7.3",
+        "3-12.2"
+      ],
+      "tokens": 909,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q074",
+      "recuperados": [
+        "7-4.1#5",
+        "17-6.1",
+        "9-12.5#1",
+        "4-4.5",
+        "9-13"
+      ],
+      "tokens": 899,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q076",
+      "recuperados": [
+        "4-4.1",
+        "7-3.1#3",
+        "9-3.2",
+        "7-6.1#2",
+        "3-4.8#0"
+      ],
+      "tokens": 1433,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q079",
+      "recuperados": [
+        "7-6.1#2",
+        "7-6.1#1",
+        "7-7.2",
+        "7-6.4",
+        "7-6.1#0"
+      ],
+      "tokens": 2030,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q081",
+      "recuperados": [
+        "2-6.2",
+        "2-6.4",
+        "2-6",
+        "11-2.2",
+        "2-6.3"
+      ],
+      "tokens": 902,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q083",
+      "recuperados": [
+        "7-8.4",
+        "11-2.2",
+        "7-8.7",
+        "7-7.3",
+        "11-3.6"
+      ],
+      "tokens": 1052,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q085",
+      "recuperados": [
+        "11-5.1",
+        "11-3.5",
+        "11-2.2",
+        "7-8.7",
+        "9-12.5#1"
+      ],
+      "tokens": 863,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q087",
+      "recuperados": [
+        "9-3.2",
+        "7-9.3#1",
+        "7-8",
+        "3-12.6#1",
+        "7-8.4"
+      ],
+      "tokens": 515,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q089",
+      "recuperados": [
+        "3-11.2",
+        "3-12.7#0",
+        "3-6.5",
+        "7-9.3#1",
+        "3-10"
+      ],
+      "tokens": 1404,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q091",
+      "recuperados": [
+        "7-8.7",
+        "7-9.3#1",
+        "7-6",
+        "11-4.1",
+        "7-9.4"
+      ],
+      "tokens": 1199,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q093",
+      "recuperados": [
+        "3-5.7",
+        "10-4.5",
+        "3-12.6#1",
+        "6-4.2#2",
+        "9-13.2"
+      ],
+      "tokens": 1333,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q095",
+      "recuperados": [
+        "7-9.3#1",
+        "3-6.5",
+        "3-12.1#1",
+        "3-5.7",
+        "3-12.7#0"
+      ],
+      "tokens": 1218,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q097",
+      "recuperados": [
+        "3-12.6#1",
+        "11-4.5",
+        "7-8.7",
+        "3-12.6#0",
+        "11-4.4"
+      ],
+      "tokens": 1590,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q099",
+      "recuperados": [
+        "3-12.3",
+        "7-8.7",
+        "17-12.3",
+        "3-12.1#1",
+        "7-8.4"
+      ],
+      "tokens": 757,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q101",
+      "recuperados": [
+        "2-7.3#1",
+        "11-4.2",
+        "3-12.6#0",
+        "7-8.7",
+        "11-2.2"
+      ],
+      "tokens": 1599,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q103",
+      "recuperados": [
+        "6-6.4#4",
+        "6-2.1#2",
+        "7-9.2",
+        "6-2.3|6-3",
+        "6-2.2#3"
+      ],
+      "tokens": 1757,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q105",
+      "recuperados": [
+        "7-7.1#0",
+        "11-3.2",
+        "7-9.3#1",
+        "7-8.4",
+        "11-3.5"
+      ],
+      "tokens": 845,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q107",
+      "recuperados": [
+        "17-3.3#1",
+        "17-5.4#1",
+        "11-3.5",
+        "17-8.8",
+        "11-2.11"
+      ],
+      "tokens": 849,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q109",
+      "recuperados": [
+        "7-9.2",
+        "7-4.1#4",
+        "7-3.7",
+        "2-9.4|2-10#1",
+        "7-5.2#1"
+      ],
+      "tokens": 1175,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q111",
+      "recuperados": [
+        "7-9.4",
+        "11-5.1",
+        "6-2.1#1",
+        "7-7.3",
+        "7-8.8#1"
+      ],
+      "tokens": 1530,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q114",
+      "recuperados": [
+        "3-12.5",
+        "9-3.22",
+        "7-9.4",
+        "7-9.3#1",
+        "9-11.2"
+      ],
+      "tokens": 752,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q116",
+      "recuperados": [
+        "3-12.6#1",
+        "3-12.5",
+        "7-9.3#1",
+        "7-9.4",
+        "7-7.3"
+      ],
+      "tokens": 997,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q118",
+      "recuperados": [
+        "3-5.4#0",
+        "3-12.5",
+        "7-8.8#1",
+        "3-12.6#1",
+        "11-5.1"
+      ],
+      "tokens": 1554,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q121",
+      "recuperados": [
+        "3-5.4#0",
+        "7-9.3#1",
+        "3-12.5",
+        "9-12.5#0",
+        "7-8.8#4"
+      ],
+      "tokens": 1746,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q123",
+      "recuperados": [
+        "7-8.8#3",
+        "9-12.5#1",
+        "9-12.5#0",
+        "7-8.1",
+        "17-8.11"
+      ],
+      "tokens": 1700,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q126",
+      "recuperados": [
+        "7-4.1#3",
+        "7-8.5#1",
+        "7-4.1#2",
+        "7-8.5#0",
+        "7-6.1#2"
+      ],
+      "tokens": 1651,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q128",
+      "recuperados": [
+        "7-9.4",
+        "7-9.2",
+        "7-9.3#1",
+        "6-6.4#3",
+        "11-2.2"
+      ],
+      "tokens": 1383,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q130",
+      "recuperados": [
+        "7-5.2#1",
+        "7-6.3",
+        "11-2.10",
+        "7-6.1#2",
+        "3-6.7"
+      ],
+      "tokens": 1148,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q136",
+      "recuperados": [
+        "11-4.1",
+        "3-12.9",
+        "7-9.3#1",
+        "3-12.1#1",
+        "11-4.4"
+      ],
+      "tokens": 1095,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q137",
+      "recuperados": [
+        "2-9.4|2-10#1",
+        "3-12.9",
+        "7-9.3#1",
+        "3-12.2",
+        "3-12.6#1"
+      ],
+      "tokens": 831,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q138",
+      "recuperados": [
+        "7-9.3#1",
+        "3-12.2",
+        "3-5.4#1",
+        "3-5.4#0",
+        "17-4.6"
+      ],
+      "tokens": 1325,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q140",
+      "recuperados": [
+        "17-8.7",
+        "17-9.2",
+        "9-8.3#6",
+        "7-9.3#1",
+        "9-3.21"
+      ],
+      "tokens": 466,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q142",
+      "recuperados": [
+        "10-8.1",
+        "10-1",
+        "10-8.3",
+        "10-7",
+        "10-3#0"
+      ],
+      "tokens": 1400,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q144",
+      "recuperados": [
+        "3-6.8#2",
+        "3-9.2#3",
+        "3-6.2#3",
+        "17-4.6",
+        "17-3.1#1"
+      ],
+      "tokens": 1346,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q148",
+      "recuperados": [
+        "3-5.3",
+        "3-8",
+        "3-6.1",
+        "17-4",
+        "3-11.1"
+      ],
+      "tokens": 1410,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q150",
+      "recuperados": [
+        "7-9.3#1",
+        "3-12.1#1",
+        "3-7",
+        "3-11.1",
+        "3-6.6"
+      ],
+      "tokens": 841,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q156",
+      "recuperados": [
+        "9-3.2",
+        "9-8.3#6",
+        "7-8",
+        "9-3.14",
+        "9-12.8#1"
+      ],
+      "tokens": 568,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q157",
+      "recuperados": [
+        "7-9.3#1",
+        "2-9.4|2-10#1",
+        "7-7.3",
+        "7-4.1#4",
+        "17-12.3"
+      ],
+      "tokens": 1024,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q160",
+      "recuperados": [
+        "7-9.3#1",
+        "9-3.14",
+        "9-6.4|9-6.5",
+        "17-9.5",
+        "9-11.2"
+      ],
+      "tokens": 530,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q162",
+      "recuperados": [
+        "17-8.11",
+        "3-6.8#3",
+        "7-9.3#1",
+        "3-12.5",
+        "9-12.5#0"
+      ],
+      "tokens": 1507,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q165",
+      "recuperados": [
+        "9-3.14",
+        "7-9.3#1",
+        "17-9.4#0",
+        "17-9",
+        "9-9.1#0"
+      ],
+      "tokens": 1029,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q169",
+      "recuperados": [
+        "17-9.3",
+        "9-14#1",
+        "9-14#0",
+        "17-9",
+        "9-15#2"
+      ],
+      "tokens": 1221,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q171",
+      "recuperados": [
+        "11-4.5",
+        "3-10",
+        "3-10.4#2",
+        "3-10.2#0",
+        "2-8.3"
+      ],
+      "tokens": 1545,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q173",
+      "recuperados": [
+        "9-11|9-11.1",
+        "3-5.7",
+        "9-11.3|9-12#2",
+        "9-12.10#1",
+        "9-11.3|9-12#0"
+      ],
+      "tokens": 1962,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q176",
+      "recuperados": [
+        "9-12.5#1",
+        "17-5.4#0",
+        "3-6.1",
+        "17-8.11",
+        "9-12.6#1"
+      ],
+      "tokens": 1434,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q179",
+      "recuperados": [
+        "9-12.5#1",
+        "17-4.2#1",
+        "7-9.3#1",
+        "17-5.4#0",
+        "9-12.5#0"
+      ],
+      "tokens": 1593,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q181",
+      "recuperados": [
+        "7-8.7",
+        "7-8.4",
+        "7-9.3#1",
+        "11-2.2",
+        "3-12.5"
+      ],
+      "tokens": 878,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q184",
+      "recuperados": [
+        "11-3.6",
+        "7-4.1#4",
+        "11-2.2",
+        "7-4.1#3",
+        "11-3.7"
+      ],
+      "tokens": 1611,
+      "sin_respuesta": false
+    },
+    {
+      "id": "q186",
+      "recuperados": [
+        "9-3.6",
+        "10-4.5",
+        "9-7.1",
+        "3-12.6#1",
+        "17-8.6"
+      ],
+      "tokens": 813,
+      "sin_respuesta": false
+    }
+  ]
+}

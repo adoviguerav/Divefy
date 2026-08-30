@@ -2,6 +2,7 @@
 
 import json
 import re
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from rank_bm25 import BM25Okapi
 
 from divefy.config import RetrievalConfig
 from divefy.pipeline import p4_vectorstore
+from divefy.pipeline.p4_indexing import MODELS
 
 K_RRF = 60  # constante k de la fórmula RRF: score = Σ 1/(k + rank). No es de BM25.
 
@@ -77,25 +79,31 @@ def dedup_to_chunk_ids(hits) -> list[str]:
 
 
 def query_cache_path(model: str) -> Path:
-    return Path("data/eval") / f"query-embeddings-{model}.json"
+    return p4_vectorstore.REPO_ROOT / "data" / "eval" / f"query-embeddings-{model}.json"
+
+
+def _write_atomic(path: Path, cache: dict) -> None:
+    """Escribir a .tmp y renombrar encima: un corte a mitad nunca deja el fichero
+    corrupto ni pierde la copia anterior (review 2026-08-30, #1)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+    tmp.replace(path)
 
 
 def ensure_query_vectors(model: str, queries: list[str]) -> dict[str, list[float]]:
     """Caché de vectores de query por modelo: se construye una vez y da
-    determinismo y coste cero a las pasadas siguientes (Decision 6)."""
+    determinismo y coste cero a las pasadas siguientes (Decision 6). Se persiste
+    tras CADA vector: si el backend muere en el 60 de 84, los 60 ya pagados
+    quedan en disco y la siguiente pasada reanuda desde ahí."""
     path = query_cache_path(model)
     cache = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     missing = [q for q in queries if q not in cache]
     if missing:
-        # import perezoso: MODELS arrastra los backends de embeddings, que solo
-        # hacen falta si la caché está incompleta
-        from divefy.pipeline.p4_indexing import MODELS
-
         embeddings = MODELS[model]
         for query in missing:
             cache[query] = embeddings.embed_query(query)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+            _write_atomic(path, cache)
     return cache
 
 
@@ -119,8 +127,6 @@ def retrieve(
             "Reindexa con `uv run python -m divefy.pipeline.p4_indexing`."
         )
 
-    from divefy.pipeline.p4_indexing import MODELS
-
     embeddings = MODELS[config.embedding]
     collection = p4_vectorstore.get_collection(name, embeddings)
     if query_vector is None:
@@ -130,6 +136,13 @@ def retrieve(
     hits = collection.similarity_search_by_vector(query_vector, k=n_dense)
     dense_ids = dedup_to_chunk_ids(hits)[: config.k]
     if config.search == "densa":
+        if len(dense_ids) < config.k:
+            # el dedup HyPE→padre puede colapsar los 4·k hits a menos de k padres;
+            # hoy no ocurre (medido), pero el fallo sería silencio (review #4)
+            warnings.warn(
+                f"{name}: {len(dense_ids)} de k={config.k} chunks tras el dedup "
+                f"HyPE→padre para {query!r}"
+            )
         return dense_ids
 
     if name not in _BM25_CACHE:
