@@ -1,6 +1,6 @@
 # Modelo de datos
 
-Contrato de datos del pipeline (F1→F4) y de sus consumidores (F5→F8, corrector).
+Contrato de datos del pipeline (F1→F4) y de sus consumidores (F5→F8, evaluador).
 Decidido con Adolfo el 2026-08-27 (decisiones D1–D3 al final; D3 revisada el
 2026-08-28). Si el código y este documento discrepan, gana este documento o se
 re-decide — nunca se deja en silencio.
@@ -9,7 +9,7 @@ re-decide — nunca se deja en silencio.
 
 Los JSONL de `data/processed/` son el **system of record**. Cada colección Chroma es
 una **vista materializada** de (chunks + enrich) × (corpus, tope, extras, modelo):
-autocontenida para leer — F5 y el corrector no tocan JSONL en runtime — pero borrable
+autocontenida para leer — F5 y el evaluador no tocan JSONL en runtime — pero borrable
 y 100 % regenerable siempre. La verdad nunca vive en el índice (Kleppmann, DDIA:
 system of record vs. derived data).
 
@@ -43,7 +43,7 @@ manual) · `capitulo`, `pagina`, `pagina_fin` (null en apuntes).
 `corpus` · `section_ids` (lista, nunca vacía) · `titulo` (de la primera sección de
 origen) · `tipo` · `texto` · `fichero` · `capitulo` · `pagina` · `pagina_fin` ·
 **`n_tokens`** (tokens BGE-M3 de `texto`, contados en F2 con el mismo tokenizador del
-tope — sirve a la métrica "tokens recuperados" del corrector sin re-tokenizar en eval).
+tope — sirve a la métrica "tokens recuperados" del evaluador sin re-tokenizar en eval).
 
 ### Enriquecimiento — `enrich.jsonl`
 
@@ -67,12 +67,12 @@ Metadata de **fila chunk** (base/contextual/hype), cada campo con su consumidor:
 | Campo                              | Tipo en Chroma             | Consumidor                                                                          |
 | ---------------------------------- | -------------------------- | ----------------------------------------------------------------------------------- |
 | `entry_type` = `"chunk"`           | str                        | F5: regla HyPE→padre                                                                |
-| `corpus`                           | str                        | corrector: recall por corpus · guardarraíl: procedencia PADI/Navy · filtros `where` |
-| `section_ids`                      | str (JSON)                 | corrector: recall@k por sección · citas                                             |
+| `corpus`                           | str                        | evaluador: recall por corpus · guardarraíl: procedencia PADI/Navy · filtros `where` |
+| `section_ids`                      | str (JSON)                 | evaluador: recall@k por sección · citas                                             |
 | `titulo`                           | str                        | F7/F8: cita de fuente, `/fuentes`                                                   |
 | `fichero`                          | str — omitido en manual    | cita de fuente                                                                      |
 | `capitulo`, `pagina`, `pagina_fin` | int — omitidos en apuntes  | cita de fuente                                                                      |
-| `n_tokens`                         | int                        | corrector: tokens recuperados                                                       |
+| `n_tokens`                         | int                        | evaluador: tokens recuperados                                                       |
 | `contexto`                         | str — solo contextual/hype | F8 modo dev                                                                         |
 
 Metadata de **fila hype-pregunta** (D3): la misma metadata que la fila chunk de su
@@ -103,7 +103,7 @@ ni `None`):
 6. Una colección solo es válida si existe su marcador `data/chroma/{nombre}.complete`
    (el indexador lo borra antes del reset y lo crea al terminar de escribir — review
    2026-08-28, #2). Sin marcador = construcción interrumpida: los consumidores (F5,
-   corrector) deben negarse a leerla, no devolver 0 resultados en silencio. Va en
+   evaluador) deben negarse a leerla, no devolver 0 resultados en silencio. Va en
    fichero y no en la metadata de colección porque `modify` de Chroma la reemplaza
    entera y langchain lee `hnsw:space` de ahí.
 
@@ -115,7 +115,7 @@ ni `None`):
   modelo. Práctica estándar (DDIA; "vector DB as cache").
 - **D2 — Todo campo de metadata entra con consumidor nombrado.** Fuera `fingerprint`
   (clave de caché de F3, sin consumidor de retrieval); dentro `n_tokens` (consumidor:
-  métrica de tokens del corrector). Guardar "por si acaso" es el mismo error de modelo
+  métrica de tokens del evaluador). Guardar "por si acaso" es el mismo error de modelo
   en dirección contraria.
 - **D3 — Filas hype autocontenidas** (revisada 2026-08-28, decisión de Adolfo —
   supersede la versión "filas mínimas" del 27): `document` = texto crudo del chunk

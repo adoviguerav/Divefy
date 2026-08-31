@@ -1,4 +1,4 @@
-"""Fases 5 y 7 — El corrector: config -> fila de métricas versionada (hit_rate, recall, precision, MRR, tokens; juez/abstención/latencia/coste en F7)."""
+"""Fase 5 — Evaluador de retrieval: config -> fila de métricas versionada (hit_rate, recall, precision, MRR, tokens). La generación (F7) se evalúa en llm_evaluator."""
 
 import argparse
 import difflib
@@ -12,7 +12,7 @@ from divefy.config import RetrievalConfig
 from divefy.pipeline import p4_vectorstore, p5_retrieve
 from divefy.pipeline.p4_indexing import MODELS
 
-# Rutas ancladas a la raíz del repo — el corrector funciona desde cualquier CWD
+# Rutas ancladas a la raíz del repo — el evaluador funciona desde cualquier CWD
 # (review 2026-08-30, #9).
 GOLDEN_PATH = p4_vectorstore.REPO_ROOT / "data" / "eval" / "golden.jsonl"
 LABELS_PATH = p4_vectorstore.REPO_ROOT / "data" / "eval" / "labels.jsonl"
@@ -171,7 +171,7 @@ def run(config: RetrievalConfig) -> dict:
     config_dict = {
         "corpus": config.corpus, "cap": config.cap, "extras": config.extras,
         "embedding": config.embedding, "search": config.search, "k": config.k,
-        "collection": config.collection, "run_id": config.run_id,
+        "rerank": config.rerank, "collection": config.collection, "run_id": config.run_id,
     }
     return {"config": config_dict, "resumen": resumen, "detalle": detalle}
 
@@ -236,14 +236,15 @@ def tabla() -> None:
     print(f"{html}: {len(filas)} runs — abrir con `open {html}`")
 
 
-_CONFIG_COLS = ("corpus", "extras", "embedding", "search", "k", "cap")
+_CONFIG_COLS = ("corpus", "extras", "embedding", "search", "k", "cap", "rerank")
 
 
 def _tabla_html(filas: list[dict], claves: list[str]) -> str:
     """Vista HTML autocontenida: un desplegable de filtro por columna de config y
     ordenación clicando la cabecera de cualquier métrica."""
     datos = [
-        {**{c: fila["config"][c] for c in _CONFIG_COLS},
+        # .get: las filas anteriores a F6 no llevan la clave "rerank" (= off)
+        {**{c: fila["config"].get(c, False) for c in _CONFIG_COLS},
          **{k: fila["resumen"][k] for k in claves}}
         for fila in filas
     ]
@@ -254,7 +255,7 @@ body{{font-family:ui-monospace,monospace;font-size:13px;margin:16px}}
 table{{border-collapse:collapse;width:100%}}
 th,td{{border:1px solid #ccc;padding:3px 7px;text-align:right;white-space:nowrap}}
 th{{background:#f0f0f0;cursor:pointer;position:sticky;top:0}}
-td:nth-child(-n+6),th:nth-child(-n+6){{text-align:left}}
+td:nth-child(-n+7),th:nth-child(-n+7){{text-align:left}}
 tr:hover{{background:#fffbe6}} select{{margin:0 6px 10px 0}}
 .max{{background:#d7f5d7;font-weight:bold}}
 </style></head><body>
@@ -286,7 +287,7 @@ pinta();
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Corrector: config → results/{run_id}.json")
+    parser = argparse.ArgumentParser(description="Evaluator: config → results/{run_id}.json")
     parser.add_argument("--paso0", action="store_true",
                         help="las 36 pasadas densas k=5 del cruce corpus×extras×modelo (T-07)")
     parser.add_argument("--tabla", action="store_true",
@@ -297,6 +298,8 @@ def main() -> None:
     parser.add_argument("--search")
     parser.add_argument("--k", type=int)
     parser.add_argument("--cap", type=int, default=512)
+    parser.add_argument("--rerank", action="store_true",
+                        help="rerank con bge-reranker-v2-m3 (N=20 → k); run_id lleva sufijo -rerank")
     args = parser.parse_args()
 
     if args.paso0:
@@ -311,7 +314,7 @@ def main() -> None:
 
     config = RetrievalConfig(
         corpus=args.corpus, extras=args.extras, embedding=args.embedding,
-        search=args.search, k=args.k, cap=args.cap,
+        search=args.search, k=args.k, cap=args.cap, rerank=args.rerank,
     )
     salida = _run_and_write(config)
     print(f"[{salida['estado']}] {RESULTS_DIR / (config.run_id + '.json')}")

@@ -2,14 +2,14 @@
 
 Blind-written from the phase plan BEFORE the implementation exists: a
 ModuleNotFoundError raised inside a test (divefy.config, p5_retrieve or the
-corrector) is the expected RED today, not a broken suite. Imports of the code
+retrieval_evaluator) is the expected RED today, not a broken suite. Imports of the code
 under test therefore live inside fixtures/tests, never at module level.
 
 Scope — only the criteria whose checker says "acceptance":
   * retrieve() against the real persisted store returns exactly k unique
     prosa chunk ids that exist in chunks.jsonl, never a raw hype-question
     row id (the hype -> parent dedup is exercised on a real hype collection).
-  * End-to-end determinism: the corrector's run() with the base config
+  * End-to-end determinism: the retrieval_evaluator's run() with the base config
     serializes byte-for-byte identically across two runs.
   * Completion-marker refusal: a collection without its `.complete` sidecar
     must raise a noisy error, never return silent results. Real markers must
@@ -148,24 +148,24 @@ def test_retrieve_on_real_hype_collection_dedups_hype_rows_to_unique_parent_chun
     _assert_retrieval_contract(config, query_vectors, prosa_chunk_ids)
 
 
-def test_running_the_corrector_twice_with_the_base_config_is_byte_for_byte_identical(
+def test_running_the_retrieval_evaluator_twice_with_the_base_config_is_byte_for_byte_identical(
     eval_question_count,
 ):
     """Same config in, same bytes out — no timestamp, no random tie-breaking,
     no ordering drift. Compared on run()'s returned dict serialized as the
-    corrector would write it, so the real results/ directory is never touched.
+    retrieval_evaluator would write it, so the real results/ directory is never touched.
     Skips (rather than writes to real data/) if the query-vector cache is not
     built yet."""
     _require(CHROMA_DIR, "build the collections with `uv run python -m divefy.pipeline.p4_indexing`")
     _require(LABELS_PATH, "produced by the separate Fase 5 labeling task")
     _require(
         QUERY_CACHE_PATH,
-        "query-vector cache built by the corrector on first use; run "
-        "`uv run python -m divefy.evals.corrector` once outside the tests",
+        "query-vector cache built by the retrieval_evaluator on first use; run "
+        "`uv run python -m divefy.evals.retrieval_evaluator` once outside the tests",
     )
     config = _make_config()
     _require_marker(config.collection)
-    from divefy.evals.corrector import run
+    from divefy.evals.retrieval_evaluator import run
 
     first = run(config)
     second = run(config)
@@ -173,7 +173,7 @@ def test_running_the_corrector_twice_with_the_base_config_is_byte_for_byte_ident
     first_bytes = json.dumps(first, ensure_ascii=False).encode("utf-8")
     second_bytes = json.dumps(second, ensure_ascii=False).encode("utf-8")
     assert first_bytes == second_bytes, (
-        "corrector run() is not deterministic for the base config: two runs "
+        "retrieval_evaluator run() is not deterministic for the base config: two runs "
         "serialized to different bytes"
     )
     assert len(first["detalle"]) == eval_question_count, (

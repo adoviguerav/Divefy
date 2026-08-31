@@ -9,7 +9,7 @@ from pathlib import Path
 from rank_bm25 import BM25Okapi
 
 from divefy.config import RetrievalConfig
-from divefy.pipeline import p4_vectorstore
+from divefy.pipeline import p4_vectorstore, p6_rerank
 from divefy.pipeline.p4_indexing import MODELS
 
 K_RRF = 60  # constante k de la fórmula RRF: score = Σ 1/(k + rank). No es de BM25.
@@ -107,10 +107,10 @@ def ensure_query_vectors(model: str, queries: list[str]) -> dict[str, list[float
     return cache
 
 
-# ponytail: caché global por nombre de colección — el corrector llama a retrieve
+# ponytail: caché global por nombre de colección — el retrieval_evaluator llama a retrieve
 # 84 veces por pasada y reconstruir BM25 (tokenizar 723 chunks) en cada query
 # sería puro desperdicio; invalidación innecesaria: las colecciones son
-# inmutables entre indexados y el proceso del corrector es efímero.
+# inmutables entre indexados y el proceso del retrieval_evaluator es efímero.
 _BM25_CACHE: dict[str, Bm25Index] = {}
 
 
@@ -132,9 +132,12 @@ def retrieve(
     if query_vector is None:
         query_vector = embeddings.embed_query(query)
 
-    n_dense = OVERSAMPLE * config.k if config.extras == "hype" else config.k
+    # Con rerank on la misma tubería se ensancha a N candidatos; con off, n == k
+    # y el flujo es byte a byte el de Fase 5.
+    n = p6_rerank.N_CANDIDATES if config.rerank else config.k
+    n_dense = OVERSAMPLE * n if config.extras == "hype" else n
     hits = collection.similarity_search_by_vector(query_vector, k=n_dense)
-    dense_ids = dedup_to_chunk_ids(hits)[: config.k]
+    dense_ids = dedup_to_chunk_ids(hits)[:n]
     if config.search == "densa":
         if len(dense_ids) < config.k:
             # el dedup HyPE→padre puede colapsar los 4·k hits a menos de k padres;
@@ -143,9 +146,17 @@ def retrieve(
                 f"{name}: {len(dense_ids)} de k={config.k} chunks tras el dedup "
                 f"HyPE→padre para {query!r}"
             )
-        return dense_ids
+        candidates = dense_ids
+    else:
+        if name not in _BM25_CACHE:
+            _BM25_CACHE[name] = build_bm25(collection)
+        lexical_ids = _BM25_CACHE[name].top(query, OVERSAMPLE * n)
+        candidates = rrf_fuse([dense_ids, lexical_ids])[:n]
 
-    if name not in _BM25_CACHE:
-        _BM25_CACHE[name] = build_bm25(collection)
-    lexical_ids = _BM25_CACHE[name].top(query, OVERSAMPLE * config.k)
-    return rrf_fuse([dense_ids, lexical_ids])[: config.k]
+    if not config.rerank:
+        return candidates
+
+    rows = collection.get(ids=candidates)
+    text_by_id = dict(zip(rows["ids"], rows["documents"]))
+    pairs = [(chunk_id, text_by_id[chunk_id]) for chunk_id in candidates]
+    return p6_rerank.rerank(query, pairs, config.k)

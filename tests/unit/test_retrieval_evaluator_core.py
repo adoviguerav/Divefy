@@ -1,4 +1,4 @@
-"""Andamiaje del implementador para el corrector (T-05 + revisión de métricas).
+"""Andamiaje del implementador para el retrieval_evaluator (T-05 + revisión de métricas).
 No es el examen — tests/acceptance es lo que congela y evalúa /verify.
 Fixture sintético mini con etiquetas y recuperados conocidos a mano: cada valor
 del resumen está calculado en el comentario, no copiado de la salida.
@@ -8,7 +8,7 @@ import json
 
 import pytest
 
-from divefy.evals.corrector import evaluate, serialize, write_result
+from divefy.evals.retrieval_evaluator import evaluate, serialize, write_result
 
 # --- fixture mini: 4 chunks, 3 preguntas, k=2 ---
 
@@ -107,28 +107,28 @@ def test_golden_sin_preguntas_eval_lanza_error_claro(tmp_path, monkeypatch):
     """Hallazgo 3: golden truncado o campo renombrado → error que lo dice, no
     ZeroDivisionError tres capas más abajo."""
     from divefy.config import RetrievalConfig
-    from divefy.evals import corrector
+    from divefy.evals import retrieval_evaluator
 
     golden = tmp_path / "golden.jsonl"
     golden.write_text(
         json.dumps({"id": "q1", "pregunta": "¿?", "uso": "repaso"}) + "\n", encoding="utf-8"
     )
-    monkeypatch.setattr(corrector, "GOLDEN_PATH", golden)
-    monkeypatch.setattr(corrector, "LABELS_PATH", tmp_path / "labels.jsonl")
+    monkeypatch.setattr(retrieval_evaluator, "GOLDEN_PATH", golden)
+    monkeypatch.setattr(retrieval_evaluator, "LABELS_PATH", tmp_path / "labels.jsonl")
 
     config = RetrievalConfig(corpus="apuntes", extras="base", embedding="bgem3", search="densa", k=5)
     with pytest.raises(ValueError, match="uso=eval"):
-        corrector.run(config)
+        retrieval_evaluator.run(config)
 
 
 def test_rutas_ancladas_al_repo_no_al_cwd(tmp_path, monkeypatch):
-    """Hallazgo 9: el corrector funciona desde cualquier directorio."""
-    from divefy.evals import corrector
+    """Hallazgo 9: el retrieval_evaluator funciona desde cualquier directorio."""
+    from divefy.evals import retrieval_evaluator
 
     monkeypatch.chdir(tmp_path)
-    assert corrector.GOLDEN_PATH.is_absolute()
-    assert corrector.GOLDEN_PATH.exists()
-    assert corrector.LABELS_PATH.exists()
+    assert retrieval_evaluator.GOLDEN_PATH.is_absolute()
+    assert retrieval_evaluator.GOLDEN_PATH.exists()
+    assert retrieval_evaluator.LABELS_PATH.exists()
 
 
 # --- política nunca-se-sobreescribe (sin cambios en la revisión de métricas) ---

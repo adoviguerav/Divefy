@@ -23,6 +23,7 @@ class RetrievalConfig:
     search: str
     k: int
     cap: int = 512
+    rerank: bool = False
 
     def __post_init__(self):
         for campo, valor, permitidos in (
@@ -41,4 +42,5 @@ class RetrievalConfig:
 
     @property
     def run_id(self) -> str:
-        return f"{self.collection}-{self.search}-k{self.k}"
+        base = f"{self.collection}-{self.search}-k{self.k}"
+        return f"{base}-rerank" if self.rerank else base

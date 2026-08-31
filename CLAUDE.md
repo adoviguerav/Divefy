@@ -24,7 +24,8 @@ src/divefy/
   pipeline/          # un módulo por fase, prefijo pN_ para que el orden se vea en `ls`:
                      # p1_ingest → p2_chunking → p3_enrich → p4_indexing/p4_vectorstore →
                      # p5_retrieve → p6_rerank → p7_generate/p7_guardrail
-  evals/             # corrector.py — banco de experimentos (config -> fila de métricas)
+  evals/             # retrieval_evaluator.py (F5) + llm_evaluator.py (F7) — banco de
+                     # experimentos (config -> fila de métricas)
   llm/               # Fase 7 — proveedores API + modelos locales (mlx-lm) tras una
                      # interfaz única que p7_generate.py llama sin saber cuál es cuál;
                      # vacío hasta tener el segundo backend real
@@ -38,7 +39,7 @@ docs/                # idea original, limitaciones hardware, modelo de datos
 
 ## Reglas inmutables
 
-1. **El golden dataset NUNCA se indexa** (`data/eval/golden.jsonl`): es el examen. El corrector usa solo `uso=eval` (84 preguntas).
+1. **El golden dataset NUNCA se indexa** (`data/eval/golden.jsonl`): es el examen. Los evaluadores usan solo `uso=eval` (84 preguntas).
 2. **PADI manda** en conflictos doctrinales con el manual Navy; se citan ambos cuando difieren.
 3. **Números de seguridad textuales del corpus, jamás traducidos ni parafraseados**; todo número emitido pasa el guardarraíl determinista o se convierte en abstención.
 4. **Sin soporte en el corpus → abstención plantilla**, nunca generación sin grounding.
@@ -48,7 +49,7 @@ docs/                # idea original, limitaciones hardware, modelo de datos
 ## Glosario
 
 - **Golden**: las 186 Q-A del curso PADI (84 eval / 102 repaso). Examen, no corpus.
-- **El corrector**: script de evals; una config → una fila de métricas versionada.
+- **Evaluadores**: `retrieval_evaluator` (búsqueda, F5) y `llm_evaluator` (generación, F7); una config → una fila de métricas versionada. (Antes "el corrector".)
 - **Receta**: combinación corpus + tope + extras + embedding + búsqueda (+rerank). La colección Chroma lleva su nombre canónico `corpus-tope-extras-embedding`.
 - **Fija-y-barre**: barrer una dimensión cada vez desde la receta base; nunca el cruce completo.
 - **section_id**: identificador estable de sección (`9-3.2`, `fichero#sección`) — las etiquetas del eval y el recall@k dependen de él.

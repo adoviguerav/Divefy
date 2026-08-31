@@ -63,7 +63,7 @@ def test_hibrida_sobre_coleccion_real_cumple_el_contrato(extras):
     if not marker.exists():
         pytest.skip(f"falta {marker} — construir con `uv run python -m divefy.pipeline.p4_indexing`")
     if not CACHE_BGEM3.exists():
-        pytest.skip(f"falta {CACHE_BGEM3} — la construye el corrector en su primera pasada")
+        pytest.skip(f"falta {CACHE_BGEM3} — la construye el retrieval_evaluator en su primera pasada")
 
     cache = json.loads(CACHE_BGEM3.read_text(encoding="utf-8"))
     query, vector = next(iter(cache.items()))

@@ -16,7 +16,7 @@ Python + uv · LangChain · Chroma · BGE-M3 · mlx-lm (Apple Silicon) · LangSm
 ## Estructura
 
 ```
-src/divefy/       # un módulo por fase del pipeline RAG + el corrector (evals)
+src/divefy/       # un módulo por fase del pipeline RAG + los evaluadores (evals)
 data/raw/         # fuentes: manual Navy (PDF) + apuntes PADI (markdown)
 data/processed/   # salida de la ingesta (regenerable)
 data/eval/        # etiquetas y cachés de evaluación
@@ -31,7 +31,7 @@ uv sync          # instala dependencias
 uv run pytest    # corre los tests
 ```
 
-(Los comandos de ingesta, indexado, corrector y chat se añaden aquí según se implementan las fases.)
+(Los comandos de ingesta, indexado, evaluadores y chat se añaden aquí según se implementan las fases.)
 
 ## Estado
 
