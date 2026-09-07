@@ -207,27 +207,41 @@ class TestRerankSemantics:
 # ---------------------------------------------------------------------------
 
 
-class TestCorrectorDeterminismWithRerank:
-    def test_run_twice_serializes_byte_identical(self):
-        # Slow (~1.5s/query x 84 queries x 2 + one-time model load), but this
-        # is the exam — do not skip when the artifacts exist.
-        _require(CHUNKS_PATH, "run p1/p2 ingest+chunking first")
-        _require(GOLDEN_PATH, "golden dataset missing (never indexed, only read by retrieval_evaluator)")
-        _require(LABELS_PATH, "run labeling first")
-        _require(CHROMA_DIR, "run p4 indexing first")
-        _require_marker(COLLECTION)
-        _require_reranker_cache()
+class TestRetrievalRegression:
+    """The winning config re-run must serialize byte-identical to its stored
+    results/ row. Red means something in the chain (chunking, index, retrieval,
+    rerank, serialization) moved the winning row: read the diff — intended
+    change => delete the stored row and relaunch the config; otherwise it is
+    a regression. Nondeterminism shows up here too, as intermittent mismatches.
+    Runs only with the slow marker (/verify or on demand), ~2 min."""
 
+    WINNING_ROW = ROOT / "results" / "combined-512-contextual-qwen8b-hibrida-k10-rerank.json"
+    WINNING_COLLECTION = "combined-512-contextual-qwen8b"
+    QWEN8B_QUERY_CACHE = ROOT / "data" / "eval" / "query-embeddings-qwen8b.json"
+
+    @pytest.mark.slow
+    def test_winning_config_matches_stored_row(self):
+        _require(CHUNKS_PATH, "run p1/p2 ingest+chunking first")
+        _require(GOLDEN_PATH, "golden dataset missing (never indexed, only read)")
+        _require(LABELS_PATH, "run labeling first")
+        _require_marker(self.WINNING_COLLECTION)
+        _require_reranker_cache()
+        _require(self.QWEN8B_QUERY_CACHE, "qwen8b query-vector cache (without it the test would need Ollama live)")
+        _require(self.WINNING_ROW, "winning row not in results/ yet — run the F6 winning config first")
+
+        from divefy.config import RetrievalConfig
         from divefy.evals.retrieval_evaluator import run, serialize
 
-        cfg = _make_config(k=5, rerank=True)
-        assert cfg.run_id.endswith("-rerank")
+        cfg = RetrievalConfig(
+            corpus="combined", extras="contextual", embedding="qwen8b",
+            search="hibrida", k=10, cap=512, rerank=True,
+        )
+        # The reference filename is derived from the config — if run_id drifts,
+        # this fails loudly instead of comparing against the wrong row.
+        assert self.WINNING_ROW.name == f"{cfg.run_id}.json"
 
-        first = run(cfg)
-        # Reuse the first result for shape assertions before paying for run #2.
-        assert set(first) >= {"config", "resumen", "detalle"}
-
-        second = run(cfg)
-        assert serialize(first) == serialize(second), (
-            "retrieval_evaluator.run() with rerank=True must be byte-stable across runs"
+        stored = self.WINNING_ROW.read_text(encoding="utf-8")
+        assert serialize(run(cfg)) == stored, (
+            "the regenerated winning row differs from results/ — intended change "
+            "=> delete the stored row and relaunch; otherwise a retrieval regression"
         )
