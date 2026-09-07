@@ -38,7 +38,7 @@ COLLECTION = "combined-512-contextual-bgem3"
 COLLECTION_MARKER = CHROMA_DIR / f"{COLLECTION}.complete"
 CONSTANTES_PATH = ROOT / "data" / "guardrail" / "constantes.jsonl"
 GOLDEN_PATH = ROOT / "data" / "eval" / "golden.jsonl"
-PROMPTS_DIR = ROOT / "prompts"
+PROMPTS_DIR = ROOT / "src" / "divefy" / "prompts"
 
 # Fresh plain-Spanish questions written for these tests — never from the golden dataset.
 Q_AIRE = "¿Qué hago si el aire de mi botella se está agotando durante la inmersión?"
