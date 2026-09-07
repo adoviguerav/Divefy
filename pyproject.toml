@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Copiloto conversacional RAG de seguridad en buceo, sobre un banco de experimentos"
 requires-python = ">=3.12"
 dependencies = [
+    "deepeval>=4.2.2",
     "docling>=2.121.0",
     "google-genai>=2.19.0",
     "langchain-anthropic>=1.7.1",

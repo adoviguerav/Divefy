@@ -230,7 +230,9 @@ def tabla() -> None:
     if not filas:
         print(f"{RESULTS_DIR} vacío — nada que resumir")
         return
-    claves = list(filas[0]["resumen"])
+    # Unión de claves preservando orden: results/ mezcla filas de retrieval y de
+    # generación (F7) con resúmenes distintos; una fila sin una clave pinta "—".
+    claves = list(dict.fromkeys(k for fila in filas for k in fila["resumen"]))
     html = RESULTS_DIR / "RESUMEN.html"
     html.write_text(_tabla_html(filas, claves), encoding="utf-8")
     print(f"{html}: {len(filas)} runs — abrir con `open {html}`")
@@ -245,7 +247,7 @@ def _tabla_html(filas: list[dict], claves: list[str]) -> str:
     datos = [
         # .get: las filas anteriores a F6 no llevan la clave "rerank" (= off)
         {**{c: fila["config"].get(c, False) for c in _CONFIG_COLS},
-         **{k: fila["resumen"][k] for k in claves}}
+         **{k: fila["resumen"].get(k) for k in claves}}
         for fila in filas
     ]
     columnas = list(_CONFIG_COLS) + claves
