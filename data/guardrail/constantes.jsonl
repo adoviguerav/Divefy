@@ -1,0 +1,87 @@
+{"numero": "18", "unidad": "m/min", "concepto": "Velocidad máxima de ascenso PADI (o más lento si el ordenador lo marca)", "fuente": "PADI", "section_id": "Habilidades prácticas#Ascensos en aguas abiertas"}
+{"numero": "30", "unidad": "fsw/min", "concepto": "CONFLICTO con PADI (18 m/min): velocidad de ascenso del manual Navy — 20 segundos por cada 10 fsw", "fuente": "Navy", "section_id": "9-6.3"}
+{"numero": "20", "unidad": "fsw/min", "concepto": "Navy: límite inferior de la variación aceptable de ascenso (20-40 fsw/min)", "fuente": "Navy", "section_id": "9-6.3"}
+{"numero": "40", "unidad": "fsw/min", "concepto": "Navy: variación aceptable máxima; ascenso desde la parada de 40 fsw a superficie en descompresión en superficie", "fuente": "Navy", "section_id": "9-6.3"}
+{"numero": "10", "unidad": "fsw", "concepto": "Navy: el ritmo 30 fsw/min equivale a 20 segundos por cada 10 fsw", "fuente": "Navy", "section_id": "9-6.3"}
+{"numero": "40", "unidad": "fsw", "concepto": "Navy: parada de agua de 40 fsw en descompresión en superficie", "fuente": "Navy", "section_id": "9-6.3"}
+{"numero": "10", "unidad": "m/min", "concepto": "Límite de ascenso típico de la mayoría de ordenadores", "fuente": "PADI", "section_id": "Habilidades prácticas#Ascensos en aguas abiertas"}
+{"numero": "3", "unidad": "m", "concepto": "Ritmo de ascenso alternativo: no pasar de 3 m cada 10 segundos; saltos de 3 m en planificación; tramo 6→3 m de la parada", "fuente": "PADI", "section_id": "Habilidades prácticas#Ascensos en aguas abiertas"}
+{"numero": "5", "unidad": "m", "concepto": "Profundidad de la parada de seguridad (±1 m); fondeo del barco a 5-6 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "1", "unidad": "m", "concepto": "Tolerancia de la parada (5 m ±1 m); tubo de señalización sobresale >1 m; la resaca se disipa a ~1 m", "fuente": "PADI", "section_id": "Habilidades prácticas#Ascensos en aguas abiertas"}
+{"numero": "3", "unidad": "min", "concepto": "Duración mínima de la parada de seguridad", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "5", "unidad": "min", "concepto": "Parada de seguridad habitual de 3-5 min (típicamente a 5 m)", "fuente": "PADI", "section_id": "Habilidades prácticas#Ascensos en aguas abiertas"}
+{"numero": "6", "unidad": "m", "concepto": "Ralentizar al pasar 6 m en el ascenso; O₂ puro tóxico por debajo de 6 m; inmersión muy superficial (≤6 m)", "fuente": "PADI", "section_id": "Fisiología y salud#Problemas con el oxígeno"}
+{"numero": "9", "unidad": "m", "concepto": "ACEN: profundidad máxima 6-9 m; el ejercicio en confinadas recorre ≥9 m", "fuente": "PADI", "section_id": "Gestión de problemas#Problemas bajo el agua"}
+{"numero": "18", "unidad": "m", "concepto": "Límite de profundidad Open Water; NDL RDP a 18 m: 56 min", "fuente": "PADI", "section_id": "Fisiología y salud#Narcosis por gas"}
+{"numero": "40", "unidad": "m", "concepto": "Máximo recreativo con formación adicional; límite con aire por toxicidad de O₂; NDL RDP: 9 min", "fuente": "PADI", "section_id": "Fisiología y salud#Narcosis por gas"}
+{"numero": "130", "unidad": "fsw", "concepto": "CONTRASTE con los límites PADI (18/40 m): máximo normal SCUBA Navy (7-2.1); la narcosis con aire suele aparecer ~130 fsw (3-9.1)", "fuente": "Navy", "section_id": "7-2.1"}
+{"numero": "190", "unidad": "fsw", "concepto": "Navy: máximo SCUBA con aprobación del mando", "fuente": "Navy", "section_id": "7-2.1"}
+{"numero": "200", "unidad": "fsw", "concepto": "Navy: narcosis muy prominente a 200 fsw", "fuente": "Navy", "section_id": "3-9.1"}
+{"numero": "30", "unidad": "m", "concepto": "Narcosis suele aparecer hacia los 30 m con aire/EANx; NDL RDP a 30 m: 20 min; presión 4 atm", "fuente": "PADI", "section_id": "Fisiología y salud#Narcosis por gas"}
+{"numero": "12", "unidad": "m", "concepto": "Descenso de 5 puntos del curso: máx 12 m; NDL RDP a 12 m: 147 min", "fuente": "PADI", "section_id": "Habilidades prácticas#Checklists de inmersiones del curso"}
+{"numero": "0", "unidad": "m", "concepto": "Superficie: 0 m = 1 atm", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "10", "unidad": "m", "concepto": "+1 atm por cada 10 m (agua salada); apnea del curso hasta ~10 m; NDL RDP a 10 m: 219 min", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "10,3", "unidad": "m", "concepto": "En agua dulce son ~10,3 m por atm (el curso usa 10)", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "20", "unidad": "m", "concepto": "NDL RDP a 20 m: 45 min; presión 3 atm", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "14", "unidad": "m", "concepto": "NDL RDP a 14 m: 98 min", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "16", "unidad": "m", "concepto": "NDL RDP a 16 m: 72 min", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "22", "unidad": "m", "concepto": "NDL RDP a 22 m: 37 min", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "25", "unidad": "m", "concepto": "NDL RDP a 25 m: 29 min", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "35", "unidad": "m", "concepto": "NDL RDP a 35 m: 14 min", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "15", "unidad": "m", "concepto": "Cabo del flotador ≥15 m; buceador a máx ~15 m de la bandera; ejercicio de nado sin máscara: 15 m", "fuente": "PADI", "section_id": "Material y equipo#Flotadores de superficie y banderas de buceo"}
+{"numero": "60", "unidad": "m", "concepto": "Barcos a mínimo 30-60 m de la bandera de buceo", "fuente": "PADI", "section_id": "Material y equipo#Flotadores de superficie y banderas de buceo"}
+{"numero": "100", "unidad": "m", "concepto": "Banderas de buceo visibles a 100 m", "fuente": "PADI", "section_id": "Material y equipo#Flotadores de superficie y banderas de buceo"}
+{"numero": "300", "unidad": "m", "concepto": "Buceo en altitud: procedimientos especiales a partir de 300 m de elevación", "fuente": "PADI", "section_id": "Fisiología y salud#Volar después de bucear y buceo en altitud"}
+{"numero": "600", "unidad": "m", "concepto": "Cabinas de avión presurizadas a 600-2400 m (base de las recomendaciones de vuelo)", "fuente": "PADI", "section_id": "Fisiología y salud#Volar después de bucear y buceo en altitud"}
+{"numero": "2400", "unidad": "m", "concepto": "Cabinas de avión presurizadas a 600-2400 m", "fuente": "PADI", "section_id": "Fisiología y salud#Volar después de bucear y buceo en altitud"}
+{"numero": "4", "unidad": "m", "concepto": "Con frío o esfuerzo: planificar con RDP/eRDPML como si la inmersión fuera 4 m más profunda", "fuente": "PADI", "section_id": "Fisiología y salud#Inmersiones con frío o agotadoras"}
+{"numero": "219", "unidad": "min", "concepto": "NDL RDP a 10 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "147", "unidad": "min", "concepto": "NDL RDP a 12 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "98", "unidad": "min", "concepto": "NDL RDP a 14 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "72", "unidad": "min", "concepto": "NDL RDP a 16 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "56", "unidad": "min", "concepto": "NDL RDP a 18 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "45", "unidad": "min", "concepto": "NDL RDP a 20 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "37", "unidad": "min", "concepto": "NDL RDP a 22 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "29", "unidad": "min", "concepto": "NDL RDP a 25 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "20", "unidad": "min", "concepto": "NDL RDP a 30 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "14", "unidad": "min", "concepto": "NDL RDP a 35 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "9", "unidad": "min", "concepto": "NDL RDP a 40 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "55", "unidad": "min", "concepto": "Ejemplo multinivel del curso: NDL 55 min planificado a 18 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "25", "unidad": "min", "concepto": "Ejemplo multinivel: quedan 25 min tras 30 min a 18 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "30", "unidad": "min", "concepto": "Ejemplo multinivel: 30 min transcurridos; agua caliente 30-90 min para púas", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "83", "unidad": "min", "concepto": "Ejemplo multinivel: la lectura sube a 83 min al ascender a 12 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "140", "unidad": "min", "concepto": "Ejemplo multinivel: los 140 min de la planificación", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "90", "unidad": "min", "concepto": "Agua caliente (máx 49 ºC) durante 30-90 min para púas de peces y rayas", "fuente": "PADI", "section_id": "Entornos y condiciones#Vida acuática"}
+{"numero": "1", "unidad": "min", "concepto": "Apnea del curso: hasta ~10 m y ~1 minuto", "fuente": "PADI", "section_id": "Habilidades prácticas#Buceo en apnea (freediving básico)"}
+{"numero": "12", "unidad": "h", "concepto": "Volar: mínimo 12 h tras inmersión simple sin paradas; intervalo para volver a inmersión 'limpia'; espera al cambiar de ordenador", "fuente": "PADI", "section_id": "Fisiología y salud#Volar después de bucear y buceo en altitud"}
+{"numero": "18", "unidad": "h", "concepto": "Volar: 18 h tras sucesivas o varios días buceando; más de 18 h si hubo paradas de descompresión de emergencia", "fuente": "PADI", "section_id": "Fisiología y salud#Volar después de bucear y buceo en altitud"}
+{"numero": "24", "unidad": "h", "concepto": "No volver a bucear en ≥24 h tras parada de descompresión de emergencia; batería del ordenador avisa para 12-24 h", "fuente": "PADI", "section_id": "Fisiología y salud#Paradas de descompresión de emergencia"}
+{"numero": "3", "unidad": "h", "concepto": "NDL orientativo: >3 horas a 10 m", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "1", "unidad": "h", "concepto": "NDL orientativo: <1 hora a 18 m; confort del equipo: llevarlo 1 h+ sin molestia", "fuente": "PADI", "section_id": "Fisiología y salud#Buceo sin paradas"}
+{"numero": "200", "unidad": "bar", "concepto": "Presión típica de botella llena (~200 bar); base de los ejemplos de gestión de aire", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "60", "unidad": "bar", "concepto": "Reserva de seguridad del ejemplo estándar; llegar a superficie con al menos esa reserva", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "30", "unidad": "bar", "concepto": "Reserva de ascenso/parada del ejemplo estándar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "90", "unidad": "bar", "concepto": "Ejemplo: iniciar ascenso a 60+30 = 90 bar; volver al punto de salida con ~90 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "110", "unidad": "bar", "concepto": "Ejemplo: presión disponible 200−90 = 110 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "55", "unidad": "bar", "concepto": "Ejemplo: mitad para ir, mitad para volver (110/2 = 55 bar)", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "145", "unidad": "bar", "concepto": "Ejemplo: punto de inflexión 200−55 = 145 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "157", "unidad": "bar", "concepto": "Ejemplo regla de los tercios: dar la vuelta a 157 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "130", "unidad": "bar", "concepto": "Ejemplo regla de los tercios: disponible 130 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "50", "unidad": "bar", "concepto": "Ejemplo regla de los tercios: reserva 50 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "43", "unidad": "bar", "concepto": "Ejemplo regla de los tercios: un tercio del disponible ≈ 43 bar", "fuente": "PADI", "section_id": "Habilidades prácticas#Sistema de compañeros"}
+{"numero": "20", "unidad": "bar", "concepto": "No vaciar la botella del todo (dejar ~20 bar); reserva de parada en el ejemplo de tercios", "fuente": "PADI", "section_id": "Material y equipo#Botellas"}
+{"numero": "4", "unidad": "bar", "concepto": "La profundidad añade 1-4 bar frente a los ~200 de la botella", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "1", "unidad": "atm", "concepto": "Presión en superficie (0 m)", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "2", "unidad": "atm", "concepto": "Presión absoluta a 10 m", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "3", "unidad": "atm", "concepto": "Presión absoluta a 20 m", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "4", "unidad": "atm", "concepto": "Presión absoluta a 30 m", "fuente": "PADI", "section_id": "Física#Física de la inmersión — por fase"}
+{"numero": "79", "unidad": "%", "concepto": "Aire: 79% nitrógeno", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "21", "unidad": "%", "concepto": "Aire: 21% oxígeno", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "1", "unidad": "%", "concepto": "Gases menores del aire: suman <1%", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "22", "unidad": "%", "concepto": "Nitrox EANx: mínimo 22% de O₂", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "32", "unidad": "%", "concepto": "Nitrox recreativo típico: 32%", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "36", "unidad": "%", "concepto": "Nitrox recreativo típico: 36%", "fuente": "PADI", "section_id": "Fisiología y salud#El aire que respiras"}
+{"numero": "100", "unidad": "%", "concepto": "O₂ puro (tóxico por debajo de 6 m); primeros auxilios con O₂ al 100%", "fuente": "PADI", "section_id": "Fisiología y salud#Problemas con el oxígeno"}
+{"numero": "33", "unidad": "%", "concepto": "Bajo el agua los objetos parecen ~33% más grandes", "fuente": "PADI", "section_id": "Física#Ver y oír bajo el agua"}
+{"numero": "25", "unidad": "%", "concepto": "…o ~25% más cerca de lo real", "fuente": "PADI", "section_id": "Física#Ver y oír bajo el agua"}
+{"numero": "49", "unidad": "ºC", "concepto": "Agua caliente a máx 49 ºC para púas de peces y rayas", "fuente": "PADI", "section_id": "Entornos y condiciones#Vida acuática"}
