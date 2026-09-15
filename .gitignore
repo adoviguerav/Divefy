@@ -184,9 +184,9 @@ cython_debug/
 
 # Mis archivos
 cosasparaprogramar.md
-SKILLS_USAGE.md
+
 Organización carpetas proyecto.md
-.claude
+
 
 # Divefy: artefactos regenerables de la ingesta (data/raw/ es la fuente)
 data/processed/
