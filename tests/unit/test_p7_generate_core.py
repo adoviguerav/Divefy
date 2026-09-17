@@ -10,8 +10,10 @@ from divefy.pipeline import p7_generate
 
 
 def test_prompt_version_comes_from_filename():
-    assert p7_generate.PROMPT_VERSION == "generation_v1"
-    assert p7_generate.GENERATION_PROMPT_PATH.name == "generation_v1.txt"
+    # La propiedad, no el literal: la versión estampada deriva SIEMPRE del
+    # nombre del fichero vigente, y ese fichero existe.
+    assert p7_generate.PROMPT_VERSION == p7_generate.GENERATION_PROMPT_PATH.stem
+    assert p7_generate.GENERATION_PROMPT_PATH.is_file()
 
 
 def test_system_prompt_interpolates_abstention_template():

@@ -22,16 +22,21 @@ from pathlib import Path
 # Dentro del paquete (veto de Adolfo a la decisión 13, 2026-09-07): los prompts
 # son parte de divefy, viajan con él.
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
-GENERATION_PROMPT_PATH = PROMPTS_DIR / "generation_v1.txt"
+# v2 (2026-09-16, decisión de Adolfo): voz hablada de instructor y sin citar
+# fuentes — el usuario ya asume material fiable — SALVO en conflictos
+# PADI/Navy, donde nombrarlas es parte de la respuesta.
+GENERATION_PROMPT_PATH = PROMPTS_DIR / "generation_v2.txt"
 PROMPT_VERSION = GENERATION_PROMPT_PATH.stem  # se estampa en la fila del eval (T-05)
 CONSTANTES_PATH = p4_vectorstore.REPO_ROOT / "data" / "guardrail" / "constantes.jsonl"
 
 # Plantilla fija de abstención (regla inmutable 4): el modelo la emite EXACTA o
 # no hay respuesta. Fuente única aquí; el prompt la recibe interpolada.
+# Sin nombrar fuentes (decisión 2026-09-17): las referencias viven en el estado
+# del RAG (chunks + metadata), jamás en la prosa ni en la plantilla.
 ABSTENTION_TEMPLATE = (
-    "No encuentro soporte en mi corpus (manual US Navy Rev 7 + apuntes PADI) para "
-    "responder con seguridad. Consulta el material oficial o a tu instructor; para "
-    "cálculos de planificación usa tu eRDPML u ordenador de buceo."
+    "No tengo información suficiente para responderte con seguridad. Consulta el "
+    "material oficial de tu curso o pregunta a tu instructor; para cálculos de "
+    "planificación usa tu eRDPML u ordenador de buceo."
 )
 
 _AVISO_REINTENTO = (

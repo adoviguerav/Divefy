@@ -16,7 +16,10 @@ from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
-JUDGE_PROMPT_PATH = PROMPTS_DIR / "judge_v1.txt"
+# v2 (2026-09-17, calibración 15/19 con Adolfo): mata la "lista blanca" de
+# números (información extra correcta no resta) y endurece el lado blando
+# (claims que enturbian una conclusión de seguridad, o avisos omitidos).
+JUDGE_PROMPT_PATH = PROMPTS_DIR / "judge_v2.txt"
 PROMPT_VERSION = JUDGE_PROMPT_PATH.stem  # se estampa en la fila del eval
 
 # Confirmado contra la referencia vigente de OpenAI (2026-09-07) y decidido por
@@ -59,6 +62,13 @@ def _metric():
             ],
             model=OpenAIModel(
                 model=JUDGE_MODEL,
+                # deepeval manda temperature=0 salvo que el modelo esté en su
+                # registro; Luna (razonadora, aún no registrada) solo acepta 1.
+                # Decisión 2026-09-16: la validez del juez la mide la
+                # calibración (≥90% acuerdo + doble pasada de estabilidad),
+                # no el termostato — el sector retiró el mando en toda la
+                # generación actual (GPT-5.x, Gemini 3.x).
+                temperature=1,
                 generation_kwargs={"reasoning_effort": JUDGE_EFFORT},
             ),
             # Score continuo 0-1 (ponderado por logprobs, paper G-Eval) + umbral
@@ -95,8 +105,10 @@ def calibrate(path: Path = CALIBRATION_PATH) -> dict:
     {aprobado, suspenso}."""
     with path.open(encoding="utf-8") as fh:
         rows = [json.loads(line) for line in fh if line.strip()]
+    # Solo las etiquetadas: una fila sin etiqueta está pendiente, no en desacuerdo.
+    rows = [r for r in rows if r.get("etiqueta")]
     if not rows:
-        raise ValueError(f"{path} vacío — etiquetar 20-30 respuestas primero")
+        raise ValueError(f"{path} sin filas etiquetadas — etiquetar 20-30 respuestas primero")
     desacuerdos = []
     for row in rows:
         veredicto = grade(row["pregunta"], row["respuesta"], row["esperada"])

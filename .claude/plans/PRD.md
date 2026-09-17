@@ -398,6 +398,7 @@ Con todas las variantes registradas en las fases 1-8, se define el grid (fija-y-
 
 - Web UI → vLLM en GPU alquilada → camino embedded.
 - Triaje manual de las tablas del Navy Diving Manual (documento de apoyo, no fuente primaria — PADI manda en conflicto): en vez de la regla binaria actual de Fase 1 (toda tabla numérica fuera, solo puntero), extraerlas, leerlas una a una y decidir caso por caso cuáles aportan valor real al RAG frente a cuáles no. Aparcado porque el Navy es secundario y ninguna de las 186 preguntas del golden lo requiere hoy.
+- Jev (TypeSafe AI, lanzado 2026-09-15): modelo de decisiones tipadas sin generación de texto — elige entre opciones, puntúa contra escala o da sí/no con probabilidad ($0.042/M entrada, 70-500ms, API cerrada en early access). Aparcado 2026-09-17 (decisión de Adolfo: "apuntarlo para ver alguna vez, ahora no"). Papeles candidatos SI algún día el dato lo pide: (a) clasificador "¿pide cálculo?" para el eval fresco de abstención (P1); (b) bake-off de jueces: cualquier candidato se enchufa a `judge.calibrate()` contra las etiquetas ciegas de Adolfo y compite por el ≥90% a céntimos. NO vale para: guardarraíl numérico (el nuestro es determinista, no se degrada a probabilístico) ni reranker (bge local gratis ya medido).
 
 ## 8. Success Metrics
 

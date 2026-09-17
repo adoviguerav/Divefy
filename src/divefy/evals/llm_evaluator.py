@@ -9,6 +9,8 @@ write_result importados, no copiados — política nunca-sobreescribir intacta).
 import argparse
 import json
 import logging
+from datetime import datetime
+from pathlib import Path
 
 import divefy.evals.judge as judge  # atributo de módulo: costura parcheable
 from divefy.config import RetrievalConfig
@@ -44,7 +46,13 @@ def run(retrieval_config: RetrievalConfig, model) -> dict:
         if respuesta.abstencion:
             veredicto, score = ABSTENCION, None
         else:
-            veredicto = judge.grade(g["pregunta"], respuesta.respuesta, g["respuesta_esperada"])
+            # En el golden respuesta_esperada es lista (hoy siempre de 1); el
+            # juez recibe texto plano — variantes futuras se unen como
+            # alternativas explícitas.
+            esperada = g["respuesta_esperada"]
+            if isinstance(esperada, list):
+                esperada = "\nO BIEN (alternativa igual de válida):\n".join(esperada)
+            veredicto = judge.grade(g["pregunta"], respuesta.respuesta, esperada)
             # Score fino del juez real (None con un juez fake que no lo rellene).
             score = (getattr(judge, "last", None) or {}).get("score")
         detalle.append(
@@ -85,6 +93,27 @@ def run(retrieval_config: RetrievalConfig, model) -> dict:
     return {"config": config_dict, "resumen": resumen, "detalle": detalle}
 
 
+def setup_logging(run_id: str) -> Path:
+    """Consola limpia (INFO: progreso [i/84]) + fichero con TODO el detalle
+    (DEBUG de divefy: estado JSON por etapa del pipeline —decisión 17— y
+    score+razón del juez). Un fichero por pasada, timestamp para no pisar
+    relanzamientos del mismo run_id (p. ej. tras rúbrica v2)."""
+    log_path = Path("logs") / f"{run_id}-{datetime.now():%Y%m%d-%H%M%S}.log"
+    log_path.parent.mkdir(exist_ok=True)
+    consola = logging.StreamHandler()
+    consola.setLevel(logging.INFO)
+    consola.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
+    fichero = logging.FileHandler(log_path, encoding="utf-8")
+    fichero.setFormatter(
+        logging.Formatter("%(asctime)s %(name)s %(levelname)s %(message)s")
+    )
+    logging.basicConfig(level=logging.INFO, handlers=[consola, fichero])
+    # Solo nuestro paquete baja a DEBUG; las librerías (httpx, openai…) se
+    # quedan en INFO para no inundar el fichero.
+    logging.getLogger("divefy").setLevel(logging.DEBUG)
+    return log_path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="llm_evaluator: config + modelo → results/{run_id}.json"
@@ -104,12 +133,14 @@ def main() -> None:
         corpus=args.corpus, extras=args.extras, embedding=args.embedding,
         search=args.search, k=args.k, cap=args.cap, rerank=args.rerank,
     )
+    log_path = setup_logging(f"{config.run_id}-{args.model}")
+    logger.info("log completo de la pasada: %s", log_path)
     data = run(config, args.model)
     estado = write_result(data, RESULTS_DIR / f"{data['config']['run_id']}.json")
     print(f"[{estado}] {RESULTS_DIR / (data['config']['run_id'] + '.json')}")
     print(json.dumps(data["resumen"], ensure_ascii=False, indent=2))
+    print(f"log: {log_path}")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     main()
