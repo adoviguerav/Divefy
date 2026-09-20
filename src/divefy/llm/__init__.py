@@ -20,7 +20,12 @@ API_MODELS = {
     "sonnet5": "claude-sonnet-5",
     "haiku45": "claude-haiku-4-5",
 }
-MLX_MODELS = ("qwen9b", "qwen4b")
+# Builds de texto 4-bit de mlx-community (T-06, verificados en HF 2026-09-17);
+# los "-MLX-4bit" son conversiones mlx-vlm (visión) — estos "-4bit" cargan con mlx-lm.
+MLX_MODELS = {
+    "qwen9b": "mlx-community/Qwen3.5-9B-4bit",
+    "qwen4b": "mlx-community/Qwen3.5-4B-4bit",
+}
 
 MAX_TOKENS = 4096  # holgado: en Sonnet 5 el thinking adaptativo cuenta contra este tope
 
@@ -49,6 +54,50 @@ def _solo_texto(content) -> str:
     )
 
 
+# Backend MLX (T-06): modelo+tokenizer perezosos por clave.
+_mlx_backends: dict[str, tuple] = {}
+
+
+def _mlx_load(model: str):
+    if model not in _mlx_backends:
+        from mlx_lm import load
+
+        _mlx_backends[model] = load(MLX_MODELS[model])
+    return _mlx_backends[model]
+
+
+def _chat_tokens(tokenizer, mensajes: list[dict]) -> list[int]:
+    """Tokens del template de chat, con el thinking de Qwen apagado (queremos
+    la respuesta directa; el except cubre plantillas sin ese kwarg)."""
+    try:
+        return tokenizer.apply_chat_template(
+            mensajes, add_generation_prompt=True, enable_thinking=False
+        )
+    except TypeError:
+        return tokenizer.apply_chat_template(mensajes, add_generation_prompt=True)
+
+
+def _generate_mlx(model: str, system: str, user: str) -> str:
+    import re
+
+    from mlx_lm import generate as mlx_generate
+
+    modelo, tokenizer = _mlx_load(model)
+    tokens = _chat_tokens(
+        tokenizer,
+        [{"role": "system", "content": system}, {"role": "user", "content": user}],
+    )
+    # ponytail: sin caché KV del system prompt — la plantilla de chat de Qwen
+    # exige un mensaje de usuario para renderizar, así que no se puede aislar
+    # el prefijo del system sin arriesgar un recorte de tokens mal alineado
+    # (bug silencioso en las respuestas). Añadir cuando 84 generaciones
+    # seguidas midan lento de verdad — hoy no hay dato que lo pida.
+    texto = mlx_generate(modelo, tokenizer, prompt=tokens, max_tokens=MAX_TOKENS)
+
+    # Defensivo: si la plantilla ignoró enable_thinking, fuera el bloque <think>.
+    return re.sub(r"<think>.*?</think>", "", texto, flags=re.DOTALL).strip()
+
+
 def generate(model: str, system: str, user: str) -> str:
     """Una firma para los 4 modelos. `model` es la clave del experimento
     (sonnet5/haiku45/qwen9b/qwen4b), no el id del proveedor."""
@@ -58,9 +107,7 @@ def generate(model: str, system: str, user: str) -> str:
         )
         return _solo_texto(respuesta.content)
     if model in MLX_MODELS:
-        raise NotImplementedError(
-            f"backend mlx pendiente (T-06, gated al repaso de teoría local): {model!r}"
-        )
+        return _generate_mlx(model, system, user)
     raise ValueError(
         f"modelo desconocido {model!r}; válidos: {sorted(API_MODELS) + sorted(MLX_MODELS)}"
     )

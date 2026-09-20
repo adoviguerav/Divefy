@@ -16,12 +16,13 @@ def test_prompt_version_comes_from_filename():
     assert p7_generate.GENERATION_PROMPT_PATH.is_file()
 
 
-def test_system_prompt_interpolates_abstention_template():
+def test_system_prompt_instructs_sentinel_not_template():
+    # Diseño 2026-09-17: el modelo emite la palabra centinela y el CÓDIGO pone
+    # la plantilla — el texto sagrado nunca viaja por el LLM.
     system = p7_generate._system_prompt()
-    assert "{abstention_template}" not in system, "el placeholder debe interpolarse"
-    assert p7_generate.ABSTENTION_TEMPLATE in system, (
-        "la plantilla del prompt y la constante deben ser la MISMA cadena — "
-        "si divergen, la comparación exacta de abstención se rompe"
+    assert p7_generate.ABSTENTION_SENTINEL in system, "el prompt debe enseñar la palabra"
+    assert p7_generate.ABSTENTION_TEMPLATE not in system, (
+        "la plantilla no debe estar en el prompt: la emite p7_generate.answer()"
     )
 
 

@@ -31,6 +31,10 @@ CONSTANTES_PATH = p4_vectorstore.REPO_ROOT / "data" / "guardrail" / "constantes.
 
 # Plantilla fija de abstención (regla inmutable 4): el modelo la emite EXACTA o
 # no hay respuesta. Fuente única aquí; el prompt la recibe interpolada.
+# La palabra que el MODELO emite para abstenerse (decisión 2026-09-17): el
+# código la sustituye por la plantilla — el LLM nunca copia texto sagrado.
+ABSTENTION_SENTINEL = "ABSTENER"
+
 # Sin nombrar fuentes (decisión 2026-09-17): las referencias viven en el estado
 # del RAG (chunks + metadata), jamás en la prosa ni en la plantilla.
 ABSTENTION_TEMPLATE = (
@@ -55,8 +59,7 @@ class Answer:
 
 
 def _system_prompt() -> str:
-    plantilla = GENERATION_PROMPT_PATH.read_text(encoding="utf-8")
-    return plantilla.replace("{abstention_template}", ABSTENTION_TEMPLATE)
+    return GENERATION_PROMPT_PATH.read_text(encoding="utf-8")
 
 
 def _constantes() -> list[dict]:
@@ -113,8 +116,11 @@ def answer(retrieval_config: RetrievalConfig, model, pregunta: str) -> Answer:
         if verdict != "ok":
             respuesta = ABSTENTION_TEMPLATE  # abstener_cifra: reincidió
 
-    if respuesta.strip() == ABSTENTION_TEMPLATE:
-        respuesta = ABSTENTION_TEMPLATE  # normaliza espacios accidentales del modelo
+    # El modelo se abstiene con la palabra centinela; se acepta también la
+    # plantilla literal (contrato de los tests congelados y del guardarraíl,
+    # que abstiene poniendo la plantilla directamente).
+    if respuesta.strip() in (ABSTENTION_SENTINEL, ABSTENTION_TEMPLATE):
+        respuesta = ABSTENTION_TEMPLATE
         abstencion = True
     else:
         abstencion = False

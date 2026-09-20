@@ -48,13 +48,19 @@ def test_haiku_maps_its_own_id_and_plain_string_content(monkeypatch):
     assert llm.generate("haiku45", "s", "u") == "ok"
 
 
-def test_mlx_models_not_implemented_yet():
+def test_mlx_models_route_to_local_backend(monkeypatch):
+    # T-06: las claves qwen* van al backend MLX con la MISMA firma que el de
+    # API. Fake en la costura _generate_mlx: cero descarga, cero GPU.
     import divefy.llm as llm
 
-    with pytest.raises(NotImplementedError):
-        llm.generate("qwen9b", "s", "u")
-    with pytest.raises(NotImplementedError):
-        llm.generate("qwen4b", "s", "u")
+    llamadas = []
+    monkeypatch.setattr(
+        llm, "_generate_mlx",
+        lambda model, system, user: llamadas.append((model, system, user)) or "local",
+    )
+    assert llm.generate("qwen9b", "s", "u") == "local"
+    assert llm.generate("qwen4b", "s", "u") == "local"
+    assert llamadas == [("qwen9b", "s", "u"), ("qwen4b", "s", "u")]
 
 
 def test_unknown_model_raises_value_error():

@@ -3,8 +3,25 @@
 Solo evaluación, jamás runtime ni hardware: el juez necesita la respuesta
 esperada, que solo existe en el examen (decisión 12 del plan). Modelo fijo de
 familia fuera de la ablación, temperatura la fija deepeval (G-Eval determinista
-por diseño con strict_mode). La rúbrica vive en `prompts/judge_v1.txt` y su
+por diseño con strict_mode). La rúbrica vive en `prompts/judge_v3.txt` y su
 versión se estampa en cada fila (`prompt_version_juez`).
+
+v3 (2026-09-20, decisión de Adolfo: "el mayor control posible sobre el
+prompt"): pasamos `evaluation_steps` en vez de `criteria`. Con `criteria`,
+deepeval hace una llamada extra al LLM que TRADUCE nuestra rúbrica a sus
+propios pasos de evaluación — el juez obedece esa traducción, no lo que
+escribimos. Con `evaluation_steps` (una línea del .txt = un paso), esa
+traducción desaparece: el juez recibe nuestras frases literales, sin
+intermediario. El envoltorio de deepeval (pedir nota+razón en JSON) se
+mantiene — es mecánica de puntuación, no criterio de juicio.
+
+Council (2026-09-20): sin `temperature` en ningún proveedor (retirado en toda
+la generación actual — Anthropic, OpenAI, Google), un solo juez tiene ruido de
+muestreo real cerca del umbral (caso h04 de la calibración: mismo texto,
+0.6 y 0.4 en corridas distintas). En vez de repetir el MISMO juez (que repite
+también su propio ruido), 3 jueces de 3 proveedores distintos votan por
+mayoría — el desacuerdo entre ellos es una señal más honesta que la varianza
+de uno solo consigo mismo, y de paso diversifica el sesgo de cada modelo.
 """
 
 import json
@@ -16,24 +33,41 @@ from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
 PROMPTS_DIR = Path(__file__).resolve().parents[1] / "prompts"
-# v2 (2026-09-17, calibración 15/19 con Adolfo): mata la "lista blanca" de
-# números (información extra correcta no resta) y endurece el lado blando
-# (claims que enturbian una conclusión de seguridad, o avisos omitidos).
-JUDGE_PROMPT_PATH = PROMPTS_DIR / "judge_v2.txt"
+# v3 (2026-09-20): sobre v2 (mata la "lista blanca" de números; endurece
+# claims que enturbian una conclusión de seguridad o avisos omitidos), añade
+# la regla de ORDEN (calibración con Adolfo, casos h03/h08: alterar el orden o
+# la prioridad de acciones de la esperada es fallo aunque estén todos los
+# elementos) — y pasa a `evaluation_steps` (ver docstring del módulo).
+JUDGE_PROMPT_PATH = PROMPTS_DIR / "judge_v3.txt"
 PROMPT_VERSION = JUDGE_PROMPT_PATH.stem  # se estampa en la fila del eval
 
-# Confirmado contra la referencia vigente de OpenAI (2026-09-07) y decidido por
-# Adolfo: Luna ($0.20/$1.20 por millón) con esfuerzo de razonamiento alto —
-# juez barato pensando mucho; la calibración dirá si basta. Fuera de la familia
-# de los 4 concursantes. Los modelos razonadores rechazan `temperature`, por
-# eso no se pasa.
-JUDGE_MODEL = "gpt-5.6-luna"
-JUDGE_EFFORT = "xhigh"
+
+def _evaluation_steps() -> list[str]:
+    """Una línea no vacía del .txt = un paso — nuestras frases literales,
+    sin que deepeval las traduzca (ver docstring del módulo)."""
+    return [
+        linea.strip()
+        for linea in JUDGE_PROMPT_PATH.read_text(encoding="utf-8").splitlines()
+        if linea.strip()
+    ]
+
+# Decisión 2026-09-20 (Adolfo): council de 3 proveedores en vez de un juez
+# solo (ver docstring del módulo). Cada entrada: (nombre, clase deepeval,
+# kwargs del constructor). Precios y disponibilidad verificados 2026-09-20
+# contra la API real — gemini-2.5-flash devolvió 404 (retirado para cuentas
+# nuevas); gemini-3.1-flash-lite confirmado con una llamada real ($0.25/$1.50
+# por millón, la más barata de las probadas).
+COUNCIL = [
+    ("sonnet45", "AnthropicModel", {"model": "claude-sonnet-4-5"}),
+    ("gemini31flashlite", "GeminiModel", {"model": "gemini-3.1-flash-lite"}),
+    ("gpt41mini", "OpenAIModel", {"model": "gpt-4.1-mini", "temperature": 0}),
+]
 
 APROBADO = "aprobado"
 SUSPENSO = "suspenso"
 
-# Última medición del juez real (score fino + razón); la costura grade() sigue
+# Última medición del council: score/reason medios de los votos ganadores,
+# más el detalle voto a voto en "jueces". La costura grade() sigue
 # devolviendo solo el veredicto (contrato de los tests congelados) y el
 # llm_evaluator lee esto con getattr — un fake que no lo rellene deja None.
 last: dict | None = None
@@ -43,59 +77,74 @@ CALIBRATION_PATH = (
 )
 
 
-def _metric():
-    """G-Eval perezoso (patrón de la casa): deepeval solo se importa/paga en la
-    primera llamada real — los tests con `grade` parcheado nunca llegan aquí."""
-    if not hasattr(_metric, "_cache"):
+def _metrics() -> dict:
+    """Una GEval perezosa por juez del council — mismos evaluation_steps para
+    los 3, solo cambia el modelo detrás. Se construyen una vez por proceso."""
+    if not hasattr(_metrics, "_cache"):
+        import os
+
         load_dotenv()
+        from deepeval import models as deepeval_models
         from deepeval.metrics import GEval
-        from deepeval.models import OpenAIModel
         from deepeval.test_case import LLMTestCaseParams
 
-        _metric._cache = GEval(
-            name="correctness-divefy",
-            criteria=JUDGE_PROMPT_PATH.read_text(encoding="utf-8"),
-            evaluation_params=[
-                LLMTestCaseParams.INPUT,
-                LLMTestCaseParams.ACTUAL_OUTPUT,
-                LLMTestCaseParams.EXPECTED_OUTPUT,
-            ],
-            model=OpenAIModel(
-                model=JUDGE_MODEL,
-                # deepeval manda temperature=0 salvo que el modelo esté en su
-                # registro; Luna (razonadora, aún no registrada) solo acepta 1.
-                # Decisión 2026-09-16: la validez del juez la mide la
-                # calibración (≥90% acuerdo + doble pasada de estabilidad),
-                # no el termostato — el sector retiró el mando en toda la
-                # generación actual (GPT-5.x, Gemini 3.x).
-                temperature=1,
-                generation_kwargs={"reasoning_effort": JUDGE_EFFORT},
-            ),
-            # Score continuo 0-1 (ponderado por logprobs, paper G-Eval) + umbral
-            # (decisión de Adolfo 2026-09-07): el veredicto sigue siendo binario
-            # vía is_successful(), pero el score fino queda en la fila.
-            strict_mode=False,
-            threshold=0.5,
-            async_mode=False,
-            verbose_mode=False,
-        )
-    return _metric._cache
+        # deepeval espera GOOGLE_API_KEY; nuestro .env usa GEMINI_API_KEY (el
+        # nombre de la variable de Google AI Studio) — se lo pasamos explícito
+        # en vez de duplicar la clave con dos nombres.
+        extra = {"GeminiModel": {"api_key": os.environ.get("GEMINI_API_KEY")}}
+
+        steps = _evaluation_steps()
+        _metrics._cache = {
+            nombre: GEval(
+                name=f"correctness-divefy-{nombre}",
+                evaluation_steps=steps,
+                evaluation_params=[
+                    LLMTestCaseParams.INPUT,
+                    LLMTestCaseParams.ACTUAL_OUTPUT,
+                    LLMTestCaseParams.EXPECTED_OUTPUT,
+                ],
+                model=getattr(deepeval_models, clase)(**kwargs, **extra.get(clase, {})),
+                # Score continuo 0-1 (ponderado por logprobs, paper G-Eval) +
+                # umbral (decisión de Adolfo 2026-09-07): is_successful() da
+                # el voto binario de este juez; el council decide por mayoría.
+                strict_mode=False,
+                threshold=0.5,
+                async_mode=False,
+                verbose_mode=False,
+            )
+            for nombre, clase, kwargs in COUNCIL
+        }
+    return _metrics._cache
 
 
 def grade(pregunta: str, respuesta: str, esperada: str) -> str:
-    """aprobado/suspenso comparando la respuesta con la esperada del golden."""
+    """aprobado/suspenso por mayoría de los 3 jueces del council (2 de 3)."""
     from deepeval.test_case import LLMTestCase
 
     global last
-    metric = _metric()
-    metric.measure(
-        LLMTestCase(input=pregunta, actual_output=respuesta, expected_output=esperada)
-    )
-    last = {"score": round(metric.score, 4), "reason": metric.reason}
+    caso = LLMTestCase(input=pregunta, actual_output=respuesta, expected_output=esperada)
+    votos = {}
+    for nombre, metric in _metrics().items():
+        metric.measure(caso)
+        votos[nombre] = {
+            "veredicto": APROBADO if metric.is_successful() else SUSPENSO,
+            "score": round(metric.score, 4),
+            "reason": metric.reason,
+        }
+
+    aprobados = [v for v in votos.values() if v["veredicto"] == APROBADO]
+    veredicto = APROBADO if len(aprobados) >= 2 else SUSPENSO
+    scores = [v["score"] for v in votos.values()]
+    last = {
+        "veredicto": veredicto,
+        "score": round(sum(scores) / len(scores), 4),
+        "reason": " | ".join(f"{n}: {v['reason']}" for n, v in votos.items()),
+        "jueces": votos,
+    }
     logger.debug("[judge] %s", json.dumps(
         {"pregunta": pregunta, **last}, ensure_ascii=False,
     ))
-    return APROBADO if metric.is_successful() else SUSPENSO
+    return veredicto
 
 
 def calibrate(path: Path = CALIBRATION_PATH) -> dict:
