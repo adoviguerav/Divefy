@@ -1,0 +1,614 @@
+{
+  "config": {
+    "corpus": "combined",
+    "cap": 512,
+    "extras": "contextual",
+    "embedding": "qwen8b",
+    "search": "hibrida",
+    "k": 10,
+    "rerank": true,
+    "collection": "combined-512-contextual-qwen8b",
+    "model": "qwen4b",
+    "run_id": "combined-512-contextual-qwen8b-hibrida-k10-rerank-qwen4b",
+    "prompt_version_generacion": "generation_v2",
+    "prompt_version_juez": "judge_v3"
+  },
+  "resumen": {
+    "n": 84,
+    "aprobado": 48,
+    "suspenso": 33,
+    "abstenciones": 3,
+    "tasa_aprobado": 0.5714,
+    "score_medio": 0.6003
+  },
+  "detalle": [
+    {
+      "id": "q001",
+      "pregunta": "¿Por qué se ven los colores apagados a 12 metros de profundidad?",
+      "respuesta": "A 12 metros de profundidad, el rojo ya no se ve porque el agua absorbe selectivamente las longitudes de onda largas primero; el rojo desaparece a profundidades relativamente poco, seguido por el naranja, luego el amarillo, el verde y finalmente el azul. A esa profundidad, la luz roja ha sido filtrada casi por completo, así que los objetos rojos no reflejan fotones rojos para que los veas, y tu ojo percibe ese color como gris u oscuro. La linterna lo recupera porque aporta luz blanca local con todos los colores, no porque el ojo se adapte.",
+      "veredicto": "aprobado",
+      "score": 0.9628
+    },
+    {
+      "id": "q002",
+      "pregunta": "¿Las cosas se ven más grandes o más pequeñas bajo el agua?",
+      "respuesta": "Las cosas parecen ~33% más grandes. Esto ocurre porque la luz se dobla al pasar del agua al aire de la máscara, haciendo que los objetos se vean aproximadamente tres cuartas partes más grandes de lo que realmente son.",
+      "veredicto": "aprobado",
+      "score": 0.492
+    },
+    {
+      "id": "q005",
+      "pregunta": "¿Cómo me muevo de forma eficaz bajo el agua?",
+      "respuesta": "Mueve las piernas con un arco grande y fácil, empujando desde la cadera, manteniendo rodillas y tobillos relajados. Usa las manos solo para maniobrar. Mantén el ritmo del remo para no cansar las piernas ni causar calambres. Mantén el equipo pegado al cuerpo y una postura horizontal para reducir el rozamiento. Nadar despacio y con continuidad, sin movimientos rápidos, para ahorrar energía y aire.",
+      "veredicto": "aprobado",
+      "score": 0.9716
+    },
+    {
+      "id": "q007",
+      "pregunta": "No paro de tiritar buceando, ¿qué hago?",
+      "respuesta": "Si te tiritas de forma incontrolable, es una señal clave de hipotermia y debes salir del agua ya, secarte y entrar en calor. No sigas buceando porque tu cuerpo ya no funciona bien.",
+      "veredicto": "aprobado",
+      "score": 1.0
+    },
+    {
+      "id": "q009",
+      "pregunta": "Estoy nadando contra corriente, me fatigo, respiro con dificultad y siento que me falta el aire, ¿qué hago?",
+      "respuesta": "Para respirar con dificultad y sentirte sin aire, para toda actividad inmediatamente y séñala a tu compañero. Descansa y respira despacio hasta que te calmes. Si no logras relajarte o si la causa son las condiciones, termina la inmersión.",
+      "veredicto": "suspenso",
+      "score": 0.3667
+    },
+    {
+      "id": "q011",
+      "pregunta": "Hemos perdido de vista a un compañero, ¿qué hacemos?",
+      "respuesta": "Primero, realiza una búsqueda visual de 360 grados desde tu posición actual. Luego, anota la profundidad máxima y el tiempo de fondo. Sube a la superficie a 30 pies por minuto mientras das 4 toques en las botellas. Continúa la búsqueda visual durante el ascenso y repite la búsqueda en superficie al llegar arriba. Inmediatamente infla el salvavidas o chaleco y seña a la embarcación de apoyo. Si localizas una columna de burbujas, sigue las burbujas hacia abajo hasta el compañero. Si el compañero está atrapado, sigue el procedimiento para un diver atrapado. Si el compañero está inconsciente, sigue el procedimiento para un diver inconsciente.",
+      "veredicto": "suspenso",
+      "score": 0.1333
+    },
+    {
+      "id": "q013",
+      "pregunta": "¿Cómo calculo a qué presión del manómetro tenemos que dar la vuelta?",
+      "respuesta": "No tengo información suficiente para responderte con seguridad. Consulta el material oficial de tu curso o pregunta a tu instructor; para cálculos de planificación usa tu eRDPML u ordenador de buceo.",
+      "veredicto": "abstención",
+      "score": null
+    },
+    {
+      "id": "q015",
+      "pregunta": "Se me acaba de soltar la aleta nadando en superficie con oleaje, ¿qué hago?",
+      "respuesta": "No te preocupes, la aleta no es parte esencial de tu equipo de buceo. Tu prioridad es mantener la flotabilidad positiva y la respiración. Si la aleta se ha caído, no necesitas hacer nada con ella; simplemente continúa nadando con el resto de tu equipo puesto. Si el oleaje es fuerte y la aleta te ayuda a mantener la posición, puedes intentar recuperarla mientras mantienes el control de tu respiración y flotabilidad, pero no es obligatorio. Lo más importante es que sigas respirando y mantengas la calma.",
+      "veredicto": "suspenso",
+      "score": 0.1346
+    },
+    {
+      "id": "q017",
+      "pregunta": "Vamos a empezar el descenso, ¿qué compruebo antes de bajar?",
+      "respuesta": "Antes de bajar, haz una comprobación final de tu equipo y el de tu compañero. Primero, verifica que no hay resistencia al respirar ni fugas en tu equipo de SCUBA. Luego, revisa visualmente el equipo de tu compañero buscando fugas, especialmente en la válvula del cilindro, las conexiones de la manguera y la boquilla. Comprueba que no haya correas sueltas o enredadas. Revisa el sellado de la máscara; un poco de agua al entrar es normal y se puede limpiar con los métodos normales. Verifica tu flotabilidad, buscando la neutralidad; si llevas traje seco, comprueba fugas y ajusta la inflación. Orienta tu posición usando un compás o puntos fijos. Finalmente, si vas a bajar, avisa al Supervisor de Buceo para que inicie el cronómetro y dé la señal de descenso.",
+      "veredicto": "suspenso",
+      "score": 0.1459
+    },
+    {
+      "id": "q019",
+      "pregunta": "Estoy bajando con traje húmedo y cada vez caigo más rápido, ¿por qué y qué hago?",
+      "respuesta": "Baja más rápido porque la presión aumenta con la profundidad, comprime el gas de tu neopreno y tu BCD, reduciendo tu volumen y por tanto el empuje hacia arriba que te mantiene flotante. Tu peso real no cambia, pero al perder empuje, el peso gana la partida y te hundes.\n\nPara compensarlo, sopla aire por la nariz para la máscara y, al mismo tiempo, mete aire al chaleco en pequeñas cantidades y con frecuencia mientras bajas. Hazlo despacio desde el principio, con la cabeza sobre los pies, y ve ajustando la flotabilidad hasta llegar al fondo con flotabilidad neutra. Si no logras compensar, para el descenso inmediatamente, séñala a tu compañero y asciende un poco para volver a intentarlo con suavidad; nunca sigas bajando sin poder compensar.",
+      "veredicto": "aprobado",
+      "score": 0.8947
+    },
+    {
+      "id": "q021",
+      "pregunta": "He perdido la referencia durante el descenso/ascenso, ¿qué hago?",
+      "respuesta": "Si pierdes la referencia durante el descenso, no te separe de tu compañero y controla tu velocidad vigilando la profundidad en el ordenador o el profundímetro mientras ajustas tu flotabilidad. Si pierdes la referencia durante el ascenso, también no te separe de tu compañero y vigila tu profundidad y velocidad en el ordenador. Si tienes que navegar mientras subes, por ejemplo porque te queda poco aire o estás lejos del punto de salida, deja que un compañero navegue mientras el otro controla el ascenso, asegurando que estén sujetos entre sí.",
+      "veredicto": "aprobado",
+      "score": 0.9734
+    },
+    {
+      "id": "q023",
+      "pregunta": "Voy a empezar el ascenso, ¿cómo lo hago bien?",
+      "respuesta": "Señala a tu compañero para que confirme que está listo, luego mira hacia arriba y respira con normalidad mientras subes despacio. Mantén un brazo extendido hacia arriba para vigilar obstáculos y haz un escaneo de 360 grados girando lentamente. Si necesitas compartir aire, usa el octopus o respira alternativamente de la misma boca, manteniendo contacto directo con la mano del compañero. Nunca aguantar la respiración, exhala el aire en expansión del chaleco en pequeñas cantidades para controlar la flotabilidad y evita separarte de tu compañero.",
+      "veredicto": "suspenso",
+      "score": 0.1984
+    },
+    {
+      "id": "q025",
+      "pregunta": "Acabo de llegar a la superficie, ¿en qué orden hago las cosas?",
+      "respuesta": "Primero, escanea en todas direcciones para comprobar que no hay obstáculos como embarcaciones o obstáculos cercanos. Luego, infla tu chaleco de salvamento o flotador inmediatamente. Después, súbate a la embarcación de apoyo con la mano levantada para señalizar. Finalmente, reporta a la supervisión de buceo tu profundidad máxima, tiempo en el fondo, aire restante y cualquier problema que hayas tenido.",
+      "veredicto": "suspenso",
+      "score": 0.1074
+    },
+    {
+      "id": "q027",
+      "pregunta": "¿Cómo me mantiene caliente un traje húmedo y cómo uno seco?",
+      "respuesta": "No tengo información suficiente para responderte con seguridad. Consulta el material oficial de tu curso o pregunta a tu instructor; para cálculos de planificación usa tu eRDPML u ordenador de buceo.",
+      "veredicto": "abstención",
+      "score": null
+    },
+    {
+      "id": "q029",
+      "pregunta": "Hace mucho calor y todavía no hemos entrado al agua, ¿qué riesgo tengo con el traje puesto y qué hago?",
+      "respuesta": "Tienes riesgo de sobrecalentamiento (hipertermia) si la temperatura del aire supera 90 ºF o la del agua 82 ºF, y el sudor puede humedecer tu ropa interior, reduciendo drásticamente su capacidad aislante. Para prevenirlo, pon el traje lo último posible, mantente relativamente inactivo en la superficie, y enfria tu rostro con un paño húmedo y ventéalo cada pocos minutos. Evita sentarte o apoyar los pies en el suelo frío de la cabaña, y si estás en un barco abierto, usa una chaqueta pesada sobre el traje.",
+      "veredicto": "suspenso",
+      "score": 0.2324
+    },
+    {
+      "id": "q031",
+      "pregunta": "¿Dónde me coloco la herramienta cortante?",
+      "respuesta": "La herramienta cortante se lleva puesta en la cadera, la pierna o la pantorrilla del buceador. Debe estar siempre a la vista y a la mano, sin que interfiera con el movimiento del cuerpo. La vaina debe tener un cierre positivo pero fácil de liberar. Nunca se debe atar la herramienta a un equipo que pueda soltarse en caso de emergencia.",
+      "veredicto": "suspenso",
+      "score": 0.2756
+    },
+    {
+      "id": "q033",
+      "pregunta": "¿Cómo cambia la densidad del aire que respiro con la profundidad?",
+      "respuesta": "La densidad del aire que respiras aumenta con la profundidad porque la presión absoluta sube y el regulador entrega el aire a la presión ambiente, comprimiendo el gas. A 10 metros la densidad es el doble de la superficie, a 20 metros es el triple y a 30 metros es el cuadruplo. Esto significa que gastas más aire de la botella por minuto aunque respires con la misma frecuencia, porque estás inhalando una cantidad mayor de moléculas de aire reales.",
+      "veredicto": "aprobado",
+      "score": 0.9658
+    },
+    {
+      "id": "q035",
+      "pregunta": "¿Cómo compenso los oídos mientras bajo?",
+      "respuesta": "Para compensar los oídos mientras bajas, pinza la nariz y sopla suavemente hacia los oídos antes de que sientas dolor. Hazlo cada metro o par de pies que bajes, y si no puedes compensar, para el descenso inmediatamente y séñala a tu compañero para subir un poco y volver a intentarlo con más calma. Nunca sigas bajando si no puedes igualar la presión en los oídos.",
+      "veredicto": "suspenso",
+      "score": 0.3661
+    },
+    {
+      "id": "q037",
+      "pregunta": "No consigo compensar mientras bajo, ¿qué hago?",
+      "respuesta": "Para compensar, sopla aire por la nariz para la máscara y pinza la nariz para soplar aire a los oídos y senos nasales. Si no logras compensar, para el descenso inmediatamente y haz la señal a tu compañero o instructor. Nunca sigas bajando sin poder compensar. Si aun así no puedes hacerlo, termina la inmersión.",
+      "veredicto": "suspenso",
+      "score": 0.2663
+    },
+    {
+      "id": "q039",
+      "pregunta": "¿Cada cuánto tengo que compensar al bajar?",
+      "respuesta": "Compensa cada metro o par de pies. Hazlo suave y frecuente. En aguas abiertas, compensa en cuanto la cabeza queda bajo el agua y luego cada metro o unos pocos pies más adelante.",
+      "veredicto": "aprobado",
+      "score": 0.7385
+    },
+    {
+      "id": "q041",
+      "pregunta": "Estoy resfriado, ¿puedo bucear si me tomo algo?",
+      "respuesta": "No, no puedes bucear. Un resfriado puede atrapar aire en tus oídos o senos, haciendo la compensación muy difícil y aumentando el riesgo de sobreexpansión. Nunca te tomes medicamentos para poder bucear; lo correcto es recuperarte primero antes de sumergirte.",
+      "veredicto": "aprobado",
+      "score": 0.6
+    },
+    {
+      "id": "q043",
+      "pregunta": "¿Cuál es la regla más importante del buceo con botella y por qué?",
+      "respuesta": "La regla más importante es respirar continuamente, nunca aguantar la respiración. Si aguantas el aire mientras subes, el pulmón se expande con la presión que baja y puede reventar.",
+      "veredicto": "aprobado",
+      "score": 1.0
+    },
+    {
+      "id": "q044",
+      "pregunta": "¿Qué pasa si aguanto la respiración bajo el agua?",
+      "respuesta": "Si aguantas la respiración mientras subes, el aire en tus pulmones sigue expandiéndose por la caída de presión y puede reventar, causando una lesión por sobreexpansión pulmonar. El riesgo es real incluso con cambios pequeños, como un solo metro de ascenso si mantienes la respiración. La regla número uno del buceo autónomo es respirar continuamente, nunca aguantar la respiración. Si no tienes el regulador en la boca, suelta un chorrito continuo de burbujas para asegurarte de que no estás aguantando aire sin querer.",
+      "veredicto": "aprobado",
+      "score": 1.0
+    },
+    {
+      "id": "q046",
+      "pregunta": "¿Cómo de grave es una lesión por sobrexpansión pulmonar?",
+      "respuesta": "Es una emergencia grave que puede llevar a la muerte si el aire pasa a la sangre o al tórax. La lesión comienza con la ruptura de los sacos alveolares, lo que puede causar emfisema intersticial, neumotórax simple o neumotórax a tensión (que aplasta el corazón y la respiración), o un embolismo gaseoso arterial que bloquea el flujo sanguíneo al cerebro y el corazón. El tratamiento requiere una cámara hiperbárica de recompresión lo antes posible, y retrasarlo aumenta el riesgo de secuelas permanentes.",
+      "veredicto": "suspenso",
+      "score": 0.3671
+    },
+    {
+      "id": "q048",
+      "pregunta": "Me duele el oído mientras subo, ¿qué hago?",
+      "respuesta": "Baja un poco, espera a que el aire atrapado se libere y luego sube más despacio dando tiempo al gas a salir. Si el dolor persiste o aparece vértigo, detén el ascenso inmediatamente y baja unos pies más para aliviar la presión antes de continuar. Nunca realices una maniobra de Valsalva al subir, ya que esto aumenta la presión en el oído medio y puede causar una ruptura de la membrana timpánica o una embolia gaseosa arterial. Si los síntomas incluyen pérdida de audición sostenida o vértigo que no desaparece, consulta a un médico especialista en medicina de buceo.",
+      "veredicto": "aprobado",
+      "score": 0.7318
+    },
+    {
+      "id": "q050",
+      "pregunta": "¿Me dura menos la botella si buceo más profundo?",
+      "respuesta": "Sí, la botella dura menos si buceas más profundo. Aunque respires a la misma velocidad que en superficie, gastas más aire porque la densidad del aire aumenta con la presión; a mayor profundidad hay más presión, lo que hace que el aire sea más denso y consumas más volumen real de la botella.",
+      "veredicto": "aprobado",
+      "score": 0.8834
+    },
+    {
+      "id": "q053",
+      "pregunta": "¿Floto más en el mar o en agua dulce?",
+      "respuesta": "Flotas más en el mar. El agua salada es más densa que la dulce, así que el mismo volumen tuyo desplaza agua que pesa más, generando más empuje hacia arriba. Por eso necesitas más plomo en el mar para llegar al mismo punto de flotabilidad neutra que en agua dulce.",
+      "veredicto": "aprobado",
+      "score": 0.9988
+    },
+    {
+      "id": "q054",
+      "pregunta": "¿Por qué algo flota o se hunde en el agua?",
+      "respuesta": "Algo flota o se hunde dependiendo de si tu densidad media (tú más equipo) es menor o mayor que la densidad del agua. Si tu densidad media es menor que la del agua, el empuje hacia arriba supera tu peso y flotas. Si tu densidad media es mayor, tu peso supera el empuje y te hundes. Si son iguales, estás en flotabilidad neutra y te mantienes suspendido. El empuje que te empuja hacia arriba es igual al peso del agua que desplazas, y ese empuje depende de la densidad del agua y de tu volumen. En agua salada, la densidad del agua es mayor (64.0 libras por pie cúbico) que en agua dulce (62.4 libras por pie cúbico), así que el mismo volumen tuyo desplaza más agua y recibes más empuje, por lo que flotas más en el mar y necesitas más lastre para igualar la flotabilidad.",
+      "veredicto": "aprobado",
+      "score": 0.8891
+    },
+    {
+      "id": "q056",
+      "pregunta": "¿Buceo solo o con más gente?",
+      "respuesta": "No tengo información suficiente para responderte con seguridad. Consulta el material oficial de tu curso o pregunta a tu instructor; para cálculos de planificación usa tu eRDPML u ordenador de buceo.",
+      "veredicto": "abstención",
+      "score": null
+    },
+    {
+      "id": "q058",
+      "pregunta": "¿En qué me fijo para elegir una pieza de equipo?",
+      "respuesta": "Para elegir una pieza de equipo, te fijas en tres cosas principales: que sea idóneo para el tipo de inmersión y entorno que vas a hacer, que se ajuste bien a tu talla (ni aprieta ni quede holgado) y que sea cómodo para llevarlo puesto durante una hora o más sin que te moleste ni distraiga. Si esas tres cosas están cubiertas, luego miras cosas secundarias como el precio, las características, el color, el estilo y los accesorios.",
+      "veredicto": "aprobado",
+      "score": 0.9994
+    },
+    {
+      "id": "q060",
+      "pregunta": "Estoy montando el equipo y noto que me cuesta respirar por el regulador más de lo normal, ¿qué hago?",
+      "respuesta": "Para respirar, detente inmediatamente y no sigas bajando. Señala a tu compañero para que te ayude. Sube un poco para aliviar la presión y vuelve a intentarlo con más calma. Si aun así no puedes respirar, termina la inmersión. Nunca uses un regulador si cuesta respirar, pierde agua o parece dañado.",
+      "veredicto": "suspenso",
+      "score": 0.1226
+    },
+    {
+      "id": "q062",
+      "pregunta": "¿Un regulador DIN vale para una botella de estribo?",
+      "respuesta": "Sí, un regulador DIN con adaptador de estribo vale para cualquier tipo de grifería.",
+      "veredicto": "aprobado",
+      "score": 0.9988
+    },
+    {
+      "id": "q064",
+      "pregunta": "¿Por qué es tan importante el control de la flotabilidad?",
+      "respuesta": "El control de la flotabilidad es vital porque te permite mantener la profundidad sin esfuerzo, navegar cerca de entornos sensibles como el coral sin dañarlos, ahorrar energía y aire, y flotar cómodamente en la superficie. Sin este control, tendrías que moverte constantemente con las manos y las aletas, lo que agota rápidamente y aumenta el riesgo de problemas en superficie. Además, un control adecuado evita que remues el fondo, lo que arruina la visibilidad y daña organismos.",
+      "veredicto": "suspenso",
+      "score": 0.3259
+    },
+    {
+      "id": "q067",
+      "pregunta": "Oigo un ruido bajo el agua pero no sé de dónde viene, ¿es normal?",
+      "respuesta": "Sí, es normal que no sepas de dónde viene el sonido bajo el agua. El sonido viaja mucho más rápido en el agua que en el aire, casi cuatro veces más rápido, lo que hace que la diferencia de tiempo entre que el sonido llegue a cada oído sea casi indetectable para tu cerebro. Además, el sonido también llega a través de tu cráneo por conducción ósea. Por eso, aunque detectes que algo suena, no podrás localizar su dirección con precisión; parecerá venir de todas partes o de arriba.",
+      "veredicto": "aprobado",
+      "score": 1.0
+    },
+    {
+      "id": "q069",
+      "pregunta": "¿Cómo respiro bien con el regulador?",
+      "respuesta": "Respira lento y profundo, manteniendo el ritmo regular y sin aguantar la respiración. Hazlo así porque respirar rápido o corto aumenta la proporción de aire muerto que gastas y te cansa más. Mantén la respiración lenta y profunda para ahorrar aire, calmarte y pensar con claridad. Si sientes que el regulador no da aire o te cuesta respirar, para la actividad, séñala a tu compañero y respira despacio hasta calmarte.",
+      "veredicto": "suspenso",
+      "score": 0.2667
+    },
+    {
+      "id": "q072",
+      "pregunta": "¿Cómo evitamos separarnos durante la inmersión?",
+      "respuesta": "Mantente a unos metros de tu compañero, alcanzables en unos segundos. Si te separas, busca al otro máximo un minuto girando y mirando también hacia arriba. Si no lo encuentras, asciende con seguridad y reuníos en superficie. En grupos de tres, si uno se separa, los dos que quedan no se separan entre sí, buscan al perdido máximo un minuto, y si no aparece, ascienden y se reúnen todos en superficie.",
+      "veredicto": "suspenso",
+      "score": 0.233
+    },
+    {
+      "id": "q074",
+      "pregunta": "¿Dónde me coloco la fuente de aire alternativa?",
+      "respuesta": "La colocas en el triángulo pecho-barbilla, con colores llamativos para que el compañero la localice rápido. La fijas ahí y nunca la dejas colgando porque se engancha, se llena de arena o daña organismos.",
+      "veredicto": "aprobado",
+      "score": 0.5708
+    },
+    {
+      "id": "q076",
+      "pregunta": "¿Cada cuánto llevo la botella a inspeccionar?",
+      "respuesta": "Lleva la botella a inspeccionar visualmente al menos una vez cada 12 meses y cada vez que sospeches que hay agua o materia particulada dentro. Además, si tiene corrosión visible, debe limpiarse antes de volver a usarla. La prueba hidrostática se hace al menos cada 5 años según las regulaciones de transporte.",
+      "veredicto": "aprobado",
+      "score": 0.5667
+    },
+    {
+      "id": "q079",
+      "pregunta": "¿Cómo compruebo que llevo el lastre correcto?",
+      "respuesta": "Comprobarás el lastre correcto haciendo una respiración normal con el chaleco vacío: si flotas a la altura de los ojos y al exhalar te hundes despacio.",
+      "veredicto": "aprobado",
+      "score": 1.0
+    },
+    {
+      "id": "q081",
+      "pregunta": "Hay poca visibilidad y no veo ni el fondo ni la superficie, ¿cómo evito desorientarme?",
+      "respuesta": "Sigue una referencia vertical, como una pendiente o un cabo. Si no hay referencia visible, usa el ordenador para controlar tu profundidad y velocidad.",
+      "veredicto": "suspenso",
+      "score": 0.3267
+    },
+    {
+      "id": "q083",
+      "pregunta": "Hay corriente, ¿en qué dirección empiezo a nadar?",
+      "respuesta": "Empieza nadando despacio contra la corriente. Hazlo para que, cuando vayas a la vuelta, la corriente te empuje hacia el punto de salida. Si te arrastra más allá del punto de salida, nunca luches de frente contra ella; en su lugar, nade perpendicular a la corriente (hacia la orilla o un cabo).",
+      "veredicto": "aprobado",
+      "score": 0.8203
+    },
+    {
+      "id": "q085",
+      "pregunta": "He emergido lejos del barco y hay corriente, ¿qué hago?",
+      "respuesta": "Calma y mantén la flotabilidad positiva. Si no ves el barco, no nadar contra la corriente ni hacia la orilla si no estás seguro de alcanzarla sin agotarte. En lugar de eso, haz señalización de superficie (silbato o tubo) para que te vean y te recojan. Si la corriente es muy fuerte y no puedes volver al barco, hincha el chaleco para aumentar tu flotabilidad y espera a ser recogido. Nunca intentes nadar contra la corriente si estás lejos del barco, ya que te arrastrarás más allá del punto de salida.",
+      "veredicto": "suspenso",
+      "score": 0.196
+    },
+    {
+      "id": "q087",
+      "pregunta": "¿Por qué no debo tocar el fondo?",
+      "respuesta": "No toques el fondo porque mantener la visibilidad, evitar peligros como cortes o picaduras y conservar los organismos frágiles son las tres razones clave. Tocar el fondo, incluso con cuidado, puede dañar el coral o la vegetación, arruinar la visibilidad al agitar el lodo y poner en riesgo tu seguridad al enredarte. La norma general es no tocar ningún ser vivo bajo el agua.",
+      "veredicto": "aprobado",
+      "score": 0.9988
+    },
+    {
+      "id": "q089",
+      "pregunta": "Algo de esta inmersión no me da buena espina, ¿bucear igualmente?",
+      "respuesta": "No bucees. Si algo te preocupa o genera ansiedad importante, no bucees. Tu seguridad es tuya y la decisión final de bucear es siempre tuya. Si no puedes racionalizarlo ni cambiar de sitio para estar cómodo, cancela la inmersión.",
+      "veredicto": "aprobado",
+      "score": 0.7188
+    },
+    {
+      "id": "q091",
+      "pregunta": "Voy a bucear en un sitio que no conozco, ¿qué hago antes?",
+      "respuesta": "Antes de bucear en un sitio desconocido, busca orientación local, como un curso con un instructor o un compañero que conozca la zona. Esto suma seguridad y disfrute porque cada entorno tiene particularidades. Además, evalúa las condiciones con calma, decide si se bucea o se cambia de sitio/cancela si no va a ser divertido, y acuerda técnicas de entrada, ruta, salida, señales, procedimiento de separación, límites de tiempo, profundidad, aire y el plan de emergencia.",
+      "veredicto": "aprobado",
+      "score": 0.9634
+    },
+    {
+      "id": "q093",
+      "pregunta": "¿Qué riesgo tiene bucear por encima de mi nivel?",
+      "respuesta": "Bucear por encima de tu nivel aumenta el riesgo de tres formas: hay modalidades con peligros no evidentes que requieren formación para reconocerlos; salirte con la tuya crea falsa seguridad hasta el día que algo falla y no tienes las habilidades o el equipo; y el nerviosismo de ir pasado de límites distrae de problemas que normalmente detectarías.",
+      "veredicto": "aprobado",
+      "score": 0.9995
+    },
+    {
+      "id": "q095",
+      "pregunta": "Mi compañero insiste en una inmersión que me supera, ¿qué hago?",
+      "respuesta": "Rechaza educadamente la propuesta y propone un plan más conservador. La mayoría de los compañeros respetan tus preocupaciones si las expresas con calma. Si el plan original excede tus límites, no lo aceptes; si un cambio lo hace más seguro, acéptalo. Nunca bucees si te sientes inseguro o nervioso, ya que el nerviosismo distrae de los problemas que normalmente detectarías.",
+      "veredicto": "aprobado",
+      "score": 0.9454
+    },
+    {
+      "id": "q097",
+      "pregunta": "¿Cómo evito que me pique o muerda algo bajo el agua?",
+      "respuesta": "Para evitar picaduras o mordeduras, sigue la norma general de no tocar ningún ser vivo bajo el agua. Mantente a distancia prudencial con flotabilidad neutra y muévete despacio. Evita joyería brillante o colgantes que parezcan presa. Ten cuidado en agua turbia donde los contactos accidentales son más probables y los animales pueden confundirte con presa. No bucees si hay animales agresivos habituales en la zona. Evita lo desconocido y no tomes contacto con organismos aparentemente muertos o trozos, ya que sus tentáculos pican incluso muertos. Si te pica, enjuaga con agua salada sin frotar y usa vinagre para medusas, coral de fuego e hidrozoos; para púas de peces usa agua caliente máxima 49 ºC durante 30-90 minutos. Para púas de erizo, usa pinzas solo si salen sin romperse, de lo contrario ve al médico.",
+      "veredicto": "aprobado",
+      "score": 0.8346
+    },
+    {
+      "id": "q099",
+      "pregunta": "Me está arrastrando una corriente de resaca mar adentro, ¿qué hago?",
+      "respuesta": "Flota y te desequilibra. No intentes nadar contra ella. Mantén la calma, flota y nada en paralelo a la orilla a un ritmo sostenible hasta que la corriente se disipe y salgas de ella, y luego vuelve a la orilla.",
+      "veredicto": "aprobado",
+      "score": 0.7541
+    },
+    {
+      "id": "q101",
+      "pregunta": "¿Cómo me afectan las mareas al bucear?",
+      "respuesta": "Las mareas te afectan en tres cosas: cambian la dirección de las corrientes, aumentan la profundidad y modifican la visibilidad. Las corrientes cambian de dirección casi nulas en el repunte, la profundidad es más honda en pleamar y la visibilidad varía porque el reflujo saca sedimentos y enturbia el agua, mientras que la marea entrante trae agua más clara. La regla general es que el mejor momento para bucear desde la orilla es la marea alta, y si hay reflujos fuertes debes planificar salir antes o durante la pleamar.",
+      "veredicto": "aprobado",
+      "score": 0.6854
+    },
+    {
+      "id": "q103",
+      "pregunta": "¿Para qué sirve pasar lista en el barco?",
+      "respuesta": "Pasar lista sirve para evitar que dejen a alguien olvidado en el sitio. Te apuntas al embarcar y respondes tú mismo tras cada inmersión, nunca por otro.",
+      "veredicto": "aprobado",
+      "score": 0.9321
+    },
+    {
+      "id": "q105",
+      "pregunta": "¿Qué entrada al agua elijo?",
+      "respuesta": "La elección depende de tu equipo, tu condición física y el entorno. Si hay espacio en el barco o muelle y puedes estar de pie, usa la entrada de pie. Si no puedes estar de pie o el barco es pequeño sin espacio, entra sentado rodando hacia atrás con el chaleco parcialmente hinchado. Si tu condición física no permite cargar el equipo en seco o el barco es muy pequeño, deja el equipo en el agua y monta todo en el agua antes de entrar. Si el fondo es lodo o hay criaturas peligrosas, entra desde un muelle o barco. Si el fondo es impracticable (barro, rocas), también usa muelle o barco. Si hay oleaje leve, observa el patrón de las olas y entra en la calma.",
+      "veredicto": "suspenso",
+      "score": 0.4991
+    },
+    {
+      "id": "q107",
+      "pregunta": "¿Puedo acercarme a la hélice si el motor está apagado?",
+      "respuesta": "No, nunca te acerques a la hélice, aunque el motor esté apagado. Debes asumir que puede arrancar sin aviso. Las lesiones por las hélices son devastadoras y a menudo letales. Si hay algo enredado en la hélice, no intentes arreglártelo tú; avisa a la tripulación inmediatamente.",
+      "veredicto": "aprobado",
+      "score": 0.9967
+    },
+    {
+      "id": "q109",
+      "pregunta": "¿Para qué sirven los cabos al bucear desde barco con corriente?",
+      "respuesta": "Los cabos sirven como referencia visual y física para orientarse, controlar la velocidad de descenso y ascenso, y mantener la posición relativa al barco frente a la corriente.\n\nPrimero, el cabo de ruta o de corrientes (que suele partir desde la popa con una boya) te indica la dirección del flujo para que no te arrastres lejos.\n\nLuego, el cabo de boyas (que va desde la popa por el lateral hasta el amarre) y el cabo de amarre/ancla te permiten entrar en fila y bajarte sujetándote a ellos, ya que la corriente te empujaría si no te sujetas.\n\nAdemás, al ascender, te sujetas al cabo para frenarte y hacer una parada de seguridad, y si pierdes el cabo, puedes nadar a través de la corriente hasta el cabo de ruta para recuperar la referencia.\n\nFinalmente, si la corriente es fuerte y no puedes mantener el cabo, puedes hinchar el chaleco para ganar flotabilidad positiva y esperar a que la corriente afloje o a que la tripulación te recoja.",
+      "veredicto": "aprobado",
+      "score": 0.8434
+    },
+    {
+      "id": "q111",
+      "pregunta": "Salgo a superficie y no veo el barco, ¿qué hago?",
+      "respuesta": "Calma y mantén la flotabilidad positiva. Señaliza a la superficie indicando que estás bien y espera, ya que el barco podría estar buscando a otros buceadores o llevando a cabo maniobras de emergencia. Si hay un cabo de amarre cerca, sútate a él. Solo nadas a la orilla si está muy cerca, a la vista y alcanzable sin agotarte.",
+      "veredicto": "aprobado",
+      "score": 0.6311
+    },
+    {
+      "id": "q114",
+      "pregunta": "Tengo un problema en superficie, ¿qué hago primero?",
+      "respuesta": "Flotabilidad positiva inmediata. Hinas tu chaleco o suelta tu lastre, y nunca es un error soltar el lastre si hay duda. Hazlo antes de tocar al compañero para asegurar tu propia flotabilidad, luego hinchas su chaleco o sueltas su lastre.",
+      "veredicto": "suspenso",
+      "score": 0.2339
+    },
+    {
+      "id": "q116",
+      "pregunta": "Hay un buceador en pánico en superficie, ¿qué hago?",
+      "respuesta": "Primero aseguras tu propia flotabilidad positiva, luego la del buceador en pánico. Hazle la señal de ayuda y pide que se relaje, ya que el pánico suele pasar al ganar flotabilidad. Ayúdale a recuperar el control de la respiración con respiraciones lentas y profundas, y dale un descanso breve. Finalmente, ayúdale a llegar al barco o la orilla, ya que incluso sin pánico puede necesitarlo por calambres o agotamiento.",
+      "veredicto": "aprobado",
+      "score": 0.5778
+    },
+    {
+      "id": "q118",
+      "pregunta": "Encuentro a un buceador inconsciente bajo el agua, ¿qué hago?",
+      "respuesta": "Sube a la superficie inmediatamente asegurando su flotabilidad positiva, ya que la prioridad con un inconsciente bajo el agua es llevarlo a la superficie. Si lleva el chaleco, úsalo; si no, suelta su lastre. Mantén el regulador en su boca si lo lleva, o no pierdas tiempo recolocándolo si no lo tiene. Sube a ritmo seguro; si su flotabilidad es demasiado alta para subir seguro, déjalo subir solo, completa tu ascenso seguro y sigue el rescate en superficie. Una vez en superficie, aplica los procedimientos de inconsciente en superficie: asegura la respiración, da respiración artificial si hace falta, y contacta emergencias.",
+      "veredicto": "aprobado",
+      "score": 0.9325
+    },
+    {
+      "id": "q121",
+      "pregunta": "Hemos sacado del agua a un buceador inconsciente, ¿en qué orden actúo?",
+      "respuesta": "Primero asegura que ambos tengan flotabilidad positiva, ya sea con chalecos o soltando lastre. Luego pide ayuda a un barco, playa o servicios de emergencia. Comproba la respiración y empieza respiraciones de rescate si no respira mientras lo llevas a la orilla o barco. Finalmente, continúa la respiración artificial durante el remolque y al sacarlo del agua, porque el rescate sigue fuera.",
+      "veredicto": "suspenso",
+      "score": 0.1641
+    },
+    {
+      "id": "q123",
+      "pregunta": "Me he quedado sin aire y mi compañero está lejos, ¿qué hago?",
+      "respuesta": "Sube a 6-9 m como máximo, manteniendo la superficie lo más cerca posible de cualquier compañero. Haz el sonido \"ahhhh\" continuo por el regulador para exhalar el gas en expansión y evitar la sobreexpansión. Mantén todo el equipo puesto y el regulador en la boca sin soltar el lastre. Si la profundidad es mayor que 9 m o no hay compañero cerca, suelta el lastre y sube a ritmo seguro, abriendo brazos y piernas al acercarte a la superficie para frenar.",
+      "veredicto": "suspenso",
+      "score": 0.4708
+    },
+    {
+      "id": "q126",
+      "pregunta": "¿Cuántos dispositivos de señalización llevo y de qué tipo?",
+      "respuesta": "Llevas al menos dos dispositivos de señalización en cada inmersión: uno audible y uno visual. El audible suele ser un silbato conectado al hinchador del chaleco, y el visual puede ser un tubo de señalización naranja, un espejo, una linterna o un flotador. Se usan juntos en emergencia: el sonido pide ayuda y lo visual permite localizarte.",
+      "veredicto": "aprobado",
+      "score": 0.9995
+    },
+    {
+      "id": "q128",
+      "pregunta": "Oigo un barco acercándose mientras buceo, ¿qué hago?",
+      "respuesta": "Calma y mantén la flotabilidad positiva. Si hay una bandera de buceo visible, pégate a ella inmediatamente. Si no hay bandera y el barco se acerca, mantente sumergido a una profundidad segura hasta que pase. Nunca subas a la superficie si el barco está cerca, ya que no te ven y podrían atropellarte.",
+      "veredicto": "suspenso",
+      "score": 0.4742
+    },
+    {
+      "id": "q130",
+      "pregunta": "¿Engancho la bolsa de malla al equipo?",
+      "respuesta": "No enganches la bolsa de malla directamente al equipo. Hazlo con cuidado porque en una emergencia podrías necesitar soltarla rápidamente. Además, existe el riesgo de que se enrede con otros elementos.",
+      "veredicto": "suspenso",
+      "score": 0.552
+    },
+    {
+      "id": "q136",
+      "pregunta": "¿Puedo tomar algo antes de bucear?",
+      "respuesta": "No, no puedes tomar alcohol ni tabaco antes de bucear. El alcohol afecta tu juicio, acelera la pérdida de calor y causa deshidratación, lo que puede desencadenar una enfermedad descompresiva. El tabaco reduce la eficacia circulatoria y respiratoria y aumenta el riesgo de sobreexpansión pulmonar si hay aire atrapado. Además, si te encuentras mal (incluso con un resfriado), no bucees y no te cubras los síntomas con medicamentos; recupérate primero.",
+      "veredicto": "suspenso",
+      "score": 0.5396
+    },
+    {
+      "id": "q137",
+      "pregunta": "¿Puedo bucear estando embarazada?",
+      "respuesta": "No, no puedes bucear si estás embarazada. No hay datos suficientes sobre el efecto en el feto y nadie considera que el riesgo merezca la pena. Además, si presentas síntomas como tos, congestión nasal o fatiga aparente, debes ser removido de la inmersión y remitido a personal médico.",
+      "veredicto": "aprobado",
+      "score": 0.4333
+    },
+    {
+      "id": "q138",
+      "pregunta": "¿Puedo bucear si tengo problemas de corazón?",
+      "respuesta": "No, no puedes bucear si tienes problemas de corazón. El buceo puede estresar el sistema cardiovascular — natación larga, cargar equipo, subir la escalera, caminatas con el equipo, calor con el traje puesto — y en personas de riesgo puede precipitar un infarto. Si tienes factores de riesgo como edad, estilo de vida, complexión o herencia, debes hablar con tu médico antes de bucear para evaluar y gestionar el riesgo.",
+      "veredicto": "aprobado",
+      "score": 0.7049
+    },
+    {
+      "id": "q140",
+      "pregunta": "Llevo tiempo sin bucear, ¿puedo ir directamente?",
+      "respuesta": "No, no puedes ir directamente si llevas tiempo sin bucear. Los calambres en las piernas son contracciones involuntarias que se vuelven más frecuentes tras tiempo sin bucear con aletas, y esto puede ser un problema típico en superficie que requiere atención. Debes prevenirlo asegurando que tu flotabilidad sea positiva, manteniéndote relajado durante la inmersión y evitando el sobreesfuerzo. Si sientes calambres, debes parar, pensar y actuar: pide ayuda, mantén la flotabilidad y no sigas bajando sin poder compensar.",
+      "veredicto": "suspenso",
+      "score": 0.07
+    },
+    {
+      "id": "q142",
+      "pregunta": "¿Puedo bucear con nitrox sin certificación?",
+      "respuesta": "No, no puedes bucear con nitrox sin la certificación correspondiente. Según tus apuntes de PADI, cualquier mezcla de nitrox con al menos 22% de oxígeno requiere la certificación Enriched Air Diver o la supervisión de un instructor de EANx. El manual de la Marina también especifica que los reguladores y las botellas deben estar designados y limpiados específicamente para nitrox, y que el uso de botellas o sistemas sin esta designación y certificación no está autorizado.",
+      "veredicto": "aprobado",
+      "score": 0.589
+    },
+    {
+      "id": "q144",
+      "pregunta": "Me duele la cabeza y tengo náuseas y mareo buceando, ¿qué puede ser?",
+      "respuesta": "Puede ser aire contaminado en tu botella, sobreesfuerzo por respirar demasiado rápido, o narcosis por gas. El aire contaminado (como monóxido de carbono) puede causar dolor de cabeza, náuseas y mareos, aunque no siempre se olo; si ocurre, busca aire fresco inmediatamente. El sobreesfuerzo se produce si respiras más rápido de lo que el equipo puede dar, causando cansancio, respiración forzada y mareos; para evitarlo, respira lento, profundo y continuo, y para si el ritmo se acelera, para y descansa. La narcosis por gas (nitrógeno u oxígeno) nubla el juicio y ralentiza la reacción, causando una sensación de embriaguez, pérdida de coordinación y falsa seguridad; si notas esto, sube de inmediato a una profundidad menor.",
+      "veredicto": "suspenso",
+      "score": 0.1577
+    },
+    {
+      "id": "q148",
+      "pregunta": "¿Qué es la enfermedad descompresiva y por qué ocurre?",
+      "respuesta": "La enfermedad descompresiva ocurre cuando el exceso de nitrógeno disuelto en los tejidos sale de solución más rápido de lo que el cuerpo puede eliminarlo al ascender, formando burbujas. Esto sucede principalmente por dos factores: a mayor profundidad (mayor presión) y mayor tiempo bajo el agua, más nitrógeno se absorbe; si luego subes demasiado rápido, esas burbujas causan daños mecánicos y bioquímicos.",
+      "veredicto": "suspenso",
+      "score": 0.3359
+    },
+    {
+      "id": "q150",
+      "pregunta": "¿Qué aumenta mi riesgo de enfermedad descompresiva?",
+      "respuesta": "Tu riesgo de enfermedad descompresiva aumenta principalmente por la profundidad y el tiempo: a mayor presión y mayor tiempo bajo el agua, más nitrógeno se disuelve en los tejidos. También lo incrementan factores secundarios como la fatiga, la deshidratación, el frío, el catarro, una baja forma física, una alta proporción de grasa corporal, enfermedades, lesiones, la edad, el consumo de alcohol y el ejercicio intenso. Además, el alcohol afecta el juicio y acelera la pérdida de calor, mientras que la deshidratación puede desencadenar la enfermedad. El tabaco reduce la eficacia circulatoria y respiratoria y aumenta el riesgo de sobrexpansión pulmonar si se fuma antes o después de bucear. Los medicamentos que afectan el juicio, la razón o la reacción también elevan el riesgo. El embarazo no se considera seguro debido a la falta de datos sobre el efecto en el feto. Finalmente, ascender a altitud después de bucear reduce la presión ambiente y facilita la formación de burbujas, aumentando el riesgo de enfermedad descompresiva.",
+      "veredicto": "aprobado",
+      "score": 0.8877
+    },
+    {
+      "id": "q156",
+      "pregunta": "¿Por qué tengo menos tiempo de fondo en la segunda inmersión del día?",
+      "respuesta": "Tienes menos tiempo de fondo en la segunda inmersión porque el nitrógeno que se disolvió en tus tejidos durante la primera inmersión sigue ahí y se acumula, lo que acorta el tiempo máximo sin paradas (NDL) para la siguiente. El ordenador de inmersiones cuenta siempre el nitrógeno residual durante la primera inmersión, el tiempo en superficie y la segunda, ajustando los NDL en consecuencia. Para recuperar el tiempo completo de la primera inmersión, necesitas un intervalo de superficie suficiente, mínimo unas 12 horas, para que el nitrógeno se elimine y la segunda inmersión vuelva a ser \"limpia\".",
+      "veredicto": "aprobado",
+      "score": 0.8484
+    },
+    {
+      "id": "q157",
+      "pregunta": "¿Puedo usar el ordenador de otro buceador o cambiar de ordenador entre inmersiones?",
+      "respuesta": "No, no puedes usar el ordenador de otro buceador ni cambiar de ordenador entre inmersiones. Si el ordenador falla durante la inmersión y no tienes uno de respaldo, debes ascender y terminar la inmersión. Si tienes un ordenador de respaldo, solo puedes continuar si has buceado con ambos equipos toda la inmersión y siempre usas el más restrictivo. Si no tienes respaldo y el ordenador falla durante la inmersión, la opción es ascender, hacer la parada de seguridad y terminar la inmersión. Luego debes esperar al menos 12 horas antes de bucear con otro ordenador. Si el fallo ocurre entre inmersiones y no tienes el ordenador de la inmersión previa, no puedes hacer una inmersión sucesiva; debes usar tablas si es viable o esperar las 12 horas.",
+      "veredicto": "aprobado",
+      "score": 0.8611
+    },
+    {
+      "id": "q160",
+      "pregunta": "¿Cuándo empiezo el regreso durante la inmersión?",
+      "respuesta": "Empiezas el regreso cuando llegas al límite más restrictivo de tu plan: el tiempo, el aire o el NDL restante.",
+      "veredicto": "suspenso",
+      "score": 0.4094
+    },
+    {
+      "id": "q162",
+      "pregunta": "Se me ha estropeado el ordenador durante la inmersión, ¿qué hago?",
+      "respuesta": "Si el ordenador falla durante la inmersión, tienes dos opciones principales. Primero, si tienes un ordenador de respaldo y has buceado con ambos durante toda la inmersión, puedes continuar usando el más restrictivo. Si no tienes un ordenador de respaldo, debes ascender inmediatamente, realizar la parada de seguridad y terminar la inmersión. Una vez en superficie, espera al menos 12 horas antes de bucear con otro ordenador. Si el fallo ocurre entre inmersiones y no puedes usar tablas, también debes esperar las 12 horas.",
+      "veredicto": "suspenso",
+      "score": 0.405
+    },
+    {
+      "id": "q165",
+      "pregunta": "¿Cuánto tengo que esperar entre inmersiones para volver a bajar?",
+      "respuesta": "Depende de si quieres una inmersión \"limpia\" o si buscas un tiempo sin paradas específico. Para que la siguiente inmersión sea \"limpia\" (sin nitrógeno residual significativo), el intervalo mínimo es de ~12 horas. Si buceas varias veces seguidas o quieres calcular un tiempo exacto para tener un tiempo sin paradas determinado, el ordenador de inmersiones debe seguir contando el nitrógeno residual durante la inmersión anterior, el tiempo en superficie y la inmersión actual; sin este ordenador, no se puede hacer una inmersión sucesiva. Si el ordenador falla entre inmersiones, puedes usar tablas (RDP/eRDPML) para la sucesiva si es viable, o esperar al menos 12 horas.",
+      "veredicto": "suspenso",
+      "score": 0.1353
+    },
+    {
+      "id": "q169",
+      "pregunta": "¿Cuánto tengo que esperar para volar después de bucear?",
+      "respuesta": "Depende de si tu inmersión fue simple o repetitiva y si tuviste paradas de descompresión. Si fue una inmersión simple sin paradas, espera al menos 12 horas. Si hiciste inmersiones sucesivas o varias días seguidos, espera 18 horas. Si tuviste paradas de descompresión de emergencia, espera más de 18 horas. Estas recomendaciones se basan en cabinas presurizadas a 600-2400 metros y ninguna garantiza evitar la enfermedad descompresiva.",
+      "veredicto": "aprobado",
+      "score": 0.7871
+    },
+    {
+      "id": "q171",
+      "pregunta": "He pasado frío o me he esforzado mucho en la inmersión, ¿cambia algo?",
+      "respuesta": "Sí, cambia mucho el riesgo de enfermedad de descompresión (ED). Cuando te enfrías o te esfuerzas, tu cuerpo absorbe más nitrógeno del que calcula el ordenador o la tabla, subiendo ese riesgo. La respuesta es ser más conservador de lo normal: mantén un margen amplio sobre los NDL durante toda la inmersión y, si usas una tabla de descompresión (RDP/eRDPML), planifica como si la inmersión fuera 4 m más profunda de lo real. Además, la parada de seguridad, siempre recomendable, se vuelve aún más necesaria. Si no consigues mantenerte caliente, lo mejor es terminar la inmersión, ya que seguir buceando sin calor no tiene sentido.",
+      "veredicto": "aprobado",
+      "score": 0.9631
+    },
+    {
+      "id": "q173",
+      "pregunta": "He excedido el límite sin paradas, ¿qué hago?",
+      "respuesta": "Sube inmediatamente a la superficie. Tu prioridad es salir con aire suficiente y sin riesgo de expansión pulmonar. Si tienes aire, sube rápido pero controlado (máximo 18 m/min según el modelo o lo que marque el ordenador, lo que sea más restrictivo). Si no tienes aire, sube lo máximo posible con el aire que tengas, soltando aire del chaleco para controlar la flotabilidad, y sal de la inmersión.\n\nLa parada de descompresión de emergencia es obligatoria solo si excediste el límite sin paradas (NDL). Si la excediste, debes detenerte a profundidades concretas el tiempo indicado por el ordenador o la tabla para liberar nitrógeno antes de seguir subiendo. Si no puedes completarla o te la saltas, con poco aire párate lo máximo posible pero guarda aire suficiente para subir y salir con seguridad.\n\nYa en superficie: relájate, respira oxígeno al 100% si hay disponible, vigila síntomas de enfermedad descompresiva (ED), y no vuelves a bucear en 24 horas como mínimo. Muchos ordenadores entran en modo error y se bloquean si se intenta bucear antes.\n\nEn el buceo recreativo, las paradas de descompresión son solo un procedimiento de emergencia — nunca parte del plan. Si excediste el NDL, la descompresión es obligatoria para evitar riesgos altos de ED.",
+      "veredicto": "suspenso",
+      "score": 0.0988
+    },
+    {
+      "id": "q176",
+      "pregunta": "No tengo aire suficiente para completar la parada de descompresión, ¿qué hago?",
+      "respuesta": "Sube a la profundidad de la parada que omitiste inmediatamente. Si no hay cámara de recompresión disponible, multiplica el tiempo de parada original de aire u oxígeno por 1.5 para calcular el nuevo tiempo en aire. Si la parada omitida fue a 40 pies o más (aprox. 12 metros), vuelve a esa profundidad si no hay cámara, o sigue el esquema original hasta 30 pies (aprox. 9 metros) y cambia a oxígeno si está disponible. Completa la descompresión en el agua siguiendo este nuevo tiempo. Si la parada omitida fue a 30 pies (aprox. 9 metros) o menos, y no hay cámara, sube a esa profundidad y multiplica el tiempo restante por 1.5 para completar en aire. Recuerda que en buceo recreativo la descompresión es solo un procedimiento de emergencia; si no puedes completarla por falta de aire, subir a la profundidad de la parada omitida es la prioridad para liberar nitrógeno antes de continuar.",
+      "veredicto": "suspenso",
+      "score": 0.0342
+    },
+    {
+      "id": "q179",
+      "pregunta": "Creo que mi compañero tiene enfermedad descompresiva, ¿qué hago?",
+      "respuesta": "Interrumpe toda actividad de buceo inmediatamente. Comproba que tu compañero respira y realiza RCP si hace falta. Llama a emergencias y al servicio de emergencias de buceo de la zona si existe. Manténlo acostado con oxígeno de emergencia si está disponible. Vigílablo y prevén el shock. Si está inconsciente pero respira bien, colócalo de costado izquierdo, sujetándole la cabeza y con oxígeno. Sigue así hasta que llegue el personal médico. Casi todos los casos requieren cámara de hiperbaria para reabsorber las burbujas, y nunca retrases el tratamiento ni el traslado.",
+      "veredicto": "aprobado",
+      "score": 0.7189
+    },
+    {
+      "id": "q181",
+      "pregunta": "Me cuesta pensar con claridad bajo el agua, ¿qué hago?",
+      "respuesta": "Parar toda actividad inmediatamente y descansar. Tu mente necesita calma para pensar con claridad, y la ansiedad o el esfuerzo excesivo nublan el juicio. Si la sensación de pánico o falta de aire persiste, termina la inmersión.",
+      "veredicto": "suspenso",
+      "score": 0.0633
+    },
+    {
+      "id": "q184",
+      "pregunta": "¿Cómo uso la brújula para nadar en línea recta?",
+      "respuesta": "Para nadar en línea recta con una brújula analógica, primero apunta la línea de fe hacia el lugar donde quieres ir. Luego, deja que la aguja del norte se fije sola. Gira el bisel hasta que la aguja encaje perfectamente entre los dos índices. Finalmente, nadas siguiendo la línea de fe manteniendo siempre la aguja dentro de esos índices. Si te desvías y la aguja se sale de los índices, gira el cuerpo para recuperar el rumbo, nunca los brazos.",
+      "veredicto": "aprobado",
+      "score": 0.6316
+    },
+    {
+      "id": "q186",
+      "pregunta": "¿Hasta qué profundidad puedo bucear con mi certificación?",
+      "respuesta": "Con tu certificación Open Water, el límite de profundidad es 18 metros. Si usas aire normal (21% oxígeno), esa es la regla completa para evitar toxicidad por oxígeno. Si usas nitrox (EANx), la profundidad máxima baja según el porcentaje de oxígeno; por ejemplo, el nitrox típico de 32% o 36% reduce ese límite. Nunca bucees con una botella etiquetada \"oxígeno\" (100%) ni con nitrox sin la formación correspondiente. El manual de la Marina menciona un límite recreativo de 40 metros, pero eso es para buceadores técnicos entrenados, no para tu nivel. Sigue el estándar de tu agencia de entrenamiento e instructor.",
+      "veredicto": "aprobado",
+      "score": 0.6184
+    }
+  ]
+}

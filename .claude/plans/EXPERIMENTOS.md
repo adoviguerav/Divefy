@@ -229,11 +229,20 @@ N=20 fijo (sonda única a N=40 solo si on gana). Umbral del reranker → P1 Post
 
 ## Fase 7 — Generación
 
-- [ ] 4 modelos confirmados: Sonnet 5 / Haiku 4.5 (API) · Qwen 3.5 9B / 4B (MLX 4-bit) → resultado:
+- [x] 4 modelos confirmados: Sonnet 5 / Haiku 4.5 (API) · Qwen 3.5 9B / 4B (MLX 4-bit) → resultado (2026-09-22, receta `combined-512-contextual-qwen8b-hibrida-k10-rerank`, prompt `generation_v2`, juez council `judge_v3`):
+
+  | modelo | aprobado | score medio | abstenciones |
+  |---|---|---|---|
+  | sonnet5 | 83.3% (70/84) | 0.817 | 1 |
+  | haiku45 | 82.1% (69/84) | 0.770 | 1 |
+  | qwen9b | 67.9% (57/84) | 0.620 | 3 |
+  | qwen4b | 57.1% (48/84) | 0.600 | 3 |
+
+  Decisión (Adolfo, 2026-09-22): **Sonnet 5** como modelo principal, **qwen9b** como opción local (corre en el Mac, sin depender de API) — no se busca máxima precisión en la rama local, el objetivo es tenerla funcionando en el hardware actual. qwen4b descartado del grid final (10 puntos por debajo de qwen9b). Hardware dedicado para multiusuario, fuera de alcance de este proyecto: es un problema de servir peticiones concurrentes (vLLM/TGI + GPU), no de modelo más grande — se revisita si el proyecto continúa más allá del MVP.
 - [ ] Contexto completo vs reducido (subsección ~2-4K tokens) → resultado:
 - [ ] Abstención (grader) on/off → resultado:
 
-Juez de generación: LLM fijo de API (familia fuera de los 4), calibrado con 20-30 etiquetas de Adolfo (acuerdo ≥90% o se ajusta la rúbrica). Prueba extra anotada (no prioritaria): ventana conversacional >3 pares.
+Juez de generación: council de 3 modelos de API (sonnet45, gemini-3.1-flash-lite, gpt-4.1-mini; familias fuera de los 4 del grid), voto por mayoría, calibrado con etiquetas de Adolfo. Prueba extra anotada (no prioritaria): ventana conversacional >3 pares.
 
 ## Notas para cuando midamos (no antes)
 
