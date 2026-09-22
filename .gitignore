@@ -196,3 +196,6 @@ data/chroma/
 
 # Fixtures de test: se regeneran con `uv run pytest tests/ -m slow`
 tests/fixtures/
+
+# Cuaderno de conocimiento personal (docs/conocimiento.md): lo gestiona Adolfo aparte
+docs/conocimiento.md
