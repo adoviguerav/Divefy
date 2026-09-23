@@ -1,108 +1,109 @@
 # Divefy
 
-Copiloto de buceo con IA: un chat que responde dudas de seguridad en buceo (ES/EN) apoyándose **solo** en un corpus verificado, construido sobre un banco de experimentos que mide cada pieza del RAG.
+A dive-safety chat that answers only from a verified corpus, plus the experiment bench used to measure every piece of its RAG pipeline.
 
-## Qué es
+## What it is
 
-Dos cosas a la vez:
+Two things at once:
 
-1. **Un chat** (página web local, minimalista) que responde desde el US Navy Diving Manual Rev 7 y unos apuntes del Open Water PADI — con las fuentes a la vista, números de seguridad copiados textualmente del corpus y verificados dígito a dígito por un guardarraíl determinista, y abstención explícita cuando el corpus no cubre la pregunta. Recuerda los últimos 3 turnos (un condensador reescribe los follow-ups antes de buscar).
-2. **Un banco de experimentos** que compara técnicas de RAG (búsqueda híbrida, contextual retrieval, HyPE, rerank…), modelos (Sonnet 5, Haiku 4.5, Qwen 3.5 9B/4B en local) y corpus contra un examen propio de 84 preguntas del curso PADI. El resultado es una tabla: qué configuración responde mejor, a qué latencia y a qué coste — y si un modelo local pequeño alcanza a los de API.
+1. A chat (a small local web page) that answers dive-safety questions in Spanish or English using the US Navy Diving Manual Rev 7 and a set of PADI Open Water course notes. Every answer shows its sources. Safety numbers (depths, times, rates) are copied verbatim from the corpus and checked digit by digit by a deterministic guardrail; if a number cannot be verified, the chat abstains instead of guessing. When the corpus does not cover a question, it says so. It remembers the last 3 turns: a condenser rewrites follow-up questions into standalone queries before searching.
+2. An experiment bench that compares RAG techniques (hybrid search, contextual retrieval, HyPE, reranking), models (Sonnet 5, Haiku 4.5, and Qwen 3.5 9B/4B running locally) and corpora against an exam of 84 questions from the PADI course. The output is a table: which configuration answers best, at what latency and cost, and whether a small local model keeps up with the API ones.
 
 ## Stack
 
-Python 3.12+ · uv · LangChain · Chroma · Ollama / HuggingFace (embeddings) · bge-reranker · mlx-lm (modelos locales, Apple Silicon) · Gemini (condensador) · LangSmith (trazas) · servidor stdlib + HTML/CSS/JS sin framework.
+Python 3.12+, uv, LangChain, Chroma, Ollama and HuggingFace for embeddings, bge-reranker, mlx-lm for local models on Apple Silicon, Gemini for the condenser, LangSmith for traces. The web layer is a stdlib HTTP server and one HTML file with inline CSS and JavaScript.
 
-## Instalación
+## Installation
 
-### Requisitos
+### Requirements
 
-- **Python ≥ 3.12** y [`uv`](https://docs.astral.sh/uv/).
-- **[Ollama](https://ollama.com)** para el modelo de embeddings ganador (~8 GB en disco). Alternativa ligera sin Ollama más abajo.
-- **macOS con Apple Silicon** solo si quieres los modelos locales (Qwen vía MLX). Con los modelos de API (Sonnet/Haiku) funciona en cualquier sistema.
-- Claves de API en un `.env` en la raíz:
+- Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
+- [Ollama](https://ollama.com), for the embedding model used by the best configuration (about 8 GB on disk). There is a lighter option without Ollama below.
+- A Mac with Apple Silicon only if you want the local models (Qwen through MLX). With the API models (Sonnet, Haiku) it runs on any system.
+- API keys in a `.env` file at the repo root:
 
-| Variable | Para qué | ¿Obligatoria? |
+| Variable | Used for | Required? |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | modelos `sonnet5` / `haiku45` | sí para chatear con esos modelos |
-| `GEMINI_API_KEY` | condensador del chat (memoria de 3 turnos) | sí para el chat |
-| `OPENAI_API_KEY` | juez de los evals y embedding `openai3large` | solo para experimentos |
-| `LANGSMITH_TRACING=true` + `LANGSMITH_API_KEY` + `LANGSMITH_PROJECT` | trazas de cada turno en LangSmith | no (sin ellas no se envía nada) |
+| `ANTHROPIC_API_KEY` | the `sonnet5` and `haiku45` models | yes, to chat with those models |
+| `GEMINI_API_KEY` | the condenser (3-turn memory) | yes, for the chat |
+| `OPENAI_API_KEY` | the evaluation judge and the `openai3large` embedding | only for experiments |
+| `LANGSMITH_TRACING=true`, `LANGSMITH_API_KEY`, `LANGSMITH_PROJECT` | one trace per turn in LangSmith | no; without them nothing is sent |
 
-### Pasos
+### Steps
 
 ```bash
 git clone https://github.com/adoviguerav/Divefy.git && cd Divefy
-uv sync                                                    # dependencias
+uv sync                                                    # dependencies
 
-ollama pull qwen3-embedding:8b-q8_0                        # embedder ganador (una vez)
+ollama pull qwen3-embedding:8b-q8_0                        # embedding model (once)
 uv run python -m divefy.pipeline.p4_indexing \
-  --corpus combined --extras contextual --embedding qwen8b # índice ganador (~2 min)
+  --corpus combined --extras contextual --embedding qwen8b # build the index (~2 min)
 
-uv run python -m divefy                                    # abre el chat en el navegador
+uv run python -m divefy                                    # opens the chat in your browser
 ```
 
-La primera vez, `python -m divefy` descarga el reranker (`BAAI/bge-reranker-v2-m3`, ~2 GB) y precarga todo antes de abrir la página; verás `Modelos cargados. Listo para preguntar.` en la terminal.
+The first run downloads the reranker (`BAAI/bge-reranker-v2-m3`, about 2 GB) and loads everything before opening the page. The terminal prints `Modelos cargados. Listo para preguntar.` when it is ready.
 
-El corpus ya viene procesado en el repo (`data/processed/chunks.jsonl` y `enrich.jsonl`): no hace falta parsear el PDF ni pagar el enriquecedor.
+The corpus ships already processed (`data/processed/chunks.jsonl` and `enrich.jsonl`), so you do not need to parse the PDF or pay for the enrichment step.
 
-### Alternativa ligera (sin Ollama)
+### Lighter option (no Ollama)
 
-Indexa con BGE-M3 (se descarga solo, ~2 GB) y elígelo en el chat en *Modo dev → embedding: bgem3 → Aplicar*:
+Index with BGE-M3 instead (it downloads itself, about 2 GB), then pick it in the chat under Dev mode, embedding: bgem3, Apply:
 
 ```bash
 uv run python -m divefy.pipeline.p4_indexing --corpus combined --extras contextual --embedding bgem3
 ```
 
-### Modelos locales (opcional, Apple Silicon)
+### Local models (optional, Apple Silicon)
 
-Los modelos `qwen9b` / `qwen4b` se descargan de HuggingFace la primera vez que los eliges en *Modo dev* (≈5 GB y ≈3 GB). Cuenta unos 14 GB de memoria unificada con todo cargado.
+The `qwen9b` and `qwen4b` models download from HuggingFace the first time you pick them in Dev mode (about 5 GB and 3 GB). With everything loaded, expect around 14 GB of unified memory in use.
 
-## Uso
+## Usage
 
-- Escribe una pregunta o pulsa una de las cuatro de ejemplo. `Enter` envía.
-- **Nueva conversación** borra la memoria.
-- **Modo dev** muestra, bajo cada respuesta, los trozos del corpus usados con su score (y una leyenda de qué significa), y un panel para cambiar modelo y receta de búsqueda al vuelo (*Aplicar* precarga los modelos nuevos y empieza una conversación limpia).
-- Una respuesta en amarillo es una **abstención**: el corpus no respalda la pregunta (o pedía un cálculo, que Divefy nunca hace).
+Type a question or click one of the four examples. Enter sends. "Nueva conversación" clears the memory.
 
-## Experimentos
+Dev mode adds two things: under each answer, the corpus chunks that were used, each with its score and a short legend explaining what that score means; and a panel to switch the model and the retrieval configuration on the fly. Apply preloads the new models and starts a clean conversation.
 
-Cada evaluador escribe una fila de métricas por configuración en `results/` (nunca se sobreescriben):
+An answer shown in yellow is an abstention: the corpus does not support the question, or the question asked for a calculation, which Divefy never does.
+
+## Experiments
+
+Each evaluator writes one row of metrics per configuration into `results/`. Rows are never overwritten.
 
 ```bash
-uv run python -m divefy.evals.retrieval_evaluator --help   # búsqueda: hit_rate@k, recall, MRR
-uv run python -m divefy.evals.llm_evaluator --help         # generación: juez LLM + abstención
-uv run pytest                                              # suite completa (~1 min, sin red)
+uv run python -m divefy.evals.retrieval_evaluator --help   # search: hit_rate@k, recall, MRR
+uv run python -m divefy.evals.llm_evaluator --help         # generation: LLM judge and abstention
+uv run pytest                                              # full suite, about a minute, no network
 ```
 
-El golden dataset (`data/eval/golden.jsonl`) es el examen: **nunca se indexa**.
+The golden dataset (`data/eval/golden.jsonl`) is the exam. It is never indexed.
 
-## Estructura
+## Layout
 
 ```
 src/divefy/
-  __main__.py        # `python -m divefy`: arranca la API, precarga modelos, abre el navegador
+  __main__.py        # `python -m divefy`: starts the API, preloads models, opens the browser
   api.py             # GET / · GET /api/options · POST /api/chat · POST /api/warmup
-  chat.py            # lógica de un turno (condensar → recuperar → generar → guardarraíl)
-  static/index.html  # la página (HTML/CSS/JS, un fichero)
-  config.py          # RetrievalConfig y la receta ganadora
-  pipeline/          # p1_ingest → p2_chunking → p3_enrich → p4_indexing →
-                     # p5_retrieve → p6_rerank → p7_generate/p7_guardrail → p8_condense
+  chat.py            # one turn: condense, retrieve, generate, guardrail
+  static/index.html  # the page (HTML, CSS and JS in one file)
+  config.py          # RetrievalConfig and the best-known configuration
+  pipeline/          # p1_ingest, p2_chunking, p3_enrich, p4_indexing,
+                     # p5_retrieve, p6_rerank, p7_generate + p7_guardrail, p8_condense
   evals/             # retrieval_evaluator, llm_evaluator, judge
-  prompts/           # prompts versionados (generación, juez, condensador)
-data/raw/            # fuentes: manual Navy (PDF) + apuntes PADI (markdown)
-data/processed/      # corpus parseado, chunks y enriquecimiento (versionados)
-data/chroma/         # colecciones Chroma (se construyen en local, no versionadas)
-data/eval/           # golden dataset, etiquetas y cachés de evaluación
-data/guardrail/      # chuleta de constantes de seguridad para el guardarraíl numérico
-results/             # una fila de métricas por configuración
-tests/               # unit (andamiaje) + acceptance (congelados por fase)
+  prompts/           # versioned prompts (generation, judge, condenser)
+data/raw/            # sources: the Navy manual (PDF) and the PADI notes (markdown)
+data/processed/      # parsed corpus, chunks and enrichment (versioned)
+data/chroma/         # Chroma collections (built locally, not versioned)
+data/eval/           # golden dataset, labels and evaluation caches
+data/guardrail/      # the table of safety constants the numeric guardrail checks against
+results/             # one row of metrics per configuration
+tests/               # unit (scaffolding) and acceptance (frozen per phase)
 ```
 
-## Estado
+## Status
 
-MVP: fases 1-8 cerradas y verificadas (ingesta → chunking → extras de índice → embeddings → retrieval → rerank → generación con guardarraíl → chat web). En curso: Fase 9, el grid completo y la tabla comparativa final.
+MVP: phases 1 to 8 are done and verified (ingestion, chunking, index extras, embeddings, retrieval, reranking, generation with guardrail, web chat). Phase 9, the full grid and the final comparison table, is in progress.
 
-## Licencia
+## License
 
-MIT. El US Navy Diving Manual es de dominio público; los apuntes PADI son material propio, parafraseado.
+MIT. The US Navy Diving Manual is in the public domain. The PADI notes are my own, paraphrased.
