@@ -25,12 +25,16 @@ def _model():
     return CrossEncoder(_MODEL_NAME, device=device, activation_fn=torch.nn.Identity())
 
 
-def rerank(query: str, candidates: list[tuple[str, str]], k: int) -> list[str]:
-    """k chunk_ids por score del cross-encoder descendente; desempate determinista chunk_id asc."""
+def rerank_scored(query: str, candidates: list[tuple[str, str]], k: int) -> list[tuple[str, float]]:
+    """k (chunk_id, score) por score del cross-encoder descendente; desempate determinista chunk_id asc."""
     scores = _model().predict(
         [(query, texto) for _, texto in candidates], batch_size=_BATCH_SIZE
     )
     ranked = sorted(
         zip(candidates, scores), key=lambda pair: (-float(pair[1]), pair[0][0])
     )
-    return [chunk_id for (chunk_id, _text), _score in ranked[:k]]
+    return [(chunk_id, float(score)) for (chunk_id, _text), score in ranked[:k]]
+
+
+def rerank(query: str, candidates: list[tuple[str, str]], k: int) -> list[str]:
+    return [chunk_id for chunk_id, _ in rerank_scored(query, candidates, k)]

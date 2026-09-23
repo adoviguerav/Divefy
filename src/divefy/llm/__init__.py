@@ -13,7 +13,7 @@ en el propio espacio de nombres de este módulo, no en el de los submódulos.
 """
 
 from .api import API_MODELS, MAX_TOKENS, _clientes, generate_api
-from .mlx_backend import MLX_MODELS, _generate_mlx
+from .mlx_backend import MLX_MODELS, _generate_mlx, _mlx_load
 
 __all__ = ["API_MODELS", "MLX_MODELS", "MAX_TOKENS", "generate"]
 

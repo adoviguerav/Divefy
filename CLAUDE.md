@@ -13,14 +13,17 @@ Chat RAG con grounding estricto + banco de experimentos que compara técnicas ×
 - Modelos locales vía **mlx-lm** (Mac Apple Silicon); API vía SDK. Modelos del grid: Sonnet 5, Haiku 4.5, Qwen 3.5 9B/4B.
 - Embeddings: BGE-M3 (base) vs Qwen3-Embedding-0.6B (medido). Reranker: bge-reranker-v2-m3.
 - Enriquecedor de índice: Gemini Flash. Juez de evals: un GPT. Ambos fuera de la ablación.
-- Observabilidad: LangSmith. Chat: Textual.
+- Observabilidad: LangSmith. Chat: interfaz web local (HTML/CSS/JS sencillo servido desde Python).
 
 ## Estructura
 
 ```
 src/divefy/
   config.py          # config de experimento, global
-  chat.py            # Fase 8 — entrypoint CLI (Textual)
+  __main__.py        # Fase 8 — ÚNICO entrypoint (`python -m divefy`): API + precarga + navegador
+  api.py             # Fase 8 — API local stdlib: GET / · /api/options · POST /api/chat · /api/warmup
+  chat.py            # Fase 8 — lógica de un turno (run_turn_full) y precarga; solo librería
+  static/index.html  # Fase 8 — la página (HTML/CSS/JS, un fichero, sin framework)
   pipeline/          # un módulo por fase, prefijo pN_ para que el orden se vea en `ls`:
                      # p1_ingest → p2_chunking → p3_enrich → p4_indexing/p4_vectorstore →
                      # p5_retrieve → p6_rerank → p7_generate/p7_guardrail

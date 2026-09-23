@@ -238,12 +238,25 @@ def _read_jsonl(path: Path) -> list[dict]:
         return [json.loads(line) for line in f if line.strip()]
 
 
-def main(cap: int = 512) -> None:
+def main(
+    cap: int = 512,
+    corpus: str | None = None,
+    extras: str | None = None,
+    embedding: str | None = None,
+) -> None:
+    """Construye las colecciones. Sin filtros, el grid entero (3 corpus × 3 extras ×
+    4 embedders); con filtros, solo las que casen — p.ej. la receta ganadora para
+    instalar el chat sin pagar los 4 embedders."""
     processed_dir = Path("data/processed")
     chunks = _read_jsonl(processed_dir / "chunks.jsonl")
     enrich = _read_jsonl(processed_dir / "enrich.jsonl")
 
-    for model, embeddings in MODELS.items():
+    models = {m: e for m, e in MODELS.items() if embedding in (None, m)}
+    corpora = [c for c in CORPUS_VALUES if corpus in (None, c)]
+    if not models or not corpora:
+        raise ValueError(f"filtro sin colecciones: embedding={embedding!r} corpus={corpus!r}")
+
+    for model, embeddings in models.items():
         logger.info("preflight %s...", model)
         embeddings.embed_query("prueba")
         embeddings.release()  # el preflight valida, no debe dejar los 4 modelos cargados (review #3)
@@ -254,15 +267,28 @@ def main(cap: int = 512) -> None:
     # de código, T-07). "combined" es exactamente apuntes ∪ manual (mismo embed_text),
     # así que reutiliza los vectores ya calculados en las 2 pasadas anteriores de este
     # mismo modelo en vez de re-embeberlos (plan Notas, T-06).
-    for model, embeddings in MODELS.items():
+    for model, embeddings in models.items():
         cache: dict[str, list[float]] = {}
-        for corpus in CORPUS_VALUES:
-            rows = build_rows(chunks, enrich, corpus)
-            logger.info("=== %s / %s ===", corpus, model)
-            index_model(model, embeddings, rows, corpus=corpus, cap=cap, cache=cache)
+        for corpus_name in corpora:
+            rows = build_rows(chunks, enrich, corpus_name)
+            if extras is not None:
+                rows = {k: v for k, v in rows.items() if k == extras}
+                if not rows:
+                    raise ValueError(f"extras={extras!r} no existe")
+            logger.info("=== %s / %s ===", corpus_name, model)
+            index_model(model, embeddings, rows, corpus=corpus_name, cap=cap, cache=cache)
         embeddings.release()  # suelta este modelo antes de cargar el siguiente (review #3)
 
 
 if __name__ == "__main__":
+    import argparse
+
+    from divefy.config import EMBEDDING_VALUES, EXTRAS_VALUES
+
+    parser = argparse.ArgumentParser(description="Indexa colecciones Chroma (todas, o las filtradas)")
+    parser.add_argument("--corpus", choices=CORPUS_VALUES)
+    parser.add_argument("--extras", choices=EXTRAS_VALUES)
+    parser.add_argument("--embedding", choices=EMBEDDING_VALUES)
+    args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    main()
+    main(corpus=args.corpus, extras=args.extras, embedding=args.embedding)
