@@ -44,3 +44,11 @@ class RetrievalConfig:
     def run_id(self) -> str:
         base = f"{self.collection}-{self.search}-k{self.k}"
         return f"{base}-rerank" if self.rerank else base
+
+
+# Receta ganadora medida en Fase 5/6 (EXPERIMENTOS.md): hit_rate 0.9881, MRR 0.815
+# — la que usa el chat (Fase 8) por defecto.
+RECETA_GANADORA = RetrievalConfig(
+    corpus="combined", extras="contextual", embedding="qwen8b",
+    search="hibrida", k=10, cap=512, rerank=True,
+)

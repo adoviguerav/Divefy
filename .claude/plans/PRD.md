@@ -343,11 +343,11 @@ Prompt, guardrail numérico, abstención. Nace `llm_evaluator`: el juez que elig
 
 **Tareas:**
 
-- [ ] Interfaz LLM en `llm/` (backend API + backend mlx-lm) con las 4 configs.
-- [ ] Prompt de sistema (solo corpus, citas inline, números textuales, idioma de la pregunta, plantilla de abstención).
-- [ ] Chuleta asistida (regex + auditoría de Adolfo) + guardarraíl numérico con la política reintento-una-vez.
-- [ ] `llm_evaluator`: juez con rúbrica + calibración contra las etiquetas de Adolfo; abstención; filas versionadas.
-- [ ] Check ruidoso (uno): fixture de 10 respuestas sintéticas — 5 con números correctos y 5 con números alterados; el guardarraíl pilla las 5 malas y deja pasar las 5 buenas.
+- [x] Interfaz LLM en `llm/` (backend API + backend mlx-lm) con las 4 configs.
+- [x] Prompt de sistema (solo corpus, citas inline, números textuales, idioma de la pregunta, plantilla de abstención).
+- [x] Chuleta asistida (regex + auditoría de Adolfo) + guardarraíl numérico con la política reintento-una-vez.
+- [x] `llm_evaluator`: juez con rúbrica + calibración contra las etiquetas de Adolfo; abstención; filas versionadas.
+- [x] Check ruidoso (uno): fixture de 10 respuestas sintéticas — 5 con números correctos y 5 con números alterados; el guardarraíl pilla las 5 malas y deja pasar las 5 buenas.
 
 **Criterio de aceptación de la fase:** el juez está calibrado (≥90% de acuerdo con Adolfo), el check del guardarraíl pasa, y los 4 modelos tienen su pasada (una por modelo) con fila en `EXPERIMENTOS.md`.
 
