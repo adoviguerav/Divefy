@@ -55,8 +55,8 @@ def test_retrieve_widens_to_n_candidates_when_rerank_on(monkeypatch, tmp_path):
     ]
 
     class FakeCollection:
-        def similarity_search_by_vector(self, vector, k):
-            return hits[:k]
+        def similarity_search_by_vector_with_relevance_scores(self, vector, k):
+            return [(hit, 0.0) for hit in hits[:k]]
 
         def get(self, ids=None):
             return {"ids": list(ids), "documents": [f"text {i}" for i in ids]}
@@ -72,11 +72,11 @@ def test_retrieve_widens_to_n_candidates_when_rerank_on(monkeypatch, tmp_path):
 
     captured = {}
 
-    def fake_rerank(query, candidates, k):
+    def fake_rerank_scored(query, candidates, k):
         captured["n_candidates"] = len(candidates)
-        return [chunk_id for chunk_id, _ in candidates[:k]]
+        return [(chunk_id, 0.0) for chunk_id, _ in candidates[:k]]
 
-    monkeypatch.setattr(p5_retrieve.p6_rerank, "rerank", fake_rerank)
+    monkeypatch.setattr(p5_retrieve.p6_rerank, "rerank_scored", fake_rerank_scored)
 
     result = p5_retrieve.retrieve(config, "q", query_vector=[0.0])
     assert captured["n_candidates"] == p6_rerank.N_CANDIDATES

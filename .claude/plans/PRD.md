@@ -95,7 +95,7 @@ Respuestas conversacionales basadas exclusivamente en el corpus verificado, con 
 - **TTS/STT — modo de voz** (decisión de Adolfo, 2026-08-27): doble objetivo, feature real y banco de medición. Como feature, añade una tercera cara al Chat CLI junto a modo buceo/dev (Fase 8) — entrada hablada (STT) transcrita a la query, respuesta leída en voz alta (TTS), sobre la receta RAG ya cerrada. Como experimento, compara modelos SOTA locales y de API, pequeños y grandes, midiendo **latencia y precisión** (mismo espíritu que el grid de generación de Fase 7: ¿el local pequeño alcanza al de API?). Candidatos concretos y metodología de medición (WER para STT, métrica de calidad para TTS) pendientes de cerrar al planificar la fase.
 - **Escalera de cuantización del modelo local ganador** (decisión de Adolfo, 2026-09-03; ampliada 2026-09-08) — el mismo modelo en 2-3 niveles de cuantización, **elegidos partiendo de la capacidad real del Mac** (24 GB unificados compartidos: el 9B en fp16 ~18-19 GB va al límite; la RAM decide qué peldaños caben), pasado por el examen de 84 preguntas con `llm_evaluator`. Se mide **todo lo medible, en dos capas**: (a) **extrínseca** — degradación real contra corpus propio (tasa_aprobado, score_medio, abstenciones, intervenciones del guardarraíl vía logs), no contra benchmarks ajenos; (b) **intrínseca** (ampliación de Adolfo) — KL divergence entre las distribuciones del cuantizado y el original sobre texto del corpus, perplexity, y lo que el tooling dé (vive en llama.cpp/GGUF, no en MLX — investigar el cómo al abrir la fase). **Pregunta explícita de la escalera: ¿la métrica intrínseca (barata, sin examen) predice la degradación extrínseca (la que importa)?** — la correlación en cualquier sentido es hallazgo para M5/paper. Insumo: documento propio de Adolfo sobre memoria y cuantización (estudiado, se aporta al planificar la fase). Da la curva calidad/tamaño que necesita el camino embedded de P2. Coste: local, gratis, sin API. Orden intacto: el grid de F7 corre los Qwen en 4-bit y elige modelo; la escalera se barre después y solo sobre el ganador (fija-y-barre).
 - **Fine-tuning del modelo local (LoRA con `mlx-lm`)** (decisión de Adolfo, 2026-09-03) — doble objetivo, como el modo de voz: experimento real y expertise de IA local. **Diana: el contrato de salida, no el conocimiento** (el conocimiento lo pone el RAG) — pasos numerados, números textuales, plantilla de abstención, idioma. Se justifica solo si la línea base de Fase 7 muestra que el modelo pequeño pierde por seguimiento de instrucciones y no por saber menos: ese diagnóstico es su prerrequisito. Orden con la cuantización: escalera primero (fija el punto de la curva), afinado después sobre ese punto (QLoRA = afinar sobre base cuantizada). **Pregunta abierta — datos de entrenamiento**: las 102 de repaso salen del mismo curso PADI que las 84 del examen, así que entrenar con unas y examinar con otras puede contaminar el eval; alternativa limpia = pares sintéticos generados desde el corpus con Gemini Flash (ya en el stack). Se decide al planificar la fase, con el dato de la línea base delante.
-- **Web UI** — una vez funcione el RAG.
+- ~~**Web UI** — una vez funcione el RAG.~~ → adelantada a Fase 8 (decisión de Adolfo, 2026-09-23).
 
 ### P2 - Nice to Have (Future)
 
@@ -343,11 +343,11 @@ Prompt, guardrail numérico, abstención. Nace `llm_evaluator`: el juez que elig
 
 **Tareas:**
 
-- [ ] Interfaz LLM en `llm/` (backend API + backend mlx-lm) con las 4 configs.
-- [ ] Prompt de sistema (solo corpus, citas inline, números textuales, idioma de la pregunta, plantilla de abstención).
-- [ ] Chuleta asistida (regex + auditoría de Adolfo) + guardarraíl numérico con la política reintento-una-vez.
-- [ ] `llm_evaluator`: juez con rúbrica + calibración contra las etiquetas de Adolfo; abstención; filas versionadas.
-- [ ] Check ruidoso (uno): fixture de 10 respuestas sintéticas — 5 con números correctos y 5 con números alterados; el guardarraíl pilla las 5 malas y deja pasar las 5 buenas.
+- [x] Interfaz LLM en `llm/` (backend API + backend mlx-lm) con las 4 configs.
+- [x] Prompt de sistema (solo corpus, citas inline, números textuales, idioma de la pregunta, plantilla de abstención).
+- [x] Chuleta asistida (regex + auditoría de Adolfo) + guardarraíl numérico con la política reintento-una-vez.
+- [x] `llm_evaluator`: juez con rúbrica + calibración contra las etiquetas de Adolfo; abstención; filas versionadas.
+- [x] Check ruidoso (uno): fixture de 10 respuestas sintéticas — 5 con números correctos y 5 con números alterados; el guardarraíl pilla las 5 malas y deja pasar las 5 buenas.
 
 **Criterio de aceptación de la fase:** el juez está calibrado (≥90% de acuerdo con Adolfo), el check del guardarraíl pasa, y los 4 modelos tienen su pasada (una por modelo) con fila en `EXPERIMENTOS.md`.
 
@@ -359,19 +359,21 @@ La interfaz conversacional sobre la receta vigente.
 
 - **Dos caras** (decisión de Adolfo): **modo buceo** — pantalla estética de ordenador de buceo (dígitos estilo digital/figlet, paleta fosforescente), solo pregunta-respuesta con cita — y **modo dev** — comandos `/fuentes` (trozos recuperados con scores), `/config` (cambiar modelo/receta al vuelo), `/reset` (vaciar la ventana de 3 pares). Se conmuta con una tecla.
 - **Condensador con ventana de 3 pares** (movido desde F7, 2026-08-31): solo actúa en el chat — el eval usa preguntas sueltas. Convierte historial + pregunta nueva en query autónoma antes de buscar; la ventana (últimos 3 pares pregunta-respuesta) ES la memoria a corto plazo, sin memoria larga. Modelo **fijo fuera de la ablación: Gemini Flash** — mismo condensador para todos los brazos, no añade dimensión al grid (medirlo exigiría un eval multi-turno que no existe).
-- Framework: **Textual** (TUI con pantallas, estilos CSS-like) + pyfiglet para los dígitos grandes. Rich a pelo se queda corto con dos pantallas y comandos.
+- ~~Framework: **Textual** (TUI con pantallas, estilos CSS-like) + pyfiglet para los dígitos grandes.~~ **Sustituido (decisión de Adolfo, 2026-09-23): interfaz web local** — una página HTML/CSS/JS sencilla y minimalista servida desde Python, "la que usaría una persona normal, no un programador". Las acciones (`/fuentes`, `/config`, `/reset`) son botones, no comandos tecleados. El chat CLI mínimo con Rich (`phase-8-chat-cli`) queda como herramienta de desarrollo, no como interfaz de usuario. La "Web UI" de P1 (§4) queda absorbida aquí.
 - Streaming de la respuesta (el usuario ve escribir al modelo) y trazas a LangSmith por conversación.
 - **Convivencia RAM con modelo local** (decisión de Adolfo, 2026-09-07, corregida 2026-09-07 tras releer el código): el `qwen8b` del grid **ya corre cuantizado a Q8_0 vía Ollama (~8 GB)** — decisión de F4/T-04, no fp16 — así que la receta ganadora ya se midió con el embedder que usará el chat: **retrieval cerrado, F7 arranca sin nada por delante**. Cuenta del chat local: Q8 8 + Qwen 9B 4-bit ~5 + reranker ~1 ≈ 14 GB en 24 compartidos — cabe sobre el papel, se verifica gratis en el smoke de T-06 (F7): cargar el MLX con el Ollama levantado y mirar la presión de memoria (en el eval de F7 el embedder ni se carga: embeddings de las 84 cacheados). LangSmith da latencia, no RAM.
 - **Brazo embedder Q4_K_M — condicional, solo si el smoke de T-06 dice que no cabe** (decisión de Adolfo, 2026-09-07): una variable (Q8_0 medido vs Q4_K_M ~4.7 GB, mismo modelo), todo lo demás clavado. Plan ya especificado por si dispara: `ollama pull qwen3-embedding:8b-q4_K_M` → entrada `qwen8b_q4` en `EMBEDDING_VALUES` y `MODELS` + filtro `--embedding/--corpus/--extras` en `p4_indexing.main()` → colección `combined-512-contextual-qwen8b_q4` → pasada de `retrieval_evaluator` híbrida k=10 rerank vs la fila Q8 (hit 0.9881 / recall 0.6891 / MRR 0.815). Práctica investigada 2026-09-07: reindexar con la misma precisión en ambos lados (mezclar precisiones del mismo modelo degrada poco — acuerdo top-10 ~0.98 int8 vs fp32 — pero reindexar elimina la deriva y aquí es barato). Nota: el "Q8 casi sin pérdida / 4-bit sesgaría" del comentario de T-04 es supuesto de conocimiento general, no medido contra el examen — este brazo lo convertiría en dato.
 
 **Tareas:**
 
-- [ ] App Textual con las dos pantallas y el conmutador.
-- [ ] Condensador (Gemini Flash) con ventana de 3 pares.
-- [ ] Comandos `/fuentes`, `/config`, `/reset`.
-- [ ] Check ruidoso (uno): sesión guionizada de 3 turnos con follow-up ("¿y a 30 metros?") — el condensador resuelve la referencia y la respuesta llega con cita.
+- [x] ~~App Textual con las dos pantallas y el conmutador.~~ → Interfaz web local (`python -m divefy`): página minimalista con interruptor "modo dev" (`phase-8b`, 2026-09-23).
+- [x] Condensador (Gemini Flash) con ventana de 3 pares (`phase-8-chat-cli`, 2026-09-22).
+- [x] ~~Comandos `/fuentes`, `/config`, `/reset`.~~ → Botones: panel de fuentes (con score y leyenda), panel de configuración con *Aplicar*, *Nueva conversación* (`phase-8b`/`8c`).
+- [x] Check ruidoso: sesión guionizada con follow-up — el condensador resuelve la referencia (`tests/acceptance/test_p8_chat.py`).
+- [x] Precarga de modelos al arrancar y al cambiar de config; escritura progresiva (simulada, sobre texto ya verificado); 4 preguntas de ejemplo (`phase-8c`).
+- [x] Trazas LangSmith por turno (`@traceable`, no-op sin clave).
 
-**Criterio de aceptación de la fase:** una conversación real multi-turno en modo buceo funciona de punta a punta (condensación, cita, abstención ante pregunta fuera de corpus), y en modo dev se ven los trozos de esa misma conversación.
+**Criterio de aceptación de la fase:** ✅ 2026-09-23 — conversación real multi-turno de punta a punta (condensación, abstención ante pregunta fuera de corpus) y, en modo dev, los trozos de esa misma conversación con su score. Verificado en `phase-8-chat-cli`, `phase-8b-chat-tui` y `phase-8c-precarga-streaming-scores` (todos archivados).
 
 ### Fase 9: Grid y tabla final 🔒
 

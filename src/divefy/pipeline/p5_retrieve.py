@@ -54,28 +54,52 @@ def build_bm25(collection) -> Bm25Index:
     )
 
 
-def rrf_fuse(rankings: list[list[str]], k_rrf: int = K_RRF) -> list[str]:
+def rrf_fuse_scored(rankings: list[list[str]], k_rrf: int = K_RRF) -> list[tuple[str, float]]:
     """Reciprocal Rank Fusion: score = Σ 1/(k_rrf + rank), rank 1-based.
     Desempate determinista: score desc, chunk_id asc."""
     scores: dict[str, float] = {}
     for ranking in rankings:
         for rank, chunk_id in enumerate(ranking, start=1):
             scores[chunk_id] = scores.get(chunk_id, 0.0) + 1.0 / (k_rrf + rank)
-    return sorted(scores, key=lambda chunk_id: (-scores[chunk_id], chunk_id))
+    ordered = sorted(scores, key=lambda chunk_id: (-scores[chunk_id], chunk_id))
+    return [(chunk_id, scores[chunk_id]) for chunk_id in ordered]
+
+
+def rrf_fuse(rankings: list[list[str]], k_rrf: int = K_RRF) -> list[str]:
+    return [chunk_id for chunk_id, _ in rrf_fuse_scored(rankings, k_rrf)]
+
+
+def _parent_id(hit) -> str:
+    """Regla HyPE→padre: cada hit hype se resuelve a su parent_chunk_id (la fila
+    es autocontenida, sin get extra — D3)."""
+    metadata = hit.metadata
+    return metadata["parent_chunk_id"] if metadata.get("entry_type") == "hype" else hit.id
+
+
+def dedup_scored(hits_with_scores) -> list[tuple[str, float]]:
+    """Dedup HyPE→padre conservando la mejor posición (la primera vista) y su score."""
+    seen: set[str] = set()
+    out: list[tuple[str, float]] = []
+    for hit, score in hits_with_scores:
+        chunk_id = _parent_id(hit)
+        if chunk_id not in seen:
+            seen.add(chunk_id)
+            out.append((chunk_id, float(score)))
+    return out
 
 
 def dedup_to_chunk_ids(hits) -> list[str]:
-    """Regla HyPE→padre: cada hit hype se resuelve a su parent_chunk_id (la fila
-    es autocontenida, sin get extra — D3); se conserva la mejor posición."""
-    seen: set[str] = set()
-    chunk_ids: list[str] = []
-    for hit in hits:
-        metadata = hit.metadata
-        chunk_id = metadata["parent_chunk_id"] if metadata.get("entry_type") == "hype" else hit.id
-        if chunk_id not in seen:
-            seen.add(chunk_id)
-            chunk_ids.append(chunk_id)
-    return chunk_ids
+    """Regla HyPE→padre; se conserva la mejor posición."""
+    return [chunk_id for chunk_id, _ in dedup_scored((hit, 0.0) for hit in hits)]
+
+
+def score_kind(config: RetrievalConfig) -> str:
+    """Qué significa el score de retrieve_scored según la config: cross-encoder
+    (más alto = mejor), RRF (más alto = mejor, máx ≈ 2/61) o distancia de Chroma
+    (más bajo = mejor)."""
+    if config.rerank:
+        return "rerank"
+    return "rrf" if config.search == "hibrida" else "distancia"
 
 
 def query_cache_path(model: str) -> Path:
@@ -118,6 +142,14 @@ def retrieve(
     config: RetrievalConfig, query: str, query_vector: list[float] | None = None
 ) -> list[str]:
     """k chunk ids únicos para una query, según la config (denso o híbrido)."""
+    return [chunk_id for chunk_id, _ in retrieve_scored(config, query, query_vector)]
+
+
+def retrieve_scored(
+    config: RetrievalConfig, query: str, query_vector: list[float] | None = None
+) -> list[tuple[str, float]]:
+    """k (chunk_id, score) únicos para una query; el tipo de score lo dice
+    `score_kind(config)`. Mismo orden que `retrieve`, byte a byte."""
     name = config.collection
     marker = p4_vectorstore.chroma_directory() / f"{name}.complete"
     if not marker.exists():
@@ -136,8 +168,10 @@ def retrieve(
     # y el flujo es byte a byte el de Fase 5.
     n = p6_rerank.N_CANDIDATES if config.rerank else config.k
     n_dense = OVERSAMPLE * n if config.extras == "hype" else n
-    hits = collection.similarity_search_by_vector(query_vector, k=n_dense)
-    dense_ids = dedup_to_chunk_ids(hits)[:n]
+    # Misma consulta que similarity_search_by_vector, con la distancia además.
+    hits = collection.similarity_search_by_vector_with_relevance_scores(query_vector, k=n_dense)
+    dense_scored = dedup_scored(hits)[:n]
+    dense_ids = [chunk_id for chunk_id, _ in dense_scored]
     if config.search == "densa":
         if len(dense_ids) < config.k:
             # el dedup HyPE→padre puede colapsar los 4·k hits a menos de k padres;
@@ -146,17 +180,18 @@ def retrieve(
                 f"{name}: {len(dense_ids)} de k={config.k} chunks tras el dedup "
                 f"HyPE→padre para {query!r}"
             )
-        candidates = dense_ids
+        candidates = dense_scored
     else:
         if name not in _BM25_CACHE:
             _BM25_CACHE[name] = build_bm25(collection)
         lexical_ids = _BM25_CACHE[name].top(query, OVERSAMPLE * n)
-        candidates = rrf_fuse([dense_ids, lexical_ids])[:n]
+        candidates = rrf_fuse_scored([dense_ids, lexical_ids])[:n]
 
     if not config.rerank:
         return candidates
 
-    rows = collection.get(ids=candidates)
+    ids = [chunk_id for chunk_id, _ in candidates]
+    rows = collection.get(ids=ids)
     text_by_id = dict(zip(rows["ids"], rows["documents"]))
-    pairs = [(chunk_id, text_by_id[chunk_id]) for chunk_id in candidates]
-    return p6_rerank.rerank(query, pairs, config.k)
+    pairs = [(chunk_id, text_by_id[chunk_id]) for chunk_id in ids]
+    return p6_rerank.rerank_scored(query, pairs, config.k)

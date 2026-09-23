@@ -70,15 +70,20 @@ def _constantes() -> list[dict]:
 
 
 def _fetch_chunks(config: RetrievalConfig, pregunta: str) -> tuple[dict, ...]:
-    """k chunks con texto y metadata, en el orden que dejó el retrieval."""
-    ids = p5_retrieve.retrieve(config, pregunta)
+    """k chunks con texto, metadata y score (tipo según la config), en el orden
+    que dejó el retrieval."""
+    scored = p5_retrieve.retrieve_scored(config, pregunta)
+    ids = [chunk_id for chunk_id, _ in scored]
+    kind = p5_retrieve.score_kind(config)
     collection = p4_vectorstore.get_collection(config.collection, MODELS[config.embedding])
     rows = collection.get(ids=ids)
     by_id = {
         row_id: {"id": row_id, "texto": documento, "metadata": metadata}
         for row_id, documento, metadata in zip(rows["ids"], rows["documents"], rows["metadatas"])
     }
-    return tuple(by_id[chunk_id] for chunk_id in ids)
+    return tuple(
+        {**by_id[chunk_id], "score": score, "score_kind": kind} for chunk_id, score in scored
+    )
 
 
 def _user_prompt(chunks: tuple[dict, ...], pregunta: str) -> str:
