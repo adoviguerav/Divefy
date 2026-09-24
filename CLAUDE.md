@@ -54,7 +54,7 @@ docs/                # idea original, limitaciones hardware, modelo de datos
 - **Golden**: las 186 Q-A del curso PADI (84 eval / 102 repaso). Examen, no corpus.
 - **Evaluadores**: `retrieval_evaluator` (búsqueda, F5) y `llm_evaluator` (generación, F7); una config → una fila de métricas versionada. (Antes "el corrector".)
 - **Receta**: combinación corpus + tope + extras + embedding + búsqueda (+rerank). La colección Chroma lleva su nombre canónico `corpus-tope-extras-embedding`.
-- **Fija-y-barre**: barrer una dimensión cada vez desde la receta base; nunca el cruce completo.
+- **Una cosa cada vez**: cambiar una sola dimensión respecto a la receta base y medir; nunca el cruce completo. (Antes llamado "fija-y-barre".)
 - **section_id**: identificador estable de sección (`9-3.2`, `fichero#sección`) — las etiquetas del eval y el recall@k dependen de él.
 
 ## Referencias
