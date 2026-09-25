@@ -6,6 +6,31 @@ A generic chatbot fails that test. It will happily invent a decompression stop. 
 
 The second half of the project is how I chose every piece of it. Instead of picking a retrieval technique or a model on faith, I wrote an exam of 84 questions from the course and measured each option against it. The table further down is the result.
 
+## Results at a glance
+
+Two separate evaluations, both on the same 84-question exam and the best configuration.
+
+**RAG evaluation** (does search find the right passage?). Deterministic, no LLM involved: each retrieved chunk is checked against the section of the corpus labeled as the answer.
+
+| Metric | Result | What it means |
+|---|---|---|
+| hit_rate@10 | **98.8%** (83/84) | the right section is among the 10 chunks retrieved |
+| MRR | 0.815 | on average, the first right chunk is at position 1 or 2 |
+| recall@10 | 0.689 | share of all labeled sections that were retrieved |
+| precision@10 | 0.230 | share of retrieved chunks that are labeled sections |
+| tokens per query | 3,327 | context size handed to the model |
+
+**Generation evaluation** (is the final answer correct?). An LLM judge compares each answer with the expected one; the judge is a council of three models from families outside the four being tested, calibrated against my own hand labels.
+
+| Model | Judged correct | Mean score | Abstentions |
+|---|---|---|---|
+| Claude Sonnet 5 | **83.3%** (70/84) | 0.817 | 1 |
+| Claude Haiku 4.5 | 82.1% (69/84) | 0.770 | 1 |
+| Qwen 3.5 9B, local | 67.9% (57/84) | 0.620 | 3 |
+| Qwen 3.5 4B, local | 57.1% (48/84) | 0.600 | 3 |
+
+Plus the numeric guardrail's acceptance test: it caught 5 of 5 altered safety numbers and let 5 of 5 correct ones through. In total, 77 retrieval runs and 4 generation runs are behind these numbers.
+
 ## What it does
 
 A small web page on your machine. You ask a question in Spanish or English, it searches the corpus, writes an answer, and shows the chunks it used. Follow-up questions work: it keeps the last 3 turns and rewrites "and at 30 meters?" into a standalone query before searching. A dev mode shows the retrieved chunks with their scores and lets you switch models and search settings on the fly.
