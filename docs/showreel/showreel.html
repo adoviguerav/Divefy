@@ -432,8 +432,8 @@ function diverPos(t) {
     const p = seg(t, 4.95, 5.62);
     x = 960 + Math.sin(t * 40) * 6 * p; y = lerp(760, -560, p * p * .8 + p * .2); s = .6;
     sy = 1.28; sx = .84; r = Math.sin(t * 30) * 2;
-  } else if (t >= 18.25) {
-    const e = E.outExpo(seg(t, 18.3, 19.1));
+  } else if (t >= 18.5) {
+    const e = E.outExpo(seg(t, 18.5, 19.2));
     x = lerp(2250, 1470, e); y = 600 + Math.sin(t * 2) * 12; s = .78; r = lerp(-18, 0, e) + Math.sin(t * 1.6) * 2;
   } else op = 0;
   return { x, y, s, r, sx, sy, op };
@@ -449,7 +449,7 @@ function diverFace(t) {
     tilt = 5;
   } else if (t < 4.95) { dx = 9; dy = -2; pr = 7; tilt = -8; bh = -6; aL = 40; aR = -40; }
   else if (t < 6) { dx = 0; dy = -10; pr = 5; tilt = -12; bh = -8; aL = 170; aR = -170; fin = 34; }
-  else { dx = -6; dy = 0; lid = 20; tilt = 0; bh = 2; const w = seg(t, 18.9, 19.2); aR = lerp(-14, -150, E.outBack(w)) + (w >= 1 ? Math.sin(t * 9) * 10 : 0); fin = 7; }
+  else { dx = -6; dy = 0; lid = 20; tilt = 0; bh = 2; const w = seg(t, 19.05, 19.35); aR = lerp(-14, -150, E.outBack(w)) + (w >= 1 ? Math.sin(t * 9) * 10 : 0); fin = 7; }
   // blinks
   for (const tb of [1.15, 3.8, 19.55]) { const d = Math.abs(t - tb); if (d < .08) lid = Math.max(lid, 50 * (1 - d / .08)); }
   return { dx, dy, pr, tilt, bh, lid, aL, aR, fin };
@@ -836,7 +836,7 @@ function renderFrame(t) {
   camY = climb(t);
   const vx = (v1 + v2) * .5, vy = (climb(t + .01) - climb(t - .01)) / .02;
   drawBG(t, vx, vy);
-  if (t < 6.0 || t > 18.25) diverBubbles(t);
+  if (t < 6.0 || t > 18.5) diverBubbles(t);
   // horizontal motion blur while whipping
   const blurX = Math.min(70, Math.abs(v1 + v2) / 180);
   $('mblurG').setAttribute('stdDeviation', `${blurX.toFixed(1)} 0`);
