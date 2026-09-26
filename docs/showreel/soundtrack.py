@@ -14,7 +14,7 @@ import numpy as np
 from scipy.signal import butter, fftconvolve, sosfilt
 
 SR = 48_000
-DUR = 20.0
+DUR = 24.5
 N = int(SR * DUR)
 BEAT = 0.5
 rng = np.random.default_rng(11)
@@ -185,6 +185,7 @@ CHORDS = [  # (start, end, bass, voicing)
     (6, 8, "A1", ("A3", "C4", "E4")), (8, 10, "F1", ("F3", "A3", "C4")), (10, 12, "C2", ("G3", "C4", "E4")),
     (12, 14, "G1", ("G3", "B3", "D4")), (14, 16, "A1", ("A3", "C4", "E4")), (16, 17, "F1", ("F3", "A3", "C4")),
     (17, 18.38, "G1", ("G3", "B3", "D4")), (18.38, 20, "A1", ("A3", "C4", "E4", "B4", "A4")),
+    (20, 22, "F1", ("F3", "A3", "C4")), (22, 23, "G1", ("G3", "B3", "D4")), (23, 24.5, "A1", ("A3", "C4", "E4", "B4")),
 ]
 
 pad = np.zeros(N)
@@ -204,7 +205,7 @@ for a, b, root, voicing in CHORDS:
         bass[i : i + len(s[: N - i])] += s[: N - i]
     else:
         t0 = a
-        while t0 < min(b, 18.3) - 1e-6:
+        while t0 < min(b, 18.3 if b <= 20 else 24.0) - 1e-6:
             for off in (0.25,):
                 nd = 0.22
                 s = (np.sin(2 * np.pi * f * 2 * tt(nd)) + lp(saw(f * 2, nd, (-5, 5)), 900) * 0.6) * env(nd, 0.004, 9)
@@ -212,7 +213,7 @@ for a, b, root, voicing in CHORDS:
                 bass[j : j + len(s)] += s[: max(0, N - j)]
             t0 += BEAT
         # 16th-note pluck arp over the groove (skips the stats + end card)
-        if a < 16:
+        if a < 16 or 20 <= a < 24:
             tones = [NOTE[voicing[0]] * 2, NOTE[voicing[1]] * 2, NOTE[voicing[2]] * 2, NOTE[voicing[1]] * 4]
             k = 0
             t0 = a
@@ -233,6 +234,7 @@ add(music, 0.0625, arp, 0.05, 0.4)  # dotted echo on the other side
 # drums
 kick_times = [i * BEAT for i in range(0, 12)]  # muffled intro kicks (0..5.5)
 kick_times += [6.0 + i * BEAT for i in range(0, 25)]  # 6.0 .. 18.0
+kick_times += [20.0 + i * BEAT for i in range(0, 8)]  # epilogue 20.0 .. 23.5
 for k in kick_times:
     if 5.9 < k < 6.0:
         continue
@@ -249,6 +251,11 @@ for i in range(96):
     t0 = 6.0 + i * BEAT / 4
     if t0 < 18.2 and (i % 2 == 1):
         add(music, t0, hat(), 0.25, -0.3)
+# epilogue groove
+for i in range(4):
+    add(music, 20.5 + i * 1.0, clap(), 0.5, 0.05)
+for i in range(8):
+    add(music, 20.25 + i * BEAT, hat(True), 0.4, 0.3)
 # intro: shaker on off-beats from 2.5
 for i in range(6):
     add(music, 2.75 + i * BEAT, hat(True), 0.3, 0.2)
@@ -279,7 +286,7 @@ gain = np.ones(N)
 gain[int(8.6 * SR) : int(16.0 * SR)] = 0.72
 music *= gain
 # final fade
-music[:, int(19.4 * SR) :] *= np.linspace(1, 0, N - int(19.4 * SR)) ** 1.5
+music[:, int(24.05 * SR) :] *= np.linspace(1, 0, N - int(24.05 * SR)) ** 1.5
 
 # ------------------------------------------------------------------ SFX (mirrors showreel.html)
 # on the boat: horn + sea, then a splash when the camera goes under
@@ -370,6 +377,33 @@ add(sfx, 18.40, shimmer(1.6, 880), 0.3, 0)
 add(sfx, 18.73, bloop(1400, 700, 0.07, 45), 0.45, -0.3)
 add(sfx, 18.98, ding(1318.5, 0.9, 4), 0.2, 0.5)
 add(sfx, 19.08, blip(1800, 0.04), 0.2, -0.2)
+
+# epilogue: back on the boat
+add(sfx, 19.98, whoosh(0.4, 300, 4000, 1.0), 0.5, 0)
+add(sfx, 20.0, lp(noise(0.5), 3000) * env(0.5, 0.005, 7), 0.45, 0)  # surfacing splash
+for i in range(6):
+    add(sfx, 20.02 + i * 0.03, bloop(900 - 90 * i, 300, 0.06), 0.15, (-1) ** i * 0.5)
+sea2 = lp(np.cumsum(noise(4.4)) * 0.02, 700)
+sea2 -= lp(sea2, 40)
+sea2 *= (0.55 + 0.45 * np.sin(2 * np.pi * 0.45 * tt(4.4)) ** 2) * np.minimum(1, tt(4.4) / 0.2) / np.abs(sea2).max()
+add(sfx, 20.1, sea2, 0.18, 0.2)
+add(sfx, 20.48, glide(150, 55, 0.25, 22) * env(0.25, 0.002, 14), 0.6, 0.3)  # diver lands
+add(sfx, 20.5, whoosh(0.32, 300, 2500, 0.8), 0.35, -0.2)  # wave builds
+add(sfx, 20.8, lp(noise(0.9), 2200) * env(0.9, 0.004, 4.5), 0.8, -0.1)  # crash
+crackle = hp(noise(0.4), 3000) * (rng.random(int(0.4 * SR)) > 0.985) * 3
+add(sfx, 20.86, crackle * env(0.4, 0.001, 5), 0.35, -0.2)
+add(sfx, 20.9, glide(900, 60, 0.45, 7) * env(0.45, 0.002, 4), 0.3, -0.2)  # power down
+add(sfx, 21.4, whoosh(0.35, 600, 4000, 1.2), 0.3, 0)
+add(sfx, 21.55, glide(1600, 500, 0.22, 6) * env(0.22, 0.01, 4), 0.12, 0.3)  # falling
+for t0, g in ((21.77, 0.8), (21.99, 0.35), (22.1, 0.15)):
+    add(sfx, t0, glide(260, 110, 0.18, 30) * env(0.18, 0.001, 18) + np.pad(tick(2500, 0.01), (0, int(0.17 * SR))) * 0.6, g, 0.3)
+add(sfx, 22.14, shimmer(0.9, 1318.5), 0.18, 0.4)
+add(sfx, 22.85, whoosh(0.35, 600, 4000, 1.2), 0.3, 0)
+add(sfx, 23.15, boom(0.5), 0.6, -0.1)
+add(sfx, 23.15, clap(), 0.45, -0.1)
+add(sfx, 23.35, ding(2093.0, 0.6, 6), 0.25, 0.2)  # ka-
+add(sfx, 23.41, ding(2637.0, 0.8, 5), 0.25, 0.2)  # -ching
+add(sfx, 23.6, bloop(700, 1100, 0.07), 0.2, 0)
 
 # ------------------------------------------------------------------ space + master
 ir_t = tt(1.4)

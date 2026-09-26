@@ -27,7 +27,7 @@ if (mode === 'stills') {
     await page.screenshot({ path: path.join(here, 'stills', `t_${t.toFixed(2)}.png`) });
   }
 } else if (mode === 'video') {
-  const out = args[0] || 'silent.mp4', fps = Number(args[1] || 60), dur = 20;
+  const out = args[0] || 'silent.mp4', fps = Number(args[1] || 60), dur = await page.evaluate(() => window.DUR);
   const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'png', '-i', '-',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '15', '-pix_fmt', 'yuv420p', '-tune', 'animation', out], { stdio: ['pipe', 'inherit', 'inherit'] });
   const n = Math.round(fps * dur), t0 = Date.now();

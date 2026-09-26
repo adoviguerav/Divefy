@@ -1,6 +1,6 @@
 # Divefy showreel
 
-A 20-second motion-graphics promo for Divefy, aimed at first-time divers. Rendered result: `divefy-showreel.mp4` (1920×1080, 60 fps, H.264 + AAC).
+A 24.5-second motion-graphics promo for Divefy, aimed at first-time divers. Rendered result: `divefy-showreel.mp4` (1920×1080, 60 fps, H.264 + AAC), plus `divefy-showreel-075x.mp4`, the same cut slowed to 0.75× with ffmpeg (no re-render).
 
 Everything is generated from code: no stock footage, no samples.
 
@@ -21,6 +21,7 @@ npm install                                                     # playwright-cor
 uv run --with numpy --with scipy python soundtrack.py soundtrack.wav
 node render.mjs video silent.mp4 60                             # needs Chromium + ffmpeg (CHROME=, FFMPEG=)
 ffmpeg -i silent.mp4 -i soundtrack.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart divefy-showreel.mp4
+ffmpeg -i divefy-showreel.mp4 -filter_complex "[0:v]setpts=PTS/0.75[v];[0:a]atempo=0.75[a]" -map "[v]" -map "[a]" -r 45 divefy-showreel-075x.mp4
 ```
 
 `node render.mjs stills 5.3 12.4` writes single frames to `stills/` for checking a moment without rendering the whole thing.
