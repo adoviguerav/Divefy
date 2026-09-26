@@ -143,6 +143,7 @@ canvas#bg{position:absolute;left:0;top:0}
 #eChip{font-weight:700;font-size:30px;color:#fff;background:#0B1320;border-radius:999px;padding:12px 26px;white-space:nowrap}
 #eRepo{font-family:var(--mono);font-size:28px;color:#fff;background:#111;border-radius:14px;padding:14px 24px;white-space:nowrap}
 #eRepo span{color:var(--aqua)}
+#eKofi{font-family:var(--mono);font-size:24px;color:#111;background:#FFD166;border-radius:12px;padding:10px 20px;white-space:nowrap}
 #eLim{font-weight:700;font-size:26px;color:#fff;white-space:nowrap;text-shadow:0 2px 12px rgba(0,0,0,.45)}
 #eStamp{font-weight:900;font-size:54px;color:#E11D48;border:7px solid #E11D48;border-radius:14px;padding:2px 20px;letter-spacing:.08em;background:rgba(255,255,255,.55)}
 #eSpark{font-size:64px}
@@ -304,6 +305,7 @@ canvas#bg{position:absolute;left:0;top:0}
     <div id="e3a" class="abs et" style="font-size:96px">My MacBook can’t swim.</div>
     <div id="e3b" class="abs et" style="font-size:132px">Help it <span class="mk">retire.</span></div>
     <div id="eRepo" class="abs"><span>open source ·</span> github.com/adoviguerav/Divefy</div>
+    <div id="eKofi" class="abs">☕ ko-fi.com/adolfoviguera</div>
     <div id="eLim" class="abs">Study tool. Not your instructor. Not your dive computer.</div>
   </div>
 
@@ -1061,7 +1063,7 @@ function sceneEpi(t) {
   };
   txt('e1a', 140, 250, 20.32, 21.3); txt('e1b', 140, 360, 20.4, 21.33); txt('e1c', 140, 485, 20.48, 21.36);
   txt('eLab', 140, 240, 21.45, 22.8); txt('e2a', 140, 350, 21.52, 22.83); txt('e2b', 140, 462, 21.6, 22.86); txt('eChip', 140, 568, 21.9, 22.89);
-  txt('e3a', 140, 285, 22.95, 99); txt('e3b', 140, 420, 23.03, 99); txt('eRepo', 140, 552, 23.35, 99);
+  txt('e3a', 140, 285, 22.95, 99); txt('e3b', 140, 420, 23.03, 99); txt('eRepo', 140, 552, 23.35, 99); txt('eKofi', 140, 628, 23.5, 99);
   const pl = E.outExpo(seg(t, 23.6, 24.0));
   show($('eLim'), t >= 23.6);
   place($('eLim'), 960, 1012 + (1 - pl) * 20, { op: pl });
