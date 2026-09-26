@@ -282,11 +282,20 @@ music *= gain
 music[:, int(19.4 * SR) :] *= np.linspace(1, 0, N - int(19.4 * SR)) ** 1.5
 
 # ------------------------------------------------------------------ SFX (mirrors showreel.html)
-ping = np.sin(2 * np.pi * 1320 * tt(1.8)) * env(1.8, 0.002, 3.2)
-add(sfx, 0.02, ping, 0.35)
-add(sfx, 0.30, ping, 0.14, 0.4)
-add(sfx, 0.58, ping, 0.06, -0.4)
-for i, t0 in enumerate((0.64, 0.77, 0.90)):
+# on the boat: horn + sea, then a splash when the camera goes under
+horn_t = tt(0.9)
+horn = lp(saw(116.5, 0.9, (-6, 6)) + saw(146.8, 0.9, (-6, 6)) * 0.7, 900) * np.minimum(1, horn_t / 0.04) * np.minimum(1, (0.9 - horn_t) / 0.25)
+add(sfx, 0.02, horn, 0.5, -0.3)
+sea = lp(np.cumsum(noise(5.2)) * 0.02, 700)
+sea -= lp(sea, 40)
+swell = 0.55 + 0.45 * np.sin(2 * np.pi * 0.45 * tt(5.2)) ** 2
+sea_fade = np.minimum(1, tt(5.2) / 0.3) * np.clip((4.98 - tt(5.2)) / 0.05, 0, 1)
+add(sfx, 0.0, sea * swell * sea_fade / np.abs(sea).max(), 0.22, 0.2)
+add(sfx, 1.07, glide(150, 55, 0.25, 22) * env(0.25, 0.002, 14), 0.7, 0.3)  # diver lands on deck
+add(sfx, 4.95, lp(noise(0.6), 2500) * env(0.6, 0.005, 6), 0.55, 0)  # splash
+for i in range(9):
+    add(sfx, 5.0 + i * 0.035, bloop(250 + 90 * i, 700 + 60 * i, 0.07), 0.2, (-1) ** i * 0.5)
+for i, t0 in enumerate((0.75, 0.9, 1.15)):
     add(sfx, t0, glide(120, 60, 0.15, 25) * env(0.15, 0.002, 20), 0.5)
 add(sfx, 0.60, blip(1500), 0.25, 0.7)
 add(sfx, 0.95, whoosh(0.4, 900, 5000, 2), 0.25, -0.2)

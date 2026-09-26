@@ -24,8 +24,11 @@ canvas#bg{position:absolute;left:0;top:0}
 #pov{font-family:var(--mono);font-weight:700;font-size:44px;color:var(--aqua);letter-spacing:.06em;white-space:nowrap}
 .line{font-weight:900;letter-spacing:-.045em;line-height:1.08;white-space:nowrap;overflow:hidden;padding:0 .1em .12em 0}
 .line .w{display:inline-block;will-change:transform}
-#l1{font-size:140px}
-#l2{font-size:250px;color:var(--aqua);text-shadow:0 0 60px rgba(94,234,212,.35)}
+#l1,#l2{font-size:104px;text-shadow:0 6px 30px rgba(2,21,38,.35)}
+#l3{font-size:250px;color:var(--aqua);text-shadow:0 0 60px rgba(94,234,212,.35),0 10px 40px rgba(2,21,38,.45)}
+#pov{text-shadow:0 4px 20px rgba(2,21,38,.4)}
+#later{font-family:var(--mono);font-weight:700;font-size:26px;letter-spacing:.04em;color:var(--aqua);background:rgba(2,16,31,.6);border:1.5px solid rgba(94,234,212,.4);border-radius:12px;padding:10px 18px;white-space:nowrap}
+#plan{font-weight:600;font-size:32px;letter-spacing:-.01em;color:rgba(255,255,255,.72);white-space:nowrap}
 #squig{overflow:visible}
 #think{background:#fff;color:var(--navy);border-radius:40px;padding:26px 38px;font-weight:800;font-size:40px;line-height:1.12;white-space:nowrap;box-shadow:0 30px 60px rgba(0,0,0,.35);transform-origin:90% 110%}
 #think small{display:block;font-family:var(--mono);font-weight:500;font-size:22px;color:#5B6B82;margin-bottom:6px}
@@ -152,12 +155,13 @@ canvas#bg{position:absolute;left:0;top:0}
   <div id="s1" class="full"><div id="s1g" class="full">
     <div id="ring1" class="abs ring"></div><div id="ring2" class="abs ring"></div>
     <div id="pov" class="abs">POV:</div>
-    <div id="l1" class="abs line"><span class="w">your</span> <span class="w">first</span></div>
-    <div id="l2" class="abs line"><span class="w">dive.</span></div>
+    <div id="l1" class="abs line"><span class="w">you</span> <span class="w">dive</span> <span class="w">in</span> <span class="w">5</span> <span class="w">mins</span></div>
+    <div id="l2" class="abs line"><span class="w">and</span> <span class="w">don’t</span> <span class="w" id="wRem">remember</span></div>
+    <div id="l3" class="abs line"><span class="w">sh*t.</span></div>
     <svg id="squig" class="abs" width="300" height="34" viewBox="0 0 420 40" preserveAspectRatio="none"><path id="squigP" d="M6 26 C 40 6, 70 6, 100 24 S 160 42, 200 22 S 270 4, 310 22 S 380 38, 414 16" fill="none" stroke="#FFD166" stroke-width="11" stroke-linecap="round"/></svg>
     <div id="td1" class="abs tdot" style="width:22px;height:22px"></div>
     <div id="td2" class="abs tdot"></div>
-    <div id="think" class="abs"><small>// internal monologue</small>wait… how fast<br>do I go up<span class="q" id="qmark">?</span></div>
+    <div id="think" class="abs"><small>// internal panic</small>wait… how fast<br>do I go up<span class="q" id="qmark">?</span></div>
   </div></div>
 
   <!-- S2 -->
@@ -194,6 +198,7 @@ canvas#bg{position:absolute;left:0;top:0}
     <div id="ldot2" class="abs ldot"></div>
     <div id="safeK" class="abs">BE A S.A.F.E. DIVER</div>
     <div id="safe" class="abs"><span class="wd"><b>S</b>lowly</span> <span class="wd"><b>A</b>scend</span> <span class="wd"><b>F</b>rom</span> <span class="wd"><b>E</b>very</span> <span class="wd">dive.</span></div>
+    <div id="plan" class="abs">Ask on the boat. Dive by the plan.</div>
     <div id="cmd" class="abs"><span>$</span> uv run python -m divefy</div>
     <div id="stopHud" class="abs">SAFETY STOP · 5 m · 3 min ✓</div>
   </div>
@@ -247,13 +252,15 @@ canvas#bg{position:absolute;left:0;top:0}
 
   <!-- HUD -->
   <div id="hud" class="abs">
-    <div class="ttl"><span>DIVE COMPUTER</span><span id="hClock">00:42</span></div>
+    <div class="ttl"><span id="hTitle">DIVE IN</span><span id="hClock">04:59</span></div>
     <div class="row"><span>DEPTH</span><b id="hDepth">12.4 m</b></div>
     <div class="row" id="hAscRow"><span>ASCENT</span><b id="hAsc">0 m/min</b></div>
     <div class="row"><span>DIVES LOGGED</span><b>000</b></div>
+    <div class="row"><span>COURSE RECALL</span><b>▌ 3%</b></div>
     <div class="row"><span>CONFIDENCE</span><b>██████ 100%</b></div>
     <div id="hWarn">⚠ SLOW DOWN</div>
   </div>
+  <div id="later" class="abs">// 20 min later · 12 m down</div>
   </div>
 
   <!-- S4/S5 portal -->
@@ -359,7 +366,87 @@ function bubble(x, y, r, a) {
   ctx.beginPath(); ctx.arc(x - r * .35, y - r * .35, r * .28, 0, 6.2832); ctx.fillStyle = '#fff'; ctx.fill();
   ctx.globalAlpha = 1;
 }
+const clouds = Array.from({ length: 5 }, (_, i) => ({ x: 160 + i * 420 + R() * 120, y: 70 + R() * 170, s: .7 + R() * .7 }));
+const glints = Array.from({ length: 90 }, () => ({ x: R() * 2400 - 240, y: R(), l: 14 + R() * 40, ph: R() * 6.28 }));
+function drawBoat(t) {
+  // sky + sea rock with the boat; deck and railing stay with the camera
+  const hz = 610;
+  ctx.save();
+  ctx.translate(960, 760); ctx.rotate(Math.sin(t * 1.1) * .02); ctx.translate(-960, -760);
+  ctx.translate(camX * .12, Math.sin(t * 1.1 + .6) * 8);
+  const sk = ctx.createLinearGradient(0, -200, 0, hz);
+  sk.addColorStop(0, '#15579A'); sk.addColorStop(.6, '#3F8FCF'); sk.addColorStop(1, '#9ED0EE');
+  ctx.fillStyle = sk; ctx.fillRect(-400, -300, W + 800, hz + 300);
+  const sun = ctx.createRadialGradient(1760, 40, 0, 1760, 40, 620);
+  sun.addColorStop(0, 'rgba(255,244,214,.75)'); sun.addColorStop(.25, 'rgba(255,236,190,.25)'); sun.addColorStop(1, 'rgba(255,236,190,0)');
+  ctx.fillStyle = sun; ctx.fillRect(-400, -300, W + 800, hz + 300);
+  ctx.fillStyle = 'rgba(255,255,255,.9)';
+  for (const c of clouds) {
+    const x = ((c.x + t * 14) % (W + 600)) - 300, y = c.y;
+    for (const [dx, dy, r] of [[0, 0, 46], [44, -18, 56], [96, 0, 44], [50, 14, 40], [-38, 10, 32]]) {
+      ctx.beginPath(); ctx.ellipse(x + dx * c.s, y + dy * c.s, r * c.s * 1.25, r * c.s * .8, 0, 0, 6.2832); ctx.fill();
+    }
+  }
+  const sea = ctx.createLinearGradient(0, hz, 0, H + 200);
+  sea.addColorStop(0, '#2A8BC4'); sea.addColorStop(.25, '#10639A'); sea.addColorStop(1, '#073A5E');
+  ctx.fillStyle = sea; ctx.fillRect(-400, hz, W + 800, H);
+  ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(-400, hz - 1, W + 800, 3);
+  ctx.strokeStyle = '#fff'; ctx.lineCap = 'round';
+  for (const g of glints) {
+    const y = hz + 8 + Math.pow(g.y, 1.6) * 420, k = .35 + g.y;
+    ctx.globalAlpha = .25 + .35 * Math.max(0, Math.sin(t * 3 + g.ph));
+    ctx.lineWidth = 1.5 + g.y * 3;
+    const x = g.x + Math.sin(t * .8 + g.ph) * 20 + camX * .25;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + g.l * k, y); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+  // railing
+  const off = camX * .6;
+  ctx.fillStyle = '#CBD5E1';
+  for (let x = ((off % 260) + 260) % 260 - 260; x < W + 260; x += 260) ctx.fillRect(x - 6, 700, 12, 140);
+  ctx.fillStyle = '#E2E8F0'; ctx.fillRect(0, 694, W, 12);
+  ctx.fillStyle = '#B8C4D2'; ctx.fillRect(0, 766, W, 7);
+  // diver-down flag on a post
+  const fx = 1820 + off;
+  if (fx > -200 && fx < W + 200) {
+    ctx.fillStyle = '#94A3B8'; ctx.fillRect(fx - 4, 420, 8, 290);
+    ctx.save(); ctx.beginPath();
+    const fw = 130, fh = 88, pts = [];
+    for (let i = 0; i <= 10; i++) { const u = i / 10; pts.push([fx + 4 + u * fw, 426 + Math.sin(t * 7 - u * 5) * 7 * u]); }
+    ctx.moveTo(pts[0][0], pts[0][1]); for (const [x, y] of pts) ctx.lineTo(x, y);
+    for (let i = 10; i >= 0; i--) ctx.lineTo(pts[i][0], pts[i][1] + fh);
+    ctx.closePath(); ctx.fillStyle = '#E11D48'; ctx.fill(); ctx.clip();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 20;
+    ctx.beginPath(); ctx.moveTo(fx, 420); ctx.lineTo(fx + fw + 10, 426 + fh + 10); ctx.stroke();
+    ctx.restore();
+  }
+  // gunwale + deck
+  ctx.fillStyle = '#F1F5F9'; ctx.fillRect(0, 820, W, 22);
+  const dk = ctx.createLinearGradient(0, 842, 0, H);
+  dk.addColorStop(0, '#A87650'); dk.addColorStop(1, '#6B4428');
+  ctx.fillStyle = dk; ctx.fillRect(0, 842, W, H - 842);
+  ctx.fillStyle = 'rgba(40,22,10,.35)';
+  for (const y of [868, 898, 934, 978, 1032]) ctx.fillRect(0, y, W, 3);
+}
 function drawBG(t, vx, vy) {
+  const SPL = [4.95, 5.16];
+  if (t < SPL[0]) return drawBoat(t);
+  if (t >= SPL[1]) return drawOcean(t, vx, vy);
+  // the camera plunges: the waterline sweeps up the screen
+  const yw = lerp(1160, -180, E.inOutCubic(seg(t, ...SPL)));
+  const edge = (x) => yw + Math.sin(x * .012 + t * 18) * 26 + Math.sin(x * .031 - t * 9) * 12;
+  drawBoat(t);
+  ctx.save(); ctx.beginPath(); ctx.moveTo(0, H + 10);
+  for (let x = 0; x <= W; x += 30) ctx.lineTo(x, edge(x));
+  ctx.lineTo(W, H + 10); ctx.closePath(); ctx.clip();
+  drawOcean(t, vx, vy);
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 12; ctx.lineJoin = 'round';
+  ctx.beginPath(); for (let x = 0; x <= W; x += 30) ctx.lineTo(x, edge(x)); ctx.stroke();
+  for (let i = 0; i < 40; i++) { const x = hash(i * 3.1) * W; bubble(x, edge(x) + 20 + hash(i * 7.7) * 160, 5 + hash(i) * 14, .8); }
+}
+function drawOcean(t, vx, vy) {
   const [c0, c1, c2] = oceanColors(t);
   const g = ctx.createLinearGradient(0, 0, 0, H);
   g.addColorStop(0, c0); g.addColorStop(.55, c1); g.addColorStop(1, c2);
@@ -420,17 +507,20 @@ function diverPos(t) {
   // returns {x,y,s,r,sx,sy,op}
   let x = 1480, y = 1400, s = 1, r = 0, sx = 1, sy = 1, op = 1;
   if (t < 2.3) {
-    const e = spring(t - .85, 1.6, 5.5);
-    y = lerp(1400, 540, e) + Math.sin(t * 2.4) * 10;
-    r = Math.sin(t * 1.9) * 3;
+    const e = E.outBounce(seg(t, .85, 1.45));
+    y = lerp(-450, 565, e) + Math.sin(t * 2.4) * 4;
+    r = Math.sin(t * 1.1) * 1.5;
   } else if (t < 4.95) {
     const p = E.inOutCubic(seg(t, 2.3, 2.95));
-    x = lerp(1480, 960, p); y = lerp(540 + Math.sin(t * 2.4) * 10, 760 + Math.sin(t * 2.4) * 8, p); s = lerp(1, .6, p);
-    r = Math.sin(t * 1.9) * 3;
+    x = lerp(1480, 960, p); y = lerp(565, 760, p) + Math.sin(t * 2.4) * 4; s = lerp(1, .6, p);
+    r = Math.sin(t * 1.1) * 1.5;
     const q = seg(t, 4.72, 4.95); sy = 1 - .16 * Math.sin(q * Math.PI / 2); sx = 1 + .12 * Math.sin(q * Math.PI / 2);
+  } else if (t < 5.06) {
+    const p = E.inCubic(seg(t, 4.95, 5.06));
+    x = 960; y = lerp(760, 1350, p); s = .6; sy = 1.15; sx = .9;
   } else if (t < 5.8) {
-    const p = seg(t, 4.95, 5.62);
-    x = 960 + Math.sin(t * 40) * 6 * p; y = lerp(760, -560, p * p * .8 + p * .2); s = .6;
+    const p = seg(t, 5.06, 5.66);
+    x = 960 + Math.sin(t * 40) * 6 * p; y = lerp(1300, -560, p * .45 + p * p * .55); s = .6;
     sy = 1.28; sx = .84; r = Math.sin(t * 30) * 2;
   } else if (t >= 18.5) {
     const e = E.outExpo(seg(t, 18.5, 19.2));
@@ -440,7 +530,7 @@ function diverPos(t) {
 }
 function diverFace(t) {
   // pupils (dx,dy), pupil radius, brow tilt/height, lid, arm angles, fin amp
-  let dx = 0, dy = 0, pr = 10, tilt = 0, bh = 0, lid = 0, aL = 14, aR = -14, fin = 10;
+  let dx = 0, dy = 0, pr = 10, tilt = 0, bh = 0, lid = 0, aL = 14, aR = -14, fin = 2;
   if (t < 1.4) { dx = -8; dy = 2; }
   else if (t < 2.4) { dx = -4; dy = -10; tilt = 9; bh = -3; const sc = seg(t, 1.5, 1.75); aR = lerp(-14, -158, E.outBack(sc)) + (sc >= 1 ? Math.sin(t * 28) * 8 : 0); }
   else if (t < 4.55) {
@@ -476,7 +566,7 @@ function renderDiver(t) {
 function diverBubbles(t) {
   for (let k = 0; k < 26; k++) {
     const te = Math.floor(t / .11) * .11 - k * .11;
-    if (te < 0) continue;
+    if (te < 5.08) continue;
     const P = diverPos(te);
     if (!(P.op > 0)) continue;
     const age = t - te, rocket = te > 4.95 && te < 5.8;
@@ -489,7 +579,8 @@ function diverBubbles(t) {
 }
 
 // ---------------------------------------------------------------- setup
-const words = [...document.querySelectorAll('#l1 .w, #l2 .w')];
+const words = [...document.querySelectorAll('#l1 .w, #l2 .w, #l3 .w')];
+let SQ = { x: 468, y: 486 };
 const cards = [
   { el: $('c1'), x: 470, y: 380, r: -5, dx: -1 },
   { el: $('c2'), x: 1440, y: 360, r: 4, dx: 1 },
@@ -546,16 +637,18 @@ function measureDot(logoEl, dotlessEl, fontPx) {
 function sceneHUD(t) {
   const on = t > .5 && t < 6.0; show($('hud'), on); if (!on) return;
   const pin = E.outExpo(seg(t, .6, 1.1)), pout = seg(t, 5.7, 5.95);
-  const rocket = seg(t, 4.95, 5.6);
+  const rocket = seg(t, 5.06, 5.6);
   const [sx, sy] = shake(t, [[4.95, 10, .9]]);
   place($('hud'), 1500 + (1 - pin) * 500 + sx, 60 + sy, { ax: '0', ay: '0', op: pin * (1 - pout) });
-  const depth = rocket > 0 ? lerp(12.4, 0, E.inCubic(rocket)) : 12.4 + Math.sin(t * 1.3) * .08;
+  const depth = t >= 5.0 ? lerp(12.4, 0, E.inCubic(rocket)) : 0;
   $('hDepth').textContent = depth.toFixed(1) + ' m';
   const asc = rocket > 0 ? Math.round(lerp(40, 214, Math.min(1, rocket * 2.5))) + Math.round(hash(Math.floor(t * 20)) * 9) : 0;
   $('hAsc').textContent = asc + ' m/min';
   $('hAscRow').className = 'row' + (rocket > 0 ? ' bad' : '');
   show($('hWarn'), rocket > 0 && Math.floor(t * 8) % 2 === 0);
-  $('hClock').textContent = '00:' + String(42 + Math.floor(t)).padStart(2, '0');
+  const boat = t < 5.0;
+  $('hTitle').textContent = boat ? 'DIVE IN' : 'DIVE TIME';
+  $('hClock').textContent = boat ? '04:' + String(59 - Math.floor(t)).padStart(2, '0') : '20:14';
 }
 
 function sceneS1(t) {
@@ -563,21 +656,19 @@ function sceneS1(t) {
   const pw = E.inExpo(seg(t, 2.18, 2.55));
   const gx = -1600 * pw;
   $('s1g').style.transform = `translateX(${gx}px)`;
-  for (const [id, t0] of [['ring1', .02], ['ring2', .28]]) {
-    const p = seg(t, t0, t0 + 1.4);
-    place($(id), 960, 540, { s: lerp(.04, 3.2, E.outCubic(p)), op: p > 0 && p < 1 ? (1 - p) * .9 : 0 });
-  }
+  show($('ring1'), false); show($('ring2'), false);
   const pp = E.outExpo(seg(t, .12, .55));
-  place($('pov'), 150, 300, { ax: '0', op: pp > 0 ? 1 : 0 });
+  place($('pov'), 150, 240, { ax: '0', op: pp > 0 ? 1 : 0 });
   $('pov').style.clipPath = `inset(-10px ${100 - pp * 100}% -10px 0)`;
   words.forEach((w, i) => {
-    const t0 = .28 + i * .13, p = seg(t, t0, t0 + .6), e = E.outBack(p);
+    const t0 = i === words.length - 1 ? 1.0 : .25 + i * .075, p = seg(t, t0, t0 + .6), e = E.outBack(p);
     w.style.transform = `translateY(${(1 - e) * 110}%) rotate(${(1 - e) * 12}deg)`;
   });
-  place($('l1'), 140, 410, { ax: '0' });
-  place($('l2'), 128, 610, { ax: '0' });
+  place($('l1'), 140, 340, { ax: '0' });
+  place($('l2'), 140, 458, { ax: '0' });
+  place($('l3'), 126, 650, { ax: '0' });
   const ps = seg(t, .95, 1.35);
-  place($('squig'), 468, 486, { ax: '0', op: ps > 0 ? 1 : 0 });
+  place($('squig'), SQ.x, SQ.y, { ax: '0', op: ps > 0 ? 1 : 0 });
   $('squigP').style.strokeDasharray = 520; $('squigP').style.strokeDashoffset = 520 * (1 - E.outCubic(ps));
   // thought bubble
   const P = diverPos(t);
@@ -802,7 +893,7 @@ function sceneS6(t) {
   });
   // end card
   const endOn = t >= T.end;
-  for (const id of ['logo2', 'ldot2', 'safe', 'safeK', 'cmd', 'stopHud']) show($(id), endOn);
+  for (const id of ['logo2', 'ldot2', 'safe', 'safeK', 'plan', 'cmd', 'stopHud']) show($(id), endOn);
   if (!endOn) return;
   const t0 = T.end;
   place($('logo2'), 650, 400);
@@ -821,8 +912,10 @@ function sceneS6(t) {
     const p = seg(t, t0 + .33 + i * .08, t0 + .78 + i * .08), e = E.outBack(p);
     w.style.transform = `translateY(${(1 - e) * 40}px)`; w.style.opacity = clamp(p * 3);
   });
-  const pc = E.outBack(seg(t, t0 + .7, t0 + 1.05));
-  place($('cmd'), 650, 730, { s: lerp(.8, 1, pc), op: clamp(pc * 2) });
+  const pl = E.outExpo(seg(t, t0 + .75, t0 + 1.15));
+  place($('plan'), 650, 678 + (1 - pl) * 24, { op: pl });
+  const pc = E.outBack(seg(t, t0 + .95, t0 + 1.3));
+  place($('cmd'), 650, 772, { s: lerp(.8, 1, pc), op: clamp(pc * 2) });
   const P = diverPos(t), ph = E.outBack(seg(t, t0 + .6, t0 + .9));
   place($('stopHud'), P.x, P.y - 300, { s: ph, op: ph > 0 ? 1 : 0, r: Math.sin(t * 2) * 2 });
 }
@@ -836,13 +929,15 @@ function renderFrame(t) {
   camY = climb(t);
   const vx = (v1 + v2) * .5, vy = (climb(t + .01) - climb(t - .01)) / .02;
   drawBG(t, vx, vy);
-  if (t < 6.0 || t > 18.5) diverBubbles(t);
+  if ((t > 5.08 && t < 6.0) || t > 18.5) diverBubbles(t);
   // horizontal motion blur while whipping
   const blurX = Math.min(70, Math.abs(v1 + v2) / 180);
   $('mblurG').setAttribute('stdDeviation', `${blurX.toFixed(1)} 0`);
   $('s1g').style.filter = blurX > .5 && t < 2.62 ? 'url(#mblur)' : 'none';
   $('s2g').style.filter = blurX > .5 && t < 3.0 ? 'url(#mblur)' : 'none';
   sceneHUD(t);
+  show($('later'), t > 5.08 && t < 5.95);
+  place($('later'), 60, 60, { ax: '0', ay: '0', op: seg(t, 5.08, 5.2) * (1 - seg(t, 5.8, 5.95)) });
   renderDiver(t);
   sceneS3(t);
   sceneS4S5(t);
@@ -858,6 +953,10 @@ function renderFrame(t) {
 async function init() {
   await document.fonts.ready;
   await Promise.all(['900 100px Inter', '800 100px Inter', '700 100px Inter', '600 100px Inter', '400 100px Inter', '500 100px Newsreader', 'italic 500 100px Newsreader', '500 20px "JetBrains Mono"', '700 20px "JetBrains Mono"'].map(f => document.fonts.load(f)));
+  renderFrame(2.0);
+  const rr = $('wRem').getBoundingClientRect();
+  SQ = { x: rr.left, y: rr.bottom - 4 };
+  $('squig').setAttribute('width', rr.width);
   renderFrame(7.0);
   logoL.forEach(l => { l.style.transform = 'none'; l.style.filter = 'none'; });
   $('s3g').style.transform = 'none';
