@@ -1,8 +1,18 @@
 # Divefy
 
-I am learning to dive. The course hands you more safety information than anyone can hold in their head: physics, physiology, procedures, and numbers where being off by a little matters. Most diving deaths come down to diver error, and most of those errors were preventable with the right information at the right moment. I wanted something I could ask in plain Spanish, the night before a dive, and trust.
+I am learning to dive. The course hands you more safety information than anyone can hold in their head: physics, physiology, procedures, and numbers where being off by a little matters. Most diving deaths come down to diver error, and most of those errors were preventable with the right information at the right moment. I wanted something I could ask in plain Spanish, on the boat minutes before a dive, and trust.
 
 A generic chatbot fails that test. It will happily invent a decompression stop. So Divefy answers only from two sources, the US Navy Diving Manual Rev 7 and my own PADI Open Water notes, and every number it says has to appear verbatim in one of them. If it cannot verify a number, it says it does not know. If the sources do not cover the question, it says that too.
+
+
+
+
+https://github.com/user-attachments/assets/05dddf06-ede8-4f7e-84e5-2b491ad3b757
+
+
+
+
+<sub>32 seconds, sound on. A first-time diver, five minutes before the dive, versus the internet advice they read before losing signal.</sub>
 
 The second half of the project is how I chose every piece of it. Instead of picking a retrieval technique or a model on faith, I wrote an exam of 84 questions from the course and measured each option against it. The table further down is the result.
 
