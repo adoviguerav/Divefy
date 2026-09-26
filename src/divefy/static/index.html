@@ -184,7 +184,7 @@
   function addBot(data) {
     const m = el('div', 'msg bot' + (data.abstencion ? ' abstencion' : ''));
     const body = el('div', 'body', '');
-    m.append(el('div', 'who', 'Divefy'), body);
+    m.append(el('div', 'who', 'Pedro'), body);
     if (data.chunks && data.chunks.length) {
       const d = el('details', 'fuentes'); d.append(el('summary', null, `Fuentes (${data.chunks.length})`));
       const kind = data.chunks[0].score_kind;
@@ -222,12 +222,12 @@
     });
   }
   function addError(text) {
-    const m = el('div', 'msg bot'); m.append(el('div', 'who', 'Divefy'), el('div', 'error', text));
+    const m = el('div', 'msg bot'); m.append(el('div', 'who', 'Pedro'), el('div', 'error', text));
     thread.append(m); scroll();
   }
   function addPending() {
     const m = el('div', 'msg bot'); m.id = 'pending';
-    m.append(el('div', 'who', 'Divefy'), el('div', 'body', 'Pensando…'));
+    m.append(el('div', 'who', 'Pedro'), el('div', 'body', 'Pensando…'));
     thread.append(m); scroll(); return m;
   }
   const scroll = () => { document.querySelector('main').scrollTop = 1e9; };
