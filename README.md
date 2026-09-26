@@ -76,7 +76,7 @@ uv run python -m divefy.evals.llm_evaluator --help         # generation: LLM jud
 uv run pytest                                              # full suite, about a minute, no network
 ```
 
-The golden dataset (`data/eval/golden.jsonl`) is the exam. It is never indexed.
+The golden dataset (`data/eval/golden.jsonl`) is the exam — questions paraphrased from the PADI course material, not copied verbatim. It is never indexed.
 
 ## Layout
 
@@ -106,4 +106,4 @@ MVP: phases 1 to 8 are done and verified (ingestion, chunking, index extras, emb
 
 ## License
 
-MIT. The US Navy Diving Manual is in the public domain. The PADI notes are my own, paraphrased.
+MIT. The US Navy Diving Manual is in the public domain. The PADI course notes and the exam questions are my own paraphrase of the official material, not a copy of it.
